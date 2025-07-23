@@ -1,6 +1,7 @@
 import type { Exploitation } from "./assets/exploitations.mock";
 import exploitations from "./assets/exploitations.mock";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Layout from "./Layout";
 
 export default function HomePage() {
@@ -63,9 +64,12 @@ export default function HomePage() {
                                     Code SAP : {exp.code}
                                 </div>
                             </div>
-                            <button className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
+                            <Link 
+                                to={`/exploitation/${exp.id}`}
+                                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                            >
                                 Voir
-                            </button>
+                            </Link>
                         </div>
                     ))
                 )}
