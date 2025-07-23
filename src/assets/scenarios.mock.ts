@@ -68,6 +68,7 @@ export interface Scenario {
     iae: IAE;
     chaulage: Chaulage;
     cultures: LigneCulture[];
+    isEmpty?: boolean;
 }
 
 export interface ResultatScenario {
@@ -103,6 +104,95 @@ export const scenarios: Scenario[] = [
         type: "T0",
         nom: "Scénario initial T0 (Récolte 2024)",
         annee: 2024,
+        isEmpty: true,
+        iae: {
+            pourcentageIAE: 0,
+            tailleMoyenneParcelles: 0,
+            certificationEnvironnementale: "NA",
+            consommationCarburant: 0,
+            typeCarburant: "Gazole non routier (litres)",
+            utilisationOAD: false
+        },
+        chaulage: {
+            amendementCalcique: 0,
+            quantiteHectare: 0
+        },
+        cultures: []
+    },
+    {
+        id: "earl-dupont-previsionnel",
+        exploitationId: "earl-dupont",
+        type: "previsionnel",
+        nom: "Scénario A reconçu (Prévision 2027)",
+        annee: 2027,
+        isEmpty: true,
+        iae: {
+            pourcentageIAE: 0,
+            tailleMoyenneParcelles: 0,
+            certificationEnvironnementale: "NA",
+            consommationCarburant: 0,
+            typeCarburant: "Gazole non routier (litres)",
+            utilisationOAD: false
+        },
+        chaulage: {
+            amendementCalcique: 0,
+            quantiteHectare: 0
+        },
+        cultures: []
+    },
+    {
+        id: "scea-martin-t0",
+        exploitationId: "scea-martin",
+        type: "T0",
+        nom: "Scénario initial T0 (Récolte 2024)",
+        annee: 2024,
+        isEmpty: true,
+        iae: {
+            pourcentageIAE: 0,
+            tailleMoyenneParcelles: 0,
+            certificationEnvironnementale: "NA",
+            consommationCarburant: 0,
+            typeCarburant: "Gazole non routier (litres)",
+            utilisationOAD: false
+        },
+        chaulage: {
+            amendementCalcique: 0,
+            quantiteHectare: 0
+        },
+        cultures: []
+    },
+    {
+        id: "scea-martin-previsionnel",
+        exploitationId: "scea-martin",
+        type: "previsionnel",
+        nom: "Scénario A reconçu (Prévision 2027)",
+        annee: 2027,
+        isEmpty: true,
+        iae: {
+            pourcentageIAE: 0,
+            tailleMoyenneParcelles: 0,
+            certificationEnvironnementale: "NA",
+            consommationCarburant: 0,
+            typeCarburant: "Gazole non routier (litres)",
+            utilisationOAD: false
+        },
+        chaulage: {
+            amendementCalcique: 0,
+            quantiteHectare: 0
+        },
+        cultures: []
+    }
+];
+
+// Données complètes pour l'import
+export const importData: Record<string, Scenario> = {
+    "earl-dupont-t0": {
+        id: "earl-dupont-t0",
+        exploitationId: "earl-dupont",
+        type: "T0",
+        nom: "Scénario initial T0 (Récolte 2024)",
+        annee: 2024,
+        isEmpty: false,
         iae: {
             pourcentageIAE: 5,
             tailleMoyenneParcelles: 14,
@@ -121,15 +211,15 @@ export const scenarios: Scenario[] = [
                     id: "ble-tendre-1",
                     culture: "Blé tendre d'hiver",
                     rendement: 7.5,
-                    semis: "15/10/2023",
-                    recolte: "15/07/2024",
+                    semis: "2023-10-15",
+                    recolte: "2024-07-15",
                     surface: 25
                 },
                 interculture: {
                     couvert: "Moutarde",
                     biomasse: 2.5,
-                    semis: "20/08/2023",
-                    destruction: "10/10/2023"
+                    semis: "2023-08-20",
+                    destruction: "2023-10-10"
                 },
                 amendementOrganique1: {
                     pro: "Fumier de bovins",
@@ -160,15 +250,15 @@ export const scenarios: Scenario[] = [
                     id: "colza-1",
                     culture: "Colza d'hiver",
                     rendement: 3.8,
-                    semis: "25/08/2024",
-                    recolte: "15/07/2025",
+                    semis: "2024-08-25",
+                    recolte: "2025-07-15",
                     surface: 15
                 },
                 interculture: {
                     couvert: "Radis fourrager",
                     biomasse: 3.0,
-                    semis: "01/08/2024",
-                    destruction: "20/08/2024"
+                    semis: "2024-08-01",
+                    destruction: "2024-08-20"
                 },
                 fertilisationAzotee1: {
                     formeEngrais: "Ammonitrate 33.5%",
@@ -183,12 +273,13 @@ export const scenarios: Scenario[] = [
             }
         ]
     },
-    {
+    "earl-dupont-previsionnel": {
         id: "earl-dupont-previsionnel",
         exploitationId: "earl-dupont",
         type: "previsionnel",
         nom: "Scénario A reconçu (Prévision 2027)",
         annee: 2027,
+        isEmpty: false,
         iae: {
             pourcentageIAE: 8,
             tailleMoyenneParcelles: 12,
@@ -207,15 +298,15 @@ export const scenarios: Scenario[] = [
                     id: "ble-tendre-prev",
                     culture: "Blé tendre d'hiver",
                     rendement: 7.8,
-                    semis: "20/10/2026",
-                    recolte: "20/07/2027",
+                    semis: "2026-10-20",
+                    recolte: "2027-07-20",
                     surface: 20
                 },
                 interculture: {
                     couvert: "Mélange légumineuses",
                     biomasse: 3.5,
-                    semis: "25/07/2026",
-                    destruction: "15/10/2026"
+                    semis: "2026-07-25",
+                    destruction: "2026-10-15"
                 },
                 amendementOrganique1: {
                     pro: "Compost végétal",
@@ -246,15 +337,15 @@ export const scenarios: Scenario[] = [
                     id: "colza-prev",
                     culture: "Colza d'hiver",
                     rendement: 4.2,
-                    semis: "30/08/2027",
-                    recolte: "20/07/2028",
+                    semis: "2027-08-30",
+                    recolte: "2028-07-20",
                     surface: 15
                 },
                 interculture: {
                     couvert: "Trèfle violet",
                     biomasse: 4.0,
-                    semis: "25/07/2027",
-                    destruction: "25/08/2027"
+                    semis: "2027-07-25",
+                    destruction: "2027-08-25"
                 },
                 fertilisationAzotee1: {
                     formeEngrais: "Ammonitrate 33.5%",
@@ -272,8 +363,8 @@ export const scenarios: Scenario[] = [
                     id: "luzerne-prev",
                     culture: "Luzerne",
                     rendement: 12.0,
-                    semis: "15/03/2027",
-                    recolte: "30/09/2027",
+                    semis: "2027-03-15",
+                    recolte: "2027-09-30",
                     surface: 5
                 },
                 interculture: {
@@ -289,7 +380,7 @@ export const scenarios: Scenario[] = [
             }
         ]
     }
-];
+};
 
 export const resultatsScenarios: ResultatScenario[] = [
     {
