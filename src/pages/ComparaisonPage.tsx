@@ -64,7 +64,7 @@ export default function ComparaisonPage() {
             </Layout>
         );
     }
-
+        
     const formatNumber = (num: number | undefined) => {
         if (num === undefined) return "N/A";
         return num.toFixed(2);

@@ -97,7 +97,6 @@ export interface ResultatScenario {
     }>;
 }
 
-// Scénarios vides par défaut
 export const scenarios: Scenario[] = [
     {
         id: "earl-dupont-t0",
