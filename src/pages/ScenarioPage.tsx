@@ -1,32 +1,60 @@
 import { useParams, Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "../Layout";
 import exploitations from "../assets/exploitations.mock";
-import { scenarios, resultatsScenarios, importData } from "../assets/scenarios.mock";
+import {
+    scenarios,
+    resultatsScenarios,
+    importData,
+} from "../assets/scenarios.mock";
 import ScenarioForm from "../components/ScenarioForm";
 import ChartsSidebar from "../components/ChartsSidebar";
 
 export default function ScenarioPage() {
-    const { id, type } = useParams<{ id: string; type: 'T0' | 'previsionnel' }>();
+    const { id, type } = useParams<{
+        id: string;
+        type: "T0" | "previsionnel";
+    }>();
     const [showCharts, setShowCharts] = useState(false);
     const [editMode, setEditMode] = useState(false);
-    const [currentScenario, setCurrentScenario] = useState(() => 
-        scenarios.find(s => s.exploitationId === id && s.type === type)
+    const [currentScenario, setCurrentScenario] = useState(() =>
+        scenarios.find((s) => s.exploitationId === id && s.type === type)
     );
-    
-    const exploitation = exploitations.find(exp => exp.id === id);
-    const resultats = resultatsScenarios.find(r => r.scenarioId === currentScenario?.id);
-    
+
+    useEffect(() => {
+        const found = scenarios.find(
+            (s) => s.exploitationId === id && s.type === type
+        );
+        setCurrentScenario(found);
+        setEditMode(false); // optionnel : reset le mode édition lors du changement
+        setShowCharts(false); // optionnel : ferme les graphiques lors du changement
+    }, [id, type]);
+
+    const exploitation = exploitations.find((exp) => exp.id === id);
+    const resultats = resultatsScenarios.find(
+        (r) => r.scenarioId === currentScenario?.id
+    );
+
     // Pour la comparaison avec T0 (si on est sur le scénario prévisionnel)
-    const scenarioT0 = type === 'previsionnel' ? scenarios.find(s => s.exploitationId === id && s.type === 'T0') : null;
-    const resultatsT0 = scenarioT0 ? resultatsScenarios.find(r => r.scenarioId === scenarioT0.id) : null;
+    const scenarioT0 =
+        type === "previsionnel"
+            ? scenarios.find((s) => s.exploitationId === id && s.type === "T0")
+            : null;
+    const resultatsT0 = scenarioT0
+        ? resultatsScenarios.find((r) => r.scenarioId === scenarioT0.id)
+        : null;
 
     if (!exploitation || !currentScenario) {
         return (
             <Layout>
                 <div className="text-center">
-                    <h1 className="text-2xl font-bold text-red-600 mb-4">Scénario non trouvé</h1>
-                    <Link to={`/exploitation/${id}`} className="text-blue-600 hover:underline">
+                    <h1 className="text-2xl font-bold text-red-600 mb-4">
+                        Scénario non trouvé
+                    </h1>
+                    <Link
+                        to={`/exploitation/${id}`}
+                        className="text-blue-600 hover:underline"
+                    >
                         Retour à l'exploitation
                     </Link>
                 </div>
@@ -39,7 +67,9 @@ export default function ScenarioPage() {
         if (importedData) {
             setCurrentScenario({ ...importedData });
             // Mettre à jour dans le tableau global (simulation)
-            const index = scenarios.findIndex(s => s.id === currentScenario.id);
+            const index = scenarios.findIndex(
+                (s) => s.id === currentScenario.id
+            );
             if (index !== -1) {
                 scenarios[index] = { ...importedData };
             }
@@ -51,7 +81,7 @@ export default function ScenarioPage() {
     };
 
     const navigateToOtherScenario = () => {
-        const otherType = type === 'T0' ? 'previsionnel' : 'T0';
+        const otherType = type === "T0" ? "previsionnel" : "T0";
         return `/exploitation/${id}/scenario/${otherType}`;
     };
 
@@ -64,23 +94,34 @@ export default function ScenarioPage() {
                         {/* En-tête */}
                         <div className="flex items-center justify-between mb-6">
                             <div>
-                                <h1 className="text-3xl font-bold text-gray-900">{exploitation.nom}</h1>
-                                <h2 className="text-xl text-gray-700 mt-1">{currentScenario.nom}</h2>
-                                <p className="text-sm text-gray-500">Année : {currentScenario.annee}</p>
+                                <h1 className="text-3xl font-bold text-gray-900">
+                                    {exploitation.nom}
+                                </h1>
+                                <h2 className="text-xl text-gray-700 mt-1">
+                                    {currentScenario.nom}
+                                </h2>
+                                <p className="text-sm text-gray-500">
+                                    Année : {currentScenario.annee}
+                                </p>
                             </div>
                             <div className="flex space-x-2">
-                                <Link 
+                                <Link
                                     to={`/exploitation/${id}`}
                                     className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                                 >
                                     Retour
                                 </Link>
-                                <button
-                                    onClick={() => setShowCharts(!showCharts)}
-                                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                                >
-                                    {showCharts ? 'Masquer' : 'Afficher'} Graphiques
-                                </button>
+                                {!currentScenario.isEmpty && (
+                                    <button
+                                        onClick={() =>
+                                            setShowCharts(!showCharts)
+                                        }
+                                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                                    >
+                                        {showCharts ? "Masquer" : "Afficher"}{" "}
+                                        Graphiques
+                                    </button>
+                                )}
                             </div>
                         </div>
 
@@ -98,13 +139,13 @@ export default function ScenarioPage() {
                                 <button
                                     onClick={toggleEditMode}
                                     className={`px-4 py-2 rounded-lg transition-colors ${
-                                        editMode 
-                                            ? 'bg-green-600 text-white hover:bg-green-700' 
-                                            : 'bg-gray-600 text-white hover:bg-gray-700'
+                                        editMode
+                                            ? "bg-green-600 text-white hover:bg-green-700"
+                                            : "bg-gray-600 text-white hover:bg-gray-700"
                                     }`}
                                     disabled={currentScenario.isEmpty}
                                 >
-                                    {editMode ? 'Sauvegarder' : 'Modifier'}
+                                    {editMode ? "Sauvegarder" : "Modifier"}
                                 </button>
                             </div>
                             <div className="flex space-x-2">
@@ -112,7 +153,9 @@ export default function ScenarioPage() {
                                     to={navigateToOtherScenario()}
                                     className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                                 >
-                                    {type === 'T0' ? 'Scénario Prévisionnel' : 'Scénario T0'}
+                                    {type === "T0"
+                                        ? "Scénario Prévisionnel"
+                                        : "Scénario T0"}
                                 </Link>
                                 <Link
                                     to={`/exploitation/${id}/comparaison`}
@@ -126,15 +169,30 @@ export default function ScenarioPage() {
                         {/* Contenu du scénario */}
                         <div className="flex-1 bg-white rounded-lg border overflow-hidden">
                             {currentScenario.isEmpty ? (
-                                <div className="flex items-center justify-center h-full">
+                                <div className="flex items-center justify-center h-full py-10">
                                     <div className="text-center">
                                         <div className="w-24 h-24 mx-auto mb-4 bg-gray-200 rounded-full flex items-center justify-center">
-                                            <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                            <svg
+                                                className="w-12 h-12 text-gray-400"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth={2}
+                                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                                                />
                                             </svg>
                                         </div>
-                                        <h3 className="text-xl font-semibold text-gray-700 mb-2">Scénario vide</h3>
-                                        <p className="text-gray-500 mb-6">Aucune donnée n'a été importée pour ce scénario.</p>
+                                        <h3 className="text-xl font-semibold text-gray-700 mb-2">
+                                            Scénario vide
+                                        </h3>
+                                        <p className="text-gray-500 mb-6">
+                                            Aucune donnée n'a été importée pour
+                                            ce scénario.
+                                        </p>
                                         <button
                                             onClick={handleImportData}
                                             className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
@@ -145,8 +203,8 @@ export default function ScenarioPage() {
                                 </div>
                             ) : (
                                 <div className="h-full overflow-y-auto">
-                                    <ScenarioForm 
-                                        scenario={currentScenario} 
+                                    <ScenarioForm
+                                        scenario={currentScenario}
                                         editMode={editMode}
                                         scenarioComparaison={scenarioT0}
                                         resultatsComparaison={resultatsT0}
@@ -160,11 +218,13 @@ export default function ScenarioPage() {
 
             {/* Sidebar des charts */}
             {showCharts && !currentScenario.isEmpty && (
-                <ChartsSidebar 
-                    scenario={currentScenario}
-                    resultats={resultats}
-                    onClose={() => setShowCharts(false)}
-                />
+                <div className="w-1/3 h-screen overflow-y-auto border-l border-gray-200 bg-white">
+                    <ChartsSidebar
+                        scenario={currentScenario}
+                        resultats={resultats}
+                        onClose={() => setShowCharts(false)}
+                    />
+                </div>
             )}
         </div>
     );
