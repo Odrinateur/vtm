@@ -68,7 +68,7 @@ export default function AdminPage() {
                             Données DDC moyennes et Q3 pour les Petites Régions Agricoles du Grand-Est.
                         </p>
                         <div className="text-green-600 text-sm font-medium">
-                            47 PRA référencées →
+                            48 PRA référencées →
                         </div>
                     </Link>
 
@@ -88,7 +88,7 @@ export default function AdminPage() {
                             Engrais minéraux avec concentrations NPK, facteurs d'émission et prix.
                         </p>
                         <div className="text-purple-600 text-sm font-medium">
-                            20+ engrais référencés →
+                            70+ engrais référencés →
                         </div>
                     </Link>
 
@@ -128,7 +128,7 @@ export default function AdminPage() {
                             Produits Résiduaires Organiques avec teneurs en carbone, azote et facteurs d'émission.
                         </p>
                         <div className="text-emerald-600 text-sm font-medium">
-                            10+ PRO référencés →
+                            150+ PRO référencés →
                         </div>
                     </Link>
 
