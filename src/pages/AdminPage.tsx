@@ -1,5 +1,12 @@
 import { Link } from "react-router-dom";
-import { Database, Cloud, Beaker, Leaf, Settings, ArrowLeft } from "lucide-react";
+import {
+    Database,
+    Cloud,
+    Beaker,
+    Leaf,
+    Settings,
+    ArrowLeft,
+} from "lucide-react";
 
 export default function AdminPage() {
     return (
@@ -8,14 +15,16 @@ export default function AdminPage() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center">
-                            <Link 
-                                to="/" 
+                            <Link
+                                to="/"
                                 className="flex items-center text-gray-600 hover:text-gray-900 mr-6"
                             >
                                 <ArrowLeft className="h-5 w-5 mr-2" />
                                 Retour à l'accueil
                             </Link>
-                            <h1 className="text-2xl font-bold text-gray-900">Administration</h1>
+                            <h1 className="text-2xl font-bold text-gray-900">
+                                Administration
+                            </h1>
                         </div>
                     </div>
                 </div>
@@ -27,7 +36,8 @@ export default function AdminPage() {
                         Gestion des bases de données
                     </h2>
                     <p className="text-gray-600">
-                        Accédez aux différentes bases de données pour consulter et gérer les référentiels techniques.
+                        Accédez aux différentes bases de données pour consulter
+                        et gérer les référentiels techniques.
                     </p>
                 </div>
 
@@ -45,7 +55,8 @@ export default function AdminPage() {
                             </h3>
                         </div>
                         <p className="text-gray-600 text-sm mb-4">
-                            Zones climatiques avec ETP, précipitations et températures moyennes annuelles.
+                            Zones climatiques avec ETP, précipitations et
+                            températures moyennes annuelles.
                         </p>
                         <div className="text-blue-600 text-sm font-medium">
                             37 zones climatiques →
@@ -65,7 +76,8 @@ export default function AdminPage() {
                             </h3>
                         </div>
                         <p className="text-gray-600 text-sm mb-4">
-                            Données DDC moyennes et Q3 pour les Petites Régions Agricoles du Grand-Est.
+                            Données DDC moyennes et Q3 pour les Petites Régions
+                            Agricoles du Grand-Est.
                         </p>
                         <div className="text-green-600 text-sm font-medium">
                             48 PRA référencées →
@@ -85,7 +97,8 @@ export default function AdminPage() {
                             </h3>
                         </div>
                         <p className="text-gray-600 text-sm mb-4">
-                            Engrais minéraux avec concentrations NPK, facteurs d'émission et prix.
+                            Engrais minéraux avec concentrations NPK, facteurs
+                            d'émission et prix.
                         </p>
                         <div className="text-purple-600 text-sm font-medium">
                             70+ engrais référencés →
@@ -105,7 +118,8 @@ export default function AdminPage() {
                             </h3>
                         </div>
                         <p className="text-gray-600 text-sm mb-4">
-                            Amendements calciques avec valeurs neutralisantes et facteurs d'émission.
+                            Amendements calciques avec valeurs neutralisantes et
+                            facteurs d'émission.
                         </p>
                         <div className="text-orange-600 text-sm font-medium">
                             3 amendements →
@@ -125,7 +139,8 @@ export default function AdminPage() {
                             </h3>
                         </div>
                         <p className="text-gray-600 text-sm mb-4">
-                            Produits Résiduaires Organiques avec teneurs en carbone, azote et facteurs d'émission.
+                            Produits Résiduaires Organiques avec teneurs en
+                            carbone, azote et facteurs d'émission.
                         </p>
                         <div className="text-emerald-600 text-sm font-medium">
                             150+ PRO référencés →
@@ -145,7 +160,8 @@ export default function AdminPage() {
                             </h3>
                         </div>
                         <p className="text-gray-600 text-sm mb-4">
-                            Matériel d'épandage avec délais et facteurs d'ajustement pour les émissions.
+                            Matériel d'épandage avec délais et facteurs
+                            d'ajustement pour les émissions.
                         </p>
                         <div className="text-red-600 text-sm font-medium">
                             21 configurations →
@@ -158,8 +174,11 @@ export default function AdminPage() {
                         À propos des bases de données
                     </h3>
                     <p className="text-blue-800 text-sm">
-                        Ces bases de données contiennent les référentiels techniques utilisés pour les calculs de bilans carbone et GES. 
-                        Les données proviennent de sources officielles (GES'TIM+, Label Bas Carbone, CITEPA OMINEA) et sont régulièrement mises à jour.
+                        Ces bases de données contiennent les référentiels
+                        techniques utilisés pour les calculs de bilans carbone
+                        et GES. Les données proviennent de sources officielles
+                        (GES'TIM+, Label Bas Carbone, CITEPA OMINEA) et sont
+                        régulièrement mises à jour.
                     </p>
                 </div>
             </div>
