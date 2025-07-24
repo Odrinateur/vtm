@@ -12,10 +12,13 @@ export default function ScenarioForm({
     scenario,
     editMode,
     scenarioComparaison,
-    resultatsComparaison,
 }: ScenarioFormProps) {
-    const [collapsedSections, setCollapsedSections] = useState<Record<string, boolean>>({});
-    const [collapsedCultures, setCollapsedCultures] = useState<Record<number, boolean>>({});
+    const [collapsedSections, setCollapsedSections] = useState<
+        Record<string, boolean>
+    >({});
+    const [collapsedCultures, setCollapsedCultures] = useState<
+        Record<number, boolean>
+    >({});
     const [tableMode, setTableMode] = useState(false);
 
     const formatNumber = (num: number) => num.toFixed(2);
@@ -38,16 +41,16 @@ export default function ScenarioForm({
     };
 
     const toggleSection = (sectionName: string) => {
-        setCollapsedSections(prev => ({
+        setCollapsedSections((prev) => ({
             ...prev,
-            [sectionName]: !prev[sectionName]
+            [sectionName]: !prev[sectionName],
         }));
     };
 
     const toggleCulture = (index: number) => {
-        setCollapsedCultures(prev => ({
+        setCollapsedCultures((prev) => ({
             ...prev,
-            [index]: !prev[index]
+            [index]: !prev[index],
         }));
     };
 
@@ -65,22 +68,36 @@ export default function ScenarioForm({
                         Mode d'affichage
                     </h3>
                     <div className="flex items-center space-x-3">
-                        <span className={`text-sm ${!tableMode ? 'font-medium text-gray-900' : 'text-gray-500'}`}>
+                        <span
+                            className={`text-sm ${
+                                !tableMode
+                                    ? "font-medium text-gray-900"
+                                    : "text-gray-500"
+                            }`}
+                        >
                             Formulaire
                         </span>
                         <button
                             onClick={() => setTableMode(!tableMode)}
                             className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                                tableMode ? 'bg-blue-600' : 'bg-gray-200'
+                                tableMode ? "bg-blue-600" : "bg-gray-200"
                             }`}
                         >
                             <span
                                 className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                                    tableMode ? 'translate-x-6' : 'translate-x-1'
+                                    tableMode
+                                        ? "translate-x-6"
+                                        : "translate-x-1"
                                 }`}
                             />
                         </button>
-                        <span className={`text-sm ${tableMode ? 'font-medium text-gray-900' : 'text-gray-500'}`}>
+                        <span
+                            className={`text-sm ${
+                                tableMode
+                                    ? "font-medium text-gray-900"
+                                    : "text-gray-500"
+                            }`}
+                        >
                             Tableau
                         </span>
                     </div>
@@ -126,10 +143,14 @@ export default function ScenarioForm({
                                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
                                         {ligneCulture.culture.rendement}
                                         {scenarioComparaison &&
-                                            scenarioComparaison.cultures[index] &&
+                                            scenarioComparaison.cultures[
+                                                index
+                                            ] &&
                                             getComparisonIndicator(
                                                 ligneCulture.culture.rendement,
-                                                scenarioComparaison.cultures[index]?.culture.rendement
+                                                scenarioComparaison.cultures[
+                                                    index
+                                                ]?.culture.rendement
                                             )}
                                     </td>
                                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -139,10 +160,12 @@ export default function ScenarioForm({
                                         {ligneCulture.culture.recolte}
                                     </td>
                                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {ligneCulture.interculture?.couvert || "N/A"}
+                                        {ligneCulture.interculture?.couvert ||
+                                            "N/A"}
                                     </td>
                                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {ligneCulture.interculture?.biomasse || "N/A"}
+                                        {ligneCulture.interculture?.biomasse ||
+                                            "N/A"}
                                     </td>
                                 </tr>
                             ))}
@@ -161,22 +184,34 @@ export default function ScenarioForm({
                     Mode d'affichage
                 </h3>
                 <div className="flex items-center space-x-3">
-                    <span className={`text-sm ${!tableMode ? 'font-medium text-gray-900' : 'text-gray-500'}`}>
+                    <span
+                        className={`text-sm ${
+                            !tableMode
+                                ? "font-medium text-gray-900"
+                                : "text-gray-500"
+                        }`}
+                    >
                         Formulaire
                     </span>
                     <button
                         onClick={() => setTableMode(!tableMode)}
                         className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                            tableMode ? 'bg-blue-600' : 'bg-gray-200'
+                            tableMode ? "bg-blue-600" : "bg-gray-200"
                         }`}
                     >
                         <span
                             className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                                tableMode ? 'translate-x-6' : 'translate-x-1'
+                                tableMode ? "translate-x-6" : "translate-x-1"
                             }`}
                         />
                     </button>
-                    <span className={`text-sm ${tableMode ? 'font-medium text-gray-900' : 'text-gray-500'}`}>
+                    <span
+                        className={`text-sm ${
+                            tableMode
+                                ? "font-medium text-gray-900"
+                                : "text-gray-500"
+                        }`}
+                    >
                         Tableau
                     </span>
                 </div>
@@ -185,7 +220,7 @@ export default function ScenarioForm({
             {/* IAE (Infrastructure Agro-Écologique) - Section repliable */}
             <div className="border border-gray-200 rounded-lg">
                 <button
-                    onClick={() => toggleSection('iae')}
+                    onClick={() => toggleSection("iae")}
                     className="w-full px-6 py-4 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors rounded-t-lg"
                 >
                     <h3 className="text-lg font-semibold text-gray-900">
@@ -193,13 +228,18 @@ export default function ScenarioForm({
                     </h3>
                     <svg
                         className={`w-5 h-5 transition-transform ${
-                            collapsedSections.iae ? 'transform rotate-180' : ''
+                            collapsedSections.iae ? "transform rotate-180" : ""
                         }`}
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
                     >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 9l-7 7-7-7"
+                        />
                     </svg>
                 </button>
                 {!collapsedSections.iae && (
@@ -221,7 +261,8 @@ export default function ScenarioForm({
                                         {scenario.iae.pourcentageIAE}%
                                         {getComparisonIndicator(
                                             scenario.iae.pourcentageIAE,
-                                            scenarioComparaison?.iae.pourcentageIAE
+                                            scenarioComparaison?.iae
+                                                .pourcentageIAE
                                         )}
                                     </p>
                                 )}
@@ -234,7 +275,9 @@ export default function ScenarioForm({
                                 {editMode ? (
                                     <input
                                         type="number"
-                                        value={scenario.iae.tailleMoyenneParcelles}
+                                        value={
+                                            scenario.iae.tailleMoyenneParcelles
+                                        }
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                                         step="0.1"
                                     />
@@ -243,7 +286,8 @@ export default function ScenarioForm({
                                         {scenario.iae.tailleMoyenneParcelles} ha
                                         {getComparisonIndicator(
                                             scenario.iae.tailleMoyenneParcelles,
-                                            scenarioComparaison?.iae.tailleMoyenneParcelles
+                                            scenarioComparaison?.iae
+                                                .tailleMoyenneParcelles
                                         )}
                                     </p>
                                 )}
@@ -255,7 +299,10 @@ export default function ScenarioForm({
                                 </label>
                                 {editMode ? (
                                     <select
-                                        value={scenario.iae.certificationEnvironnementale}
+                                        value={
+                                            scenario.iae
+                                                .certificationEnvironnementale
+                                        }
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                                     >
                                         <option value="NA">NA</option>
@@ -264,12 +311,22 @@ export default function ScenarioForm({
                                     </select>
                                 ) : (
                                     <p className="text-gray-900 font-medium">
-                                        {scenario.iae.certificationEnvironnementale}
+                                        {
+                                            scenario.iae
+                                                .certificationEnvironnementale
+                                        }
                                         {scenarioComparaison &&
-                                            scenario.iae.certificationEnvironnementale !==
-                                                scenarioComparaison.iae.certificationEnvironnementale && (
+                                            scenario.iae
+                                                .certificationEnvironnementale !==
+                                                scenarioComparaison.iae
+                                                    .certificationEnvironnementale && (
                                                 <span className="ml-2 text-sm text-blue-600 font-medium">
-                                                    (vs {scenarioComparaison.iae.certificationEnvironnementale})
+                                                    (vs{" "}
+                                                    {
+                                                        scenarioComparaison.iae
+                                                            .certificationEnvironnementale
+                                                    }
+                                                    )
                                                 </span>
                                             )}
                                     </p>
@@ -282,7 +339,11 @@ export default function ScenarioForm({
                                 </label>
                                 {editMode ? (
                                     <select
-                                        value={scenario.iae.utilisationOAD ? "true" : "false"}
+                                        value={
+                                            scenario.iae.utilisationOAD
+                                                ? "true"
+                                                : "false"
+                                        }
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                                     >
                                         <option value="false">Non</option>
@@ -290,12 +351,20 @@ export default function ScenarioForm({
                                     </select>
                                 ) : (
                                     <p className="text-gray-900 font-medium">
-                                        {scenario.iae.utilisationOAD ? "Oui" : "Non"}
+                                        {scenario.iae.utilisationOAD
+                                            ? "Oui"
+                                            : "Non"}
                                         {scenarioComparaison &&
                                             scenario.iae.utilisationOAD !==
-                                                scenarioComparaison.iae.utilisationOAD && (
+                                                scenarioComparaison.iae
+                                                    .utilisationOAD && (
                                                 <span className="ml-2 text-sm text-blue-600 font-medium">
-                                                    (vs {scenarioComparaison.iae.utilisationOAD ? "Oui" : "Non"})
+                                                    (vs{" "}
+                                                    {scenarioComparaison.iae
+                                                        .utilisationOAD
+                                                        ? "Oui"
+                                                        : "Non"}
+                                                    )
                                                 </span>
                                             )}
                                     </p>
@@ -309,7 +378,7 @@ export default function ScenarioForm({
             {/* Chaulage - Section repliable */}
             <div className="border border-gray-200 rounded-lg">
                 <button
-                    onClick={() => toggleSection('chaulage')}
+                    onClick={() => toggleSection("chaulage")}
                     className="w-full px-6 py-4 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors rounded-t-lg"
                 >
                     <h3 className="text-lg font-semibold text-gray-900">
@@ -317,13 +386,20 @@ export default function ScenarioForm({
                     </h3>
                     <svg
                         className={`w-5 h-5 transition-transform ${
-                            collapsedSections.chaulage ? 'transform rotate-180' : ''
+                            collapsedSections.chaulage
+                                ? "transform rotate-180"
+                                : ""
                         }`}
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
                     >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 9l-7 7-7-7"
+                        />
                     </svg>
                 </button>
                 {!collapsedSections.chaulage && (
@@ -336,7 +412,9 @@ export default function ScenarioForm({
                                 {editMode ? (
                                     <input
                                         type="number"
-                                        value={scenario.chaulage.amendementCalcique}
+                                        value={
+                                            scenario.chaulage.amendementCalcique
+                                        }
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                                         step="0.1"
                                     />
@@ -344,8 +422,10 @@ export default function ScenarioForm({
                                     <p className="text-gray-900 font-medium">
                                         {scenario.chaulage.amendementCalcique}
                                         {getComparisonIndicator(
-                                            scenario.chaulage.amendementCalcique,
-                                            scenarioComparaison?.chaulage.amendementCalcique
+                                            scenario.chaulage
+                                                .amendementCalcique,
+                                            scenarioComparaison?.chaulage
+                                                .amendementCalcique
                                         )}
                                     </p>
                                 )}
@@ -357,7 +437,9 @@ export default function ScenarioForm({
                                 {editMode ? (
                                     <input
                                         type="number"
-                                        value={scenario.chaulage.quantiteHectare}
+                                        value={
+                                            scenario.chaulage.quantiteHectare
+                                        }
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                                         step="0.1"
                                     />
@@ -366,7 +448,8 @@ export default function ScenarioForm({
                                         {scenario.chaulage.quantiteHectare} t/ha
                                         {getComparisonIndicator(
                                             scenario.chaulage.quantiteHectare,
-                                            scenarioComparaison?.chaulage.quantiteHectare
+                                            scenarioComparaison?.chaulage
+                                                .quantiteHectare
                                         )}
                                     </p>
                                 )}
@@ -380,7 +463,8 @@ export default function ScenarioForm({
             <div className="border border-gray-200 rounded-lg">
                 <div className="px-6 py-4 flex items-center justify-between bg-gray-50 rounded-t-lg">
                     <h3 className="text-lg font-semibold text-gray-900">
-                        Rotation et ITK ({scenario.cultures.length} culture{scenario.cultures.length > 1 ? 's' : ''})
+                        Rotation et ITK ({scenario.cultures.length} culture
+                        {scenario.cultures.length > 1 ? "s" : ""})
                     </h3>
                     <button
                         onClick={addCulture}
@@ -391,7 +475,10 @@ export default function ScenarioForm({
                 </div>
                 <div className="p-6 space-y-4">
                     {scenario.cultures.map((ligneCulture, index) => (
-                        <div key={index} className="border border-gray-200 rounded-lg">
+                        <div
+                            key={index}
+                            className="border border-gray-200 rounded-lg"
+                        >
                             <button
                                 onClick={() => toggleCulture(index)}
                                 className="w-full px-4 py-3 flex items-center justify-between bg-green-50 hover:bg-green-100 transition-colors rounded-t-lg"
@@ -401,23 +488,40 @@ export default function ScenarioForm({
                                         {ligneCulture.culture.culture}
                                     </h4>
                                     <div className="flex space-x-4 text-sm text-gray-600">
-                                        <span>{ligneCulture.culture.surface} ha</span>
-                                        <span>{ligneCulture.culture.rendement} T/ha</span>
-                                        <span>{ligneCulture.culture.semis} → {ligneCulture.culture.recolte}</span>
+                                        <span>
+                                            {ligneCulture.culture.surface} ha
+                                        </span>
+                                        <span>
+                                            {ligneCulture.culture.rendement}{" "}
+                                            T/ha
+                                        </span>
+                                        <span>
+                                            {ligneCulture.culture.semis} →{" "}
+                                            {ligneCulture.culture.recolte}
+                                        </span>
                                         {ligneCulture.interculture && (
-                                            <span className="text-blue-600">+ Couvert</span>
+                                            <span className="text-blue-600">
+                                                + Couvert
+                                            </span>
                                         )}
                                     </div>
                                 </div>
                                 <svg
                                     className={`w-5 h-5 transition-transform ${
-                                        collapsedCultures[index] ? 'transform rotate-180' : ''
+                                        collapsedCultures[index]
+                                            ? "transform rotate-180"
+                                            : ""
                                     }`}
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
                                 >
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M19 9l-7 7-7-7"
+                                    />
                                 </svg>
                             </button>
                             {!collapsedCultures[index] && (
@@ -431,13 +535,20 @@ export default function ScenarioForm({
                                             {editMode ? (
                                                 <input
                                                     type="number"
-                                                    value={ligneCulture.culture.surface}
+                                                    value={
+                                                        ligneCulture.culture
+                                                            .surface
+                                                    }
                                                     className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
                                                     step="0.1"
                                                 />
                                             ) : (
                                                 <p className="text-gray-900 font-medium">
-                                                    {ligneCulture.culture.surface} ha
+                                                    {
+                                                        ligneCulture.culture
+                                                            .surface
+                                                    }{" "}
+                                                    ha
                                                 </p>
                                             )}
                                         </div>
@@ -448,18 +559,30 @@ export default function ScenarioForm({
                                             {editMode ? (
                                                 <input
                                                     type="number"
-                                                    value={ligneCulture.culture.rendement}
+                                                    value={
+                                                        ligneCulture.culture
+                                                            .rendement
+                                                    }
                                                     className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
                                                     step="0.1"
                                                 />
                                             ) : (
                                                 <p className="text-gray-900 font-medium">
-                                                    {ligneCulture.culture.rendement} T/ha
+                                                    {
+                                                        ligneCulture.culture
+                                                            .rendement
+                                                    }{" "}
+                                                    T/ha
                                                     {scenarioComparaison &&
-                                                        scenarioComparaison.cultures[index] &&
+                                                        scenarioComparaison
+                                                            .cultures[index] &&
                                                         getComparisonIndicator(
-                                                            ligneCulture.culture.rendement,
-                                                            scenarioComparaison.cultures[index]?.culture.rendement
+                                                            ligneCulture.culture
+                                                                .rendement,
+                                                            scenarioComparaison
+                                                                .cultures[index]
+                                                                ?.culture
+                                                                .rendement
                                                         )}
                                                 </p>
                                             )}
@@ -471,7 +594,10 @@ export default function ScenarioForm({
                                             {editMode ? (
                                                 <input
                                                     type="date"
-                                                    value={ligneCulture.culture.semis}
+                                                    value={
+                                                        ligneCulture.culture
+                                                            .semis
+                                                    }
                                                     className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
                                                 />
                                             ) : (
@@ -487,12 +613,18 @@ export default function ScenarioForm({
                                             {editMode ? (
                                                 <input
                                                     type="date"
-                                                    value={ligneCulture.culture.recolte}
+                                                    value={
+                                                        ligneCulture.culture
+                                                            .recolte
+                                                    }
                                                     className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
                                                 />
                                             ) : (
                                                 <p className="text-gray-900 font-medium">
-                                                    {ligneCulture.culture.recolte}
+                                                    {
+                                                        ligneCulture.culture
+                                                            .recolte
+                                                    }
                                                 </p>
                                             )}
                                         </div>
@@ -501,14 +633,20 @@ export default function ScenarioForm({
                                     {/* Section Interculture si elle existe */}
                                     {ligneCulture.interculture && (
                                         <div className="bg-blue-50 p-4 rounded-lg mb-4">
-                                            <h5 className="font-medium text-gray-800 mb-3">Interculture</h5>
+                                            <h5 className="font-medium text-gray-800 mb-3">
+                                                Interculture
+                                            </h5>
                                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                                                 <div>
                                                     <label className="block text-sm font-medium text-gray-700 mb-1">
                                                         Couvert
                                                     </label>
                                                     <p className="text-gray-900 font-medium">
-                                                        {ligneCulture.interculture.couvert}
+                                                        {
+                                                            ligneCulture
+                                                                .interculture
+                                                                .couvert
+                                                        }
                                                     </p>
                                                 </div>
                                                 <div>
@@ -516,7 +654,11 @@ export default function ScenarioForm({
                                                         Biomasse
                                                     </label>
                                                     <p className="text-gray-900 font-medium">
-                                                        {ligneCulture.interculture.biomasse}
+                                                        {
+                                                            ligneCulture
+                                                                .interculture
+                                                                .biomasse
+                                                        }
                                                     </p>
                                                 </div>
                                                 <div>
@@ -524,7 +666,11 @@ export default function ScenarioForm({
                                                         Semis
                                                     </label>
                                                     <p className="text-gray-900 font-medium">
-                                                        {ligneCulture.interculture.semis}
+                                                        {
+                                                            ligneCulture
+                                                                .interculture
+                                                                .semis
+                                                        }
                                                     </p>
                                                 </div>
                                                 <div>
@@ -532,7 +678,11 @@ export default function ScenarioForm({
                                                         Destruction
                                                     </label>
                                                     <p className="text-gray-900 font-medium">
-                                                        {ligneCulture.interculture.destruction}
+                                                        {
+                                                            ligneCulture
+                                                                .interculture
+                                                                .destruction
+                                                        }
                                                     </p>
                                                 </div>
                                             </div>
