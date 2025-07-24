@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, Leaf, Download, Upload, Plus, Edit, Trash2 } from "lucide-react";
-import { pros, PRO } from "../../assets/admin-data";
+import { ArrowLeft, Leaf, Download, Plus, Edit, Trash2 } from "lucide-react";
+import { pros, type PRO } from "../../assets/admin-data";
 import { useState } from "react";
 
 export default function AdminPROPage() {
@@ -9,20 +9,21 @@ export default function AdminPROPage() {
     const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
     const filteredData = pros
-        .filter(pro => 
-            pro.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            pro.commentaire.toLowerCase().includes(searchTerm.toLowerCase())
+        .filter(
+            (pro) =>
+                pro.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                pro.commentaire.toLowerCase().includes(searchTerm.toLowerCase())
         )
         .sort((a, b) => {
             const aValue = a[sortField];
             const bValue = b[sortField];
-            
+
             if (typeof aValue === "string" && typeof bValue === "string") {
-                return sortDirection === "asc" 
+                return sortDirection === "asc"
                     ? aValue.localeCompare(bValue)
                     : bValue.localeCompare(aValue);
             }
-            
+
             if (aValue < bValue) return sortDirection === "asc" ? -1 : 1;
             if (aValue > bValue) return sortDirection === "asc" ? 1 : -1;
             return 0;
@@ -43,8 +44,8 @@ export default function AdminPROPage() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center">
-                            <Link 
-                                to="/admin" 
+                            <Link
+                                to="/admin"
                                 className="flex items-center text-gray-600 hover:text-gray-900 mr-6"
                             >
                                 <ArrowLeft className="h-5 w-5 mr-2" />
@@ -52,19 +53,17 @@ export default function AdminPROPage() {
                             </Link>
                             <div className="flex items-center">
                                 <Leaf className="h-6 w-6 text-emerald-600 mr-3" />
-                                <h1 className="text-2xl font-bold text-gray-900">BD PRO</h1>
+                                <h1 className="text-2xl font-bold text-gray-900">
+                                    BD PRO
+                                </h1>
                             </div>
                         </div>
                         <div className="flex items-center space-x-3">
-                            <button className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            <button className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
                                 <Download className="h-4 w-4 mr-2" />
-                                Exporter
+                                Exporter CSV
                             </button>
-                            <button className="flex items-center px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
-                                <Upload className="h-4 w-4 mr-2" />
-                                Importer
-                            </button>
-                            <button className="flex items-center px-3 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                            <button className="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700">
                                 <Plus className="h-4 w-4 mr-2" />
                                 Ajouter
                             </button>
@@ -81,7 +80,8 @@ export default function AdminPROPage() {
                                 Produits Résiduaires Organiques (PRO)
                             </h2>
                             <p className="text-gray-600">
-                                Base de données des PRO avec teneurs en carbone, azote et facteurs d'émission GES
+                                Base de données des PRO avec teneurs en carbone,
+                                azote et facteurs d'émission GES
                             </p>
                         </div>
                         <div className="text-sm text-gray-500">
@@ -107,7 +107,7 @@ export default function AdminPROPage() {
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
                                 <tr>
-                                    <th 
+                                    <th
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                                         onClick={() => handleSort("name")}
                                     >
@@ -115,12 +115,14 @@ export default function AdminPROPage() {
                                             Nom PRO
                                             {sortField === "name" && (
                                                 <span className="ml-1">
-                                                    {sortDirection === "asc" ? "↑" : "↓"}
+                                                    {sortDirection === "asc"
+                                                        ? "↑"
+                                                        : "↓"}
                                                 </span>
                                             )}
                                         </div>
                                     </th>
-                                    <th 
+                                    <th
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                                         onClick={() => handleSort("ismo")}
                                     >
@@ -128,12 +130,14 @@ export default function AdminPROPage() {
                                             ISMO
                                             {sortField === "ismo" && (
                                                 <span className="ml-1">
-                                                    {sortDirection === "asc" ? "↑" : "↓"}
+                                                    {sortDirection === "asc"
+                                                        ? "↑"
+                                                        : "↓"}
                                                 </span>
                                             )}
                                         </div>
                                     </th>
-                                    <th 
+                                    <th
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                                         onClick={() => handleSort("teneurCKgT")}
                                     >
@@ -141,12 +145,14 @@ export default function AdminPROPage() {
                                             Teneur C (kg/T)
                                             {sortField === "teneurCKgT" && (
                                                 <span className="ml-1">
-                                                    {sortDirection === "asc" ? "↑" : "↓"}
+                                                    {sortDirection === "asc"
+                                                        ? "↑"
+                                                        : "↓"}
                                                 </span>
                                             )}
                                         </div>
                                     </th>
-                                    <th 
+                                    <th
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                                         onClick={() => handleSort("nMoyenKgT")}
                                     >
@@ -154,12 +160,14 @@ export default function AdminPROPage() {
                                             N moyen (kg/T)
                                             {sortField === "nMoyenKgT" && (
                                                 <span className="ml-1">
-                                                    {sortDirection === "asc" ? "↑" : "↓"}
+                                                    {sortDirection === "asc"
+                                                        ? "↑"
+                                                        : "↓"}
                                                 </span>
                                             )}
                                         </div>
                                     </th>
-                                    <th 
+                                    <th
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                                         onClick={() => handleSort("feCO2eqT")}
                                     >
@@ -167,12 +175,14 @@ export default function AdminPROPage() {
                                             FE CO2eq/T
                                             {sortField === "feCO2eqT" && (
                                                 <span className="ml-1">
-                                                    {sortDirection === "asc" ? "↑" : "↓"}
+                                                    {sortDirection === "asc"
+                                                        ? "↑"
+                                                        : "↓"}
                                                 </span>
                                             )}
                                         </div>
                                     </th>
-                                    <th 
+                                    <th
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                                         onClick={() => handleSort("prixT")}
                                     >
@@ -180,7 +190,9 @@ export default function AdminPROPage() {
                                             Prix (€/T)
                                             {sortField === "prixT" && (
                                                 <span className="ml-1">
-                                                    {sortDirection === "asc" ? "↑" : "↓"}
+                                                    {sortDirection === "asc"
+                                                        ? "↑"
+                                                        : "↓"}
                                                 </span>
                                             )}
                                         </div>
@@ -195,7 +207,10 @@ export default function AdminPROPage() {
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
                                 {filteredData.map((pro, index) => (
-                                    <tr key={index} className="hover:bg-gray-50">
+                                    <tr
+                                        key={index}
+                                        className="hover:bg-gray-50"
+                                    >
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="text-sm font-medium text-gray-900">
                                                 {pro.name}
@@ -228,24 +243,32 @@ export default function AdminPROPage() {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="text-sm text-gray-900">
-                                                {pro.prixT > 0 ? `${pro.prixT}€` : '-'}
+                                                {pro.prixT > 0
+                                                    ? `${pro.prixT}€`
+                                                    : "-"}
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="text-sm text-gray-900">
-                                                {pro.name.startsWith('COMP') ? (
+                                                {pro.name.startsWith("COMP") ? (
                                                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                                         Compost
                                                     </span>
-                                                ) : pro.name.includes('FUMIER') ? (
+                                                ) : pro.name.includes(
+                                                      "FUMIER"
+                                                  ) ? (
                                                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-brown-100 text-brown-800">
                                                         Fumier
                                                     </span>
-                                                ) : pro.name.includes('VINASSE') ? (
+                                                ) : pro.name.includes(
+                                                      "VINASSE"
+                                                  ) ? (
                                                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
                                                         Vinasse
                                                     </span>
-                                                ) : pro.name.includes('DIGESTAT') ? (
+                                                ) : pro.name.includes(
+                                                      "DIGESTAT"
+                                                  ) ? (
                                                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                                         Digestat
                                                     </span>
@@ -279,19 +302,27 @@ export default function AdminPROPage() {
                     </h3>
                     <div className="text-blue-800 text-sm space-y-2">
                         <p>
-                            Les PRO sont des matières organiques issues de l'activité humaine qui peuvent être valorisées en agriculture comme amendements organiques ou fertilisants.
+                            Les PRO sont des matières organiques issues de
+                            l'activité humaine qui peuvent être valorisées en
+                            agriculture comme amendements organiques ou
+                            fertilisants.
                         </p>
                         <p>
-                            <strong>ISMO :</strong> Indice de Stabilité de la Matière Organique, exprime la fraction de carbone organique qui reste dans le sol après décomposition
+                            <strong>ISMO :</strong> Indice de Stabilité de la
+                            Matière Organique, exprime la fraction de carbone
+                            organique qui reste dans le sol après décomposition
                         </p>
                         <p>
-                            <strong>Teneur C :</strong> Teneur en carbone organique (kg/tonne de produit brut)
+                            <strong>Teneur C :</strong> Teneur en carbone
+                            organique (kg/tonne de produit brut)
                         </p>
                         <p>
-                            <strong>N moyen :</strong> Teneur moyenne en azote total (kg/tonne de produit brut)
+                            <strong>N moyen :</strong> Teneur moyenne en azote
+                            total (kg/tonne de produit brut)
                         </p>
                         <p>
-                            <strong>FE CO2eq/T :</strong> Facteur d'émission en équivalent CO2 par tonne de produit
+                            <strong>FE CO2eq/T :</strong> Facteur d'émission en
+                            équivalent CO2 par tonne de produit
                         </p>
                     </div>
                 </div>

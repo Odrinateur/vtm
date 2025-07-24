@@ -1,25 +1,26 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, MapPin, Download, Upload, Plus, Edit, Trash2 } from "lucide-react";
-import { praGrandEst, PRAGrandEst } from "../../assets/admin-data";
+import { ArrowLeft, MapPin, Download, Plus, Edit, Trash2 } from "lucide-react";
+import { praGrandEst, type PRAGrandEst } from "../../assets/admin-data";
 import { useState } from "react";
 
 export default function AdminPRAPage() {
     const [searchTerm, setSearchTerm] = useState("");
-    const [sortField, setSortField] = useState<keyof PRAGrandEst>("nomPRACommune");
+    const [sortField, setSortField] =
+        useState<keyof PRAGrandEst>("nomPRACommune");
     const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
     const filteredData = praGrandEst
-        .filter(pra => 
+        .filter((pra) =>
             pra.nomPRACommune.toLowerCase().includes(searchTerm.toLowerCase())
         )
         .sort((a, b) => {
             const aValue = a[sortField];
             const bValue = b[sortField];
-            
+
             if (aValue === null && bValue === null) return 0;
             if (aValue === null) return sortDirection === "asc" ? 1 : -1;
             if (bValue === null) return sortDirection === "asc" ? -1 : 1;
-            
+
             if (aValue < bValue) return sortDirection === "asc" ? -1 : 1;
             if (aValue > bValue) return sortDirection === "asc" ? 1 : -1;
             return 0;
@@ -40,8 +41,8 @@ export default function AdminPRAPage() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center">
-                            <Link 
-                                to="/admin" 
+                            <Link
+                                to="/admin"
                                 className="flex items-center text-gray-600 hover:text-gray-900 mr-6"
                             >
                                 <ArrowLeft className="h-5 w-5 mr-2" />
@@ -49,19 +50,17 @@ export default function AdminPRAPage() {
                             </Link>
                             <div className="flex items-center">
                                 <MapPin className="h-6 w-6 text-green-600 mr-3" />
-                                <h1 className="text-2xl font-bold text-gray-900">BD PRA Grand-Est</h1>
+                                <h1 className="text-2xl font-bold text-gray-900">
+                                    BD PRA Grand-Est
+                                </h1>
                             </div>
                         </div>
                         <div className="flex items-center space-x-3">
-                            <button className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            <button className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
                                 <Download className="h-4 w-4 mr-2" />
-                                Exporter
+                                Exporter CSV
                             </button>
-                            <button className="flex items-center px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
-                                <Upload className="h-4 w-4 mr-2" />
-                                Importer
-                            </button>
-                            <button className="flex items-center px-3 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                            <button className="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700">
                                 <Plus className="h-4 w-4 mr-2" />
                                 Ajouter
                             </button>
@@ -78,11 +77,13 @@ export default function AdminPRAPage() {
                                 Petites Régions Agricoles du Grand-Est
                             </h2>
                             <p className="text-gray-600">
-                                Données DDC (Degrés Jours de Croissance) moyennes et Q3 pour les PRA du Grand-Est en 2022
+                                Données DDC (Degrés Jours de Croissance)
+                                moyennes et Q3 pour les PRA du Grand-Est en 2022
                             </p>
                         </div>
                         <div className="text-sm text-gray-500">
-                            {filteredData.length} entrée(s) sur {praGrandEst.length}
+                            {filteredData.length} entrée(s) sur{" "}
+                            {praGrandEst.length}
                         </div>
                     </div>
 
@@ -104,33 +105,41 @@ export default function AdminPRAPage() {
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
                                 <tr>
-                                    <th 
+                                    <th
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                                        onClick={() => handleSort("nomPRACommune")}
+                                        onClick={() =>
+                                            handleSort("nomPRACommune")
+                                        }
                                     >
                                         <div className="flex items-center">
                                             Nom PRA et Commune
                                             {sortField === "nomPRACommune" && (
                                                 <span className="ml-1">
-                                                    {sortDirection === "asc" ? "↑" : "↓"}
+                                                    {sortDirection === "asc"
+                                                        ? "↑"
+                                                        : "↓"}
                                                 </span>
                                             )}
                                         </div>
                                     </th>
-                                    <th 
+                                    <th
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                                        onClick={() => handleSort("ddcMoyPRA22")}
+                                        onClick={() =>
+                                            handleSort("ddcMoyPRA22")
+                                        }
                                     >
                                         <div className="flex items-center">
                                             DDC Moy PRA 22
                                             {sortField === "ddcMoyPRA22" && (
                                                 <span className="ml-1">
-                                                    {sortDirection === "asc" ? "↑" : "↓"}
+                                                    {sortDirection === "asc"
+                                                        ? "↑"
+                                                        : "↓"}
                                                 </span>
                                             )}
                                         </div>
                                     </th>
-                                    <th 
+                                    <th
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                                         onClick={() => handleSort("ddcQ3PRA22")}
                                     >
@@ -138,7 +147,9 @@ export default function AdminPRAPage() {
                                             DDC Q3 PRA 22
                                             {sortField === "ddcQ3PRA22" && (
                                                 <span className="ml-1">
-                                                    {sortDirection === "asc" ? "↑" : "↓"}
+                                                    {sortDirection === "asc"
+                                                        ? "↑"
+                                                        : "↓"}
                                                 </span>
                                             )}
                                         </div>
@@ -150,7 +161,10 @@ export default function AdminPRAPage() {
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
                                 {filteredData.map((pra, index) => (
-                                    <tr key={index} className="hover:bg-gray-50">
+                                    <tr
+                                        key={index}
+                                        className="hover:bg-gray-50"
+                                    >
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="text-sm font-medium text-gray-900">
                                                 {pra.nomPRACommune}
@@ -163,8 +177,12 @@ export default function AdminPRAPage() {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="text-sm text-gray-900">
-                                                {pra.ddcQ3PRA22 !== null ? pra.ddcQ3PRA22 : (
-                                                    <span className="text-gray-400 italic">Non renseigné</span>
+                                                {pra.ddcQ3PRA22 !== null ? (
+                                                    pra.ddcQ3PRA22
+                                                ) : (
+                                                    <span className="text-gray-400 italic">
+                                                        Non renseigné
+                                                    </span>
                                                 )}
                                             </div>
                                         </td>
@@ -191,13 +209,19 @@ export default function AdminPRAPage() {
                     </h3>
                     <div className="text-blue-800 text-sm space-y-2">
                         <p>
-                            Les Petites Régions Agricoles (PRA) sont des zones géographiques homogènes du point de vue des conditions naturelles et des orientations de production.
+                            Les Petites Régions Agricoles (PRA) sont des zones
+                            géographiques homogènes du point de vue des
+                            conditions naturelles et des orientations de
+                            production.
                         </p>
                         <p>
-                            <strong>DDC Moy PRA 22 :</strong> Degrés Jours de Croissance moyens pour l'année 2022
+                            <strong>DDC Moy PRA 22 :</strong> Degrés Jours de
+                            Croissance moyens pour l'année 2022
                         </p>
                         <p>
-                            <strong>DDC Q3 PRA 22 :</strong> Troisième quartile des DDC pour l'année 2022 (75% des valeurs sont inférieures à cette valeur)
+                            <strong>DDC Q3 PRA 22 :</strong> Troisième quartile
+                            des DDC pour l'année 2022 (75% des valeurs sont
+                            inférieures à cette valeur)
                         </p>
                     </div>
                 </div>

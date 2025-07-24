@@ -1,6 +1,16 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, Settings, Download, Upload, Plus, Edit, Trash2 } from "lucide-react";
-import { amendementsCalciques, AmendementCalcique } from "../../assets/admin-data";
+import {
+    ArrowLeft,
+    Settings,
+    Download,
+    Plus,
+    Edit,
+    Trash2,
+} from "lucide-react";
+import {
+    amendementsCalciques,
+    type AmendementCalcique,
+} from "../../assets/admin-data";
 import { useState } from "react";
 
 export default function AdminAmendementPage() {
@@ -9,20 +19,25 @@ export default function AdminAmendementPage() {
     const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
     const filteredData = amendementsCalciques
-        .filter(amendement => 
-            amendement.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            amendement.source.toLowerCase().includes(searchTerm.toLowerCase())
+        .filter(
+            (amendement) =>
+                amendement.nom
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()) ||
+                amendement.source
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase())
         )
         .sort((a, b) => {
             const aValue = a[sortField];
             const bValue = b[sortField];
-            
+
             if (typeof aValue === "string" && typeof bValue === "string") {
-                return sortDirection === "asc" 
+                return sortDirection === "asc"
                     ? aValue.localeCompare(bValue)
                     : bValue.localeCompare(aValue);
             }
-            
+
             if (aValue < bValue) return sortDirection === "asc" ? -1 : 1;
             if (aValue > bValue) return sortDirection === "asc" ? 1 : -1;
             return 0;
@@ -43,8 +58,8 @@ export default function AdminAmendementPage() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center">
-                            <Link 
-                                to="/admin" 
+                            <Link
+                                to="/admin"
                                 className="flex items-center text-gray-600 hover:text-gray-900 mr-6"
                             >
                                 <ArrowLeft className="h-5 w-5 mr-2" />
@@ -52,19 +67,17 @@ export default function AdminAmendementPage() {
                             </Link>
                             <div className="flex items-center">
                                 <Settings className="h-6 w-6 text-orange-600 mr-3" />
-                                <h1 className="text-2xl font-bold text-gray-900">BD Amendements Calciques</h1>
+                                <h1 className="text-2xl font-bold text-gray-900">
+                                    BD Amendements Calciques
+                                </h1>
                             </div>
                         </div>
                         <div className="flex items-center space-x-3">
-                            <button className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            <button className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
                                 <Download className="h-4 w-4 mr-2" />
-                                Exporter
+                                Exporter CSV
                             </button>
-                            <button className="flex items-center px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
-                                <Upload className="h-4 w-4 mr-2" />
-                                Importer
-                            </button>
-                            <button className="flex items-center px-3 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                            <button className="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700">
                                 <Plus className="h-4 w-4 mr-2" />
                                 Ajouter
                             </button>
@@ -81,11 +94,13 @@ export default function AdminAmendementPage() {
                                 Amendements Calciques
                             </h2>
                             <p className="text-gray-600">
-                                Base de données des amendements calciques avec valeurs neutralisantes et facteurs d'émission
+                                Base de données des amendements calciques avec
+                                valeurs neutralisantes et facteurs d'émission
                             </p>
                         </div>
                         <div className="text-sm text-gray-500">
-                            {filteredData.length} entrée(s) sur {amendementsCalciques.length}
+                            {filteredData.length} entrée(s) sur{" "}
+                            {amendementsCalciques.length}
                         </div>
                     </div>
 
@@ -107,7 +122,7 @@ export default function AdminAmendementPage() {
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
                                 <tr>
-                                    <th 
+                                    <th
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                                         onClick={() => handleSort("nom")}
                                     >
@@ -115,25 +130,32 @@ export default function AdminAmendementPage() {
                                             Amendement Calcique
                                             {sortField === "nom" && (
                                                 <span className="ml-1">
-                                                    {sortDirection === "asc" ? "↑" : "↓"}
+                                                    {sortDirection === "asc"
+                                                        ? "↑"
+                                                        : "↓"}
                                                 </span>
                                             )}
                                         </div>
                                     </th>
-                                    <th 
+                                    <th
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                                        onClick={() => handleSort("valeurNeutralisante")}
+                                        onClick={() =>
+                                            handleSort("valeurNeutralisante")
+                                        }
                                     >
                                         <div className="flex items-center">
                                             Valeur Neutralisante (%)
-                                            {sortField === "valeurNeutralisante" && (
+                                            {sortField ===
+                                                "valeurNeutralisante" && (
                                                 <span className="ml-1">
-                                                    {sortDirection === "asc" ? "↑" : "↓"}
+                                                    {sortDirection === "asc"
+                                                        ? "↑"
+                                                        : "↓"}
                                                 </span>
                                             )}
                                         </div>
                                     </th>
-                                    <th 
+                                    <th
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                                         onClick={() => handleSort("feVN")}
                                     >
@@ -141,12 +163,14 @@ export default function AdminAmendementPage() {
                                             FE_VN (kg eqCO2/kg VN)
                                             {sortField === "feVN" && (
                                                 <span className="ml-1">
-                                                    {sortDirection === "asc" ? "↑" : "↓"}
+                                                    {sortDirection === "asc"
+                                                        ? "↑"
+                                                        : "↓"}
                                                 </span>
                                             )}
                                         </div>
                                     </th>
-                                    <th 
+                                    <th
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                                         onClick={() => handleSort("source")}
                                     >
@@ -154,7 +178,9 @@ export default function AdminAmendementPage() {
                                             Source
                                             {sortField === "source" && (
                                                 <span className="ml-1">
-                                                    {sortDirection === "asc" ? "↑" : "↓"}
+                                                    {sortDirection === "asc"
+                                                        ? "↑"
+                                                        : "↓"}
                                                 </span>
                                             )}
                                         </div>
@@ -166,7 +192,10 @@ export default function AdminAmendementPage() {
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
                                 {filteredData.map((amendement, index) => (
-                                    <tr key={index} className="hover:bg-gray-50">
+                                    <tr
+                                        key={index}
+                                        className="hover:bg-gray-50"
+                                    >
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="text-sm font-medium text-gray-900">
                                                 {amendement.nom}
@@ -174,7 +203,11 @@ export default function AdminAmendementPage() {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="text-sm text-gray-900">
-                                                {(amendement.valeurNeutralisante * 100).toFixed(1)}%
+                                                {(
+                                                    amendement.valeurNeutralisante *
+                                                    100
+                                                ).toFixed(1)}
+                                                %
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
@@ -212,16 +245,24 @@ export default function AdminAmendementPage() {
                     </h3>
                     <div className="text-blue-800 text-sm space-y-2">
                         <p>
-                            Les amendements calciques sont utilisés pour corriger l'acidité des sols et améliorer leur structure.
+                            Les amendements calciques sont utilisés pour
+                            corriger l'acidité des sols et améliorer leur
+                            structure.
                         </p>
                         <p>
-                            <strong>Valeur Neutralisante :</strong> Capacité de l'amendement à neutraliser l'acidité du sol, exprimée en pourcentage par rapport à l'oxyde de calcium (CaO)
+                            <strong>Valeur Neutralisante :</strong> Capacité de
+                            l'amendement à neutraliser l'acidité du sol,
+                            exprimée en pourcentage par rapport à l'oxyde de
+                            calcium (CaO)
                         </p>
                         <p>
-                            <strong>FE_VN :</strong> Facteur d'émission par unité de valeur neutralisante (kg équivalent CO2 par kg de valeur neutralisante)
+                            <strong>FE_VN :</strong> Facteur d'émission par
+                            unité de valeur neutralisante (kg équivalent CO2 par
+                            kg de valeur neutralisante)
                         </p>
                         <p>
-                            <strong>Source :</strong> Référentiel technique utilisé (GES'TIM+)
+                            <strong>Source :</strong> Référentiel technique
+                            utilisé (GES'TIM+)
                         </p>
                     </div>
                 </div>

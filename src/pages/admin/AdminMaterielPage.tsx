@@ -1,29 +1,42 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, Settings, Download, Upload, Plus, Edit, Trash2 } from "lucide-react";
-import { materielDelais, MaterielDelais } from "../../assets/admin-data";
+import {
+    ArrowLeft,
+    Settings,
+    Download,
+    Plus,
+    Edit,
+    Trash2,
+} from "lucide-react";
+import { materielDelais, type MaterielDelais } from "../../assets/admin-data";
 import { useState } from "react";
 
 export default function AdminMaterielPage() {
     const [searchTerm, setSearchTerm] = useState("");
-    const [sortField, setSortField] = useState<keyof MaterielDelais>("materielDelais");
+    const [sortField, setSortField] =
+        useState<keyof MaterielDelais>("materielDelais");
     const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
     const filteredData = materielDelais
-        .filter(materiel => 
-            materiel.materielDelais.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            materiel.materiel.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            materiel.delais.toLowerCase().includes(searchTerm.toLowerCase())
+        .filter(
+            (materiel) =>
+                materiel.materielDelais
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()) ||
+                materiel.materiel
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()) ||
+                materiel.delais.toLowerCase().includes(searchTerm.toLowerCase())
         )
         .sort((a, b) => {
             const aValue = a[sortField];
             const bValue = b[sortField];
-            
+
             if (typeof aValue === "string" && typeof bValue === "string") {
-                return sortDirection === "asc" 
+                return sortDirection === "asc"
                     ? aValue.localeCompare(bValue)
                     : bValue.localeCompare(aValue);
             }
-            
+
             if (aValue < bValue) return sortDirection === "asc" ? -1 : 1;
             if (aValue > bValue) return sortDirection === "asc" ? 1 : -1;
             return 0;
@@ -51,8 +64,8 @@ export default function AdminMaterielPage() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center">
-                            <Link 
-                                to="/admin" 
+                            <Link
+                                to="/admin"
                                 className="flex items-center text-gray-600 hover:text-gray-900 mr-6"
                             >
                                 <ArrowLeft className="h-5 w-5 mr-2" />
@@ -60,19 +73,17 @@ export default function AdminMaterielPage() {
                             </Link>
                             <div className="flex items-center">
                                 <Settings className="h-6 w-6 text-red-600 mr-3" />
-                                <h1 className="text-2xl font-bold text-gray-900">BD Matériel et Délais</h1>
+                                <h1 className="text-2xl font-bold text-gray-900">
+                                    BD Matériel et Délais
+                                </h1>
                             </div>
                         </div>
                         <div className="flex items-center space-x-3">
-                            <button className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            <button className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
                                 <Download className="h-4 w-4 mr-2" />
-                                Exporter
+                                Exporter CSV
                             </button>
-                            <button className="flex items-center px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
-                                <Upload className="h-4 w-4 mr-2" />
-                                Importer
-                            </button>
-                            <button className="flex items-center px-3 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                            <button className="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700">
                                 <Plus className="h-4 w-4 mr-2" />
                                 Ajouter
                             </button>
@@ -89,11 +100,14 @@ export default function AdminMaterielPage() {
                                 Matériel d'épandage et Délais
                             </h2>
                             <p className="text-gray-600">
-                                Facteurs d'ajustement pour les émissions selon le matériel d'épandage et les délais d'enfouissement
+                                Facteurs d'ajustement pour les émissions selon
+                                le matériel d'épandage et les délais
+                                d'enfouissement
                             </p>
                         </div>
                         <div className="text-sm text-gray-500">
-                            {filteredData.length} entrée(s) sur {materielDelais.length}
+                            {filteredData.length} entrée(s) sur{" "}
+                            {materielDelais.length}
                         </div>
                     </div>
 
@@ -115,20 +129,24 @@ export default function AdminMaterielPage() {
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
                                 <tr>
-                                    <th 
+                                    <th
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                                        onClick={() => handleSort("materielDelais")}
+                                        onClick={() =>
+                                            handleSort("materielDelais")
+                                        }
                                     >
                                         <div className="flex items-center">
                                             Configuration
                                             {sortField === "materielDelais" && (
                                                 <span className="ml-1">
-                                                    {sortDirection === "asc" ? "↑" : "↓"}
+                                                    {sortDirection === "asc"
+                                                        ? "↑"
+                                                        : "↓"}
                                                 </span>
                                             )}
                                         </div>
                                     </th>
-                                    <th 
+                                    <th
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                                         onClick={() => handleSort("materiel")}
                                     >
@@ -136,12 +154,14 @@ export default function AdminMaterielPage() {
                                             Matériel
                                             {sortField === "materiel" && (
                                                 <span className="ml-1">
-                                                    {sortDirection === "asc" ? "↑" : "↓"}
+                                                    {sortDirection === "asc"
+                                                        ? "↑"
+                                                        : "↓"}
                                                 </span>
                                             )}
                                         </div>
                                     </th>
-                                    <th 
+                                    <th
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                                         onClick={() => handleSort("delais")}
                                     >
@@ -149,20 +169,27 @@ export default function AdminMaterielPage() {
                                             Délais
                                             {sortField === "delais" && (
                                                 <span className="ml-1">
-                                                    {sortDirection === "asc" ? "↑" : "↓"}
+                                                    {sortDirection === "asc"
+                                                        ? "↑"
+                                                        : "↓"}
                                                 </span>
                                             )}
                                         </div>
                                     </th>
-                                    <th 
+                                    <th
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                                        onClick={() => handleSort("facteurAjustement")}
+                                        onClick={() =>
+                                            handleSort("facteurAjustement")
+                                        }
                                     >
                                         <div className="flex items-center">
                                             Facteur d'Ajustement
-                                            {sortField === "facteurAjustement" && (
+                                            {sortField ===
+                                                "facteurAjustement" && (
                                                 <span className="ml-1">
-                                                    {sortDirection === "asc" ? "↑" : "↓"}
+                                                    {sortDirection === "asc"
+                                                        ? "↑"
+                                                        : "↓"}
                                                 </span>
                                             )}
                                         </div>
@@ -174,7 +201,10 @@ export default function AdminMaterielPage() {
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
                                 {filteredData.map((materiel, index) => (
-                                    <tr key={index} className="hover:bg-gray-50">
+                                    <tr
+                                        key={index}
+                                        className="hover:bg-gray-50"
+                                    >
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="text-sm font-medium text-gray-900">
                                                 {materiel.materielDelais}
@@ -190,13 +220,19 @@ export default function AdminMaterielPage() {
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="text-sm text-gray-900">
                                                 {materiel.delais || (
-                                                    <span className="text-gray-400 italic">-</span>
+                                                    <span className="text-gray-400 italic">
+                                                        -
+                                                    </span>
                                                 )}
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="text-sm text-gray-900">
-                                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getFacteurColor(materiel.facteurAjustement)}`}>
+                                                <span
+                                                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getFacteurColor(
+                                                        materiel.facteurAjustement
+                                                    )}`}
+                                                >
                                                     {materiel.facteurAjustement}
                                                 </span>
                                             </div>
@@ -225,10 +261,13 @@ export default function AdminMaterielPage() {
                         </h3>
                         <div className="text-blue-800 text-sm space-y-2">
                             <p>
-                                Les facteurs d'ajustement permettent de moduler les émissions d'ammoniac selon le matériel d'épandage et le délai d'enfouissement.
+                                Les facteurs d'ajustement permettent de moduler
+                                les émissions d'ammoniac selon le matériel
+                                d'épandage et le délai d'enfouissement.
                             </p>
                             <p>
-                                <strong>Source :</strong> CITEPA, OMINEA février 2018
+                                <strong>Source :</strong> CITEPA, OMINEA février
+                                2018
                             </p>
                         </div>
                     </div>
@@ -258,7 +297,7 @@ export default function AdminMaterielPage() {
                             </div>
                             <div className="flex items-center">
                                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 mr-2">
-                                    > 0.75
+                                    {">"} 0.75
                                 </span>
                                 <span>Forte émission</span>
                             </div>
