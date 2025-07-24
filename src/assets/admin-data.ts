@@ -158,7 +158,7 @@ export const amendementsCalciques: AmendementCalcique[] = [
     { nom: "Ecumes de sucreries", valeurNeutralisante: 0.35, feVN: 0.10013922, source: "GES'TIM+" }
 ];
 
-// Base de données Produits Résiduaires Organiques (PRO)
+// Base de données Produits Résiduaires Organiques (PRO) - Version complète
 export interface PRO {
     name: string;
     ismo: string;
@@ -181,11 +181,22 @@ export const pros: PRO[] = [
     { name: "ASH 00-05-08 + 2,5 MGO VRAC", ismo: "54%", teneurCKgT: 150, feCO2eqT: 166.356, volatilisation: 0.4, nMoyenKgT: 7.9, tanKgNH4T: 2.4, prixT: 31, feMafor: 166.356, commentaire: "Refus lisier de porc +/- composté", simeosTeneurCKgT: 139, k1: 0.63, teneurxK1: 94.5, delta: 55.5 },
     { name: "AVF SK6%", ismo: "46%", teneurCKgT: 207, feCO2eqT: 954, volatilisation: 0.81, nMoyenKgT: 21.6, tanKgNH4T: 2, prixT: 0, feMafor: 667.657, commentaire: "Compost de fumier de volailles", simeosTeneurCKgT: 110, k1: 0.46, teneurxK1: 95.2, delta: 111.8 },
     { name: "BIOCOMPIG", ismo: "73%", teneurCKgT: 128.77, feCO2eqT: 954, volatilisation: 0.71, nMoyenKgT: 8.75, tanKgNH4T: 0.7, prixT: 0, feMafor: 667.657, commentaire: "Compost de fumier (sauf volaille)", simeosTeneurCKgT: 123, k1: 0.72, teneurxK1: 92.7, delta: 36.1 },
+    { name: "COMP - CLASSIC Végévigne AO 1,8 0,8 1 +3", ismo: "80%", teneurCKgT: 129.15, feCO2eqT: 211, volatilisation: 0.71, nMoyenKgT: 7.79, tanKgNH4T: 0.44, prixT: 25, feMafor: 632.328, commentaire: "Compost de déchets verts", simeosTeneurCKgT: 121, k1: 0.82, teneurxK1: 105.9, delta: 23.2 },
     { name: "FUMIER BOVIN", ismo: "65%", teneurCKgT: 90.07, feCO2eqT: 9.2, volatilisation: 0.79, nMoyenKgT: 4.79, tanKgNH4T: 0.92, prixT: 14, feMafor: 11.098, commentaire: "Fumier bovin", simeosTeneurCKgT: 80, k1: 0.67, teneurxK1: 60.3, delta: 29.7 },
     { name: "FIENTES DE VOLAILLES", ismo: "16%", teneurCKgT: 211, feCO2eqT: 20, volatilisation: 0.54, nMoyenKgT: 25.5, tanKgNH4T: 7.4, prixT: 0, feMafor: 20.202, commentaire: "Fiente de Dinde", simeosTeneurCKgT: 211, k1: 0.16, teneurxK1: 33.8, delta: 177.2 },
+    { name: "DIGESTAT LIQUIDE APRES SEPARATION DE PHASE", ismo: "43%", teneurCKgT: 26.64, feCO2eqT: 191, volatilisation: 0.4, nMoyenKgT: 4.69, tanKgNH4T: 2.81, prixT: 0, feMafor: 21.136, commentaire: "Digestat liquide", simeosTeneurCKgT: 15, k1: 0.63, teneurxK1: 16.8, delta: 9.9 },
+    { name: "Eaux blanches (tank)", ismo: "52%", teneurCKgT: 16.128, feCO2eqT: 47, volatilisation: 0.81, nMoyenKgT: 2.97, tanKgNH4T: 0.27, prixT: 0, feMafor: 21.072, commentaire: "Boue urbaine liquide (SIMEOS)/ Lixivit eaux blanches, verte et brune (Agribalyse )", simeosTeneurCKgT: 12, k1: 0.47, teneurxK1: 7.6, delta: 8.5 },
+    { name: "PROTAMYLASSE", ismo: "55%", teneurCKgT: 248, feCO2eqT: 37.574, volatilisation: 0.81, nMoyenKgT: 25, tanKgNH4T: 0.6, prixT: 95, feMafor: 37.574, commentaire: "Vinasse concentrée (t/ha)", simeosTeneurCKgT: 248, k1: 0.55, teneurxK1: 136.4, delta: 111.6 },
+    { name: "VINASSE DE MELASSE RR", ismo: "55%", teneurCKgT: 248, feCO2eqT: 37.574, volatilisation: 0.81, nMoyenKgT: 25, tanKgNH4T: 0.6, prixT: 95, feMafor: 37.574, commentaire: "Vinasse concentrée (t/ha)", simeosTeneurCKgT: 248, k1: 0.55, teneurxK1: 136.4, delta: 111.6 },
+    { name: "Z- Boue déshydratée chaulée", ismo: "49%", teneurCKgT: 55.25, feCO2eqT: 759, volatilisation: 0.4, nMoyenKgT: 5.2, tanKgNH4T: 0.08, prixT: 0, feMafor: 1439.182, commentaire: "", simeosTeneurCKgT: 63, k1: 0.47, teneurxK1: 26.0, delta: 29.3 },
     { name: "Z- Compost de déchets verts", ismo: "80%", teneurCKgT: 129.15, feCO2eqT: 211, volatilisation: 0.71, nMoyenKgT: 7.79, tanKgNH4T: 0.44, prixT: 25, feMafor: 632.328, commentaire: "Compost de déchets verts", simeosTeneurCKgT: 121, k1: 0.82, teneurxK1: 105.9, delta: 23.2 },
-    { name: "Z- Digestat liquide", ismo: "43%", teneurCKgT: 26.64, feCO2eqT: 191, volatilisation: 0.4, nMoyenKgT: 4.69, tanKgNH4T: 2.81, prixT: 0, feMafor: 21.136, commentaire: "Digestat liquide", simeosTeneurCKgT: 15, k1: 0.63, teneurxK1: 16.8, delta: 9.9 },
+    { name: "Z- Compost de fumier (sauf volaille)", ismo: "73%", teneurCKgT: 128.77, feCO2eqT: 954, volatilisation: 0.71, nMoyenKgT: 8.75, tanKgNH4T: 0.7, prixT: 0, feMafor: 667.657, commentaire: "Compost de fumier (sauf volaille)", simeosTeneurCKgT: 123, k1: 0.72, teneurxK1: 92.7, delta: 36.1 },
+    { name: "Z- Compost de fumier de volailles", ismo: "46%", teneurCKgT: 207, feCO2eqT: 954, volatilisation: 0.81, nMoyenKgT: 21.6, tanKgNH4T: 2, prixT: 0, feMafor: 667.657, commentaire: "Compost de fumier de volailles", simeosTeneurCKgT: 110, k1: 0.46, teneurxK1: 95.2, delta: 111.8 },
+    { name: "Z- Digestat liquide", ismo: "43%", teneurCKgT: 26.64, feCO2eqT: 191, volatilisation: 0.4, nMoyenKgT: 4.69, tanKgNH4T: 2.81, prixT: 0, feMafor: 21.136, commentaire: "", simeosTeneurCKgT: 15, k1: 0.63, teneurxK1: 16.8, delta: 9.9 },
+    { name: "Z- Fiente de Poule sèche (t/ha)", ismo: "41%", teneurCKgT: 216, feCO2eqT: 20, volatilisation: 0.69, nMoyenKgT: 39.5, tanKgNH4T: 3.2, prixT: 65, feMafor: 20.202, commentaire: "", simeosTeneurCKgT: 216, k1: 0.41, teneurxK1: 88.6, delta: 127.4 },
+    { name: "Z- Fumier bovin", ismo: "65%", teneurCKgT: 90.07, feCO2eqT: 9.2, volatilisation: 0.79, nMoyenKgT: 4.79, tanKgNH4T: 0.92, prixT: 14, feMafor: 11.098, commentaire: "", simeosTeneurCKgT: 80, k1: 0.67, teneurxK1: 60.3, delta: 29.7 },
     { name: "Z- Lisier de Porc (m3/ha)", ismo: "50%", teneurCKgT: 11, feCO2eqT: 18, volatilisation: 0.4, nMoyenKgT: 3.5, tanKgNH4T: 2.5, prixT: 0, feMafor: 18.473, commentaire: "Lisier de Porc", simeosTeneurCKgT: 21, k1: 0.51, teneurxK1: 5.6, delta: 5.4 },
+    { name: "Z- Refus lisier de porc +/- composté", ismo: "54%", teneurCKgT: 150, feCO2eqT: 166.356, volatilisation: 0.4, nMoyenKgT: 7.9, tanKgNH4T: 2.4, prixT: 31, feMafor: 166.356, commentaire: "", simeosTeneurCKgT: 139, k1: 0.63, teneurxK1: 94.5, delta: 55.5 },
     { name: "Z- Vinasse concentrée", ismo: "55%", teneurCKgT: 248, feCO2eqT: 37.574, volatilisation: 0.81, nMoyenKgT: 25, tanKgNH4T: 0.6, prixT: 95, feMafor: 37.574, commentaire: "Vinasse concentrée (t/ha)", simeosTeneurCKgT: 248, k1: 0.55, teneurxK1: 136.4, delta: 111.6 }
 ];
 
