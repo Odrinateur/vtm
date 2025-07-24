@@ -30,7 +30,7 @@ export default function ChartsSidebar({
             {/* En-tête */}
             <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center">
                 <h3 className="text-lg font-semibold text-gray-900">
-                    Graphiques
+                    Perf agro détaillées - {scenario.nom}
                 </h3>
                 <button
                     onClick={onClose}
@@ -53,97 +53,6 @@ export default function ChartsSidebar({
             </div>
 
             <div className="p-4 space-y-6">
-                {/* Répartition des surfaces */}
-                <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="font-medium text-gray-800 mb-4">
-                        Répartition des surfaces
-                    </h4>
-                    <div className="space-y-3">
-                        {surfaceData.map((item, index) => {
-                            const totalSurface = surfaceData.reduce(
-                                (sum, d) => sum + d.surface,
-                                0
-                            );
-                            const percentage =
-                                (item.surface / totalSurface) * 100;
-                            const colors = [
-                                "bg-green-500",
-                                "bg-blue-500",
-                                "bg-yellow-500",
-                                "bg-purple-500",
-                                "bg-red-500",
-                            ];
-
-                            return (
-                                <div key={index} className="space-y-2">
-                                    <div className="flex justify-between text-sm">
-                                        <span className="font-medium">
-                                            {item.culture}
-                                        </span>
-                                        <span>
-                                            {item.surface} ha (
-                                            {percentage.toFixed(1)}%)
-                                        </span>
-                                    </div>
-                                    <div className="w-full bg-gray-200 rounded-full h-2">
-                                        <div
-                                            className={`h-2 rounded-full ${
-                                                colors[index % colors.length]
-                                            }`}
-                                            style={{ width: `${percentage}%` }}
-                                        ></div>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                    <div className="mt-3 pt-3 border-t border-gray-300">
-                        <div className="flex justify-between font-semibold">
-                            <span>Total:</span>
-                            <span>
-                                {surfaceData.reduce(
-                                    (sum, d) => sum + d.surface,
-                                    0
-                                )}{" "}
-                                ha
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Rendements par culture */}
-                <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="font-medium text-gray-800 mb-4">
-                        Rendements par culture
-                    </h4>
-                    <div className="space-y-3">
-                        {surfaceData.map((item, index) => {
-                            const maxRendement = Math.max(
-                                ...surfaceData.map((d) => d.rendement)
-                            );
-                            const percentage =
-                                (item.rendement / maxRendement) * 100;
-
-                            return (
-                                <div key={index} className="space-y-2">
-                                    <div className="flex justify-between text-sm">
-                                        <span className="font-medium">
-                                            {item.culture}
-                                        </span>
-                                        <span>{item.rendement} T/ha</span>
-                                    </div>
-                                    <div className="w-full bg-gray-200 rounded-full h-2">
-                                        <div
-                                            className="h-2 rounded-full bg-green-500"
-                                            style={{ width: `${percentage}%` }}
-                                        ></div>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
-
                 {/* Indicateurs clés */}
                 {resultats && (
                     <div className="bg-gray-50 rounded-lg p-4">

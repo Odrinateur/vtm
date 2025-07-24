@@ -119,7 +119,7 @@ export default function ScenarioPage() {
                                         className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                                     >
                                         {showCharts ? "Masquer" : "Afficher"}{" "}
-                                        Graphiques
+                                        Perf agro détaillées
                                     </button>
                                 )}
                             </div>
@@ -128,25 +128,19 @@ export default function ScenarioPage() {
                         {/* Actions */}
                         <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg border mb-6">
                             <div className="flex space-x-4">
-                                {currentScenario.isEmpty && (
+                                {!currentScenario.isEmpty && (
                                     <button
-                                        onClick={handleImportData}
-                                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                                        onClick={toggleEditMode}
+                                        className={`px-4 py-2 rounded-lg transition-colors ${
+                                            editMode
+                                                ? "bg-green-600 text-white hover:bg-green-700"
+                                                : "bg-gray-600 text-white hover:bg-gray-700"
+                                        }`}
+                                        disabled={currentScenario.isEmpty}
                                     >
-                                        Importer données
+                                        {editMode ? "Sauvegarder" : "Modifier"}
                                     </button>
                                 )}
-                                <button
-                                    onClick={toggleEditMode}
-                                    className={`px-4 py-2 rounded-lg transition-colors ${
-                                        editMode
-                                            ? "bg-green-600 text-white hover:bg-green-700"
-                                            : "bg-gray-600 text-white hover:bg-gray-700"
-                                    }`}
-                                    disabled={currentScenario.isEmpty}
-                                >
-                                    {editMode ? "Sauvegarder" : "Modifier"}
-                                </button>
                             </div>
                             <div className="flex space-x-2">
                                 <Link
@@ -197,7 +191,9 @@ export default function ScenarioPage() {
                                             onClick={handleImportData}
                                             className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
                                         >
-                                            Importer les données
+                                            {currentScenario.type === "T0"
+                                                ? "Importer les données"
+                                                : "Importer depuis T0"}
                                         </button>
                                     </div>
                                 </div>

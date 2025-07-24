@@ -19,12 +19,12 @@ export default function Layout({ children, fullHeight = false }: LayoutProps) {
                             className="h-10 mr-4"
                         />
                         <span className="text-2xl font-bold text-green-800 tracking-tight">
-                            Vivescia Décarbonation
+                            Calculette Décarbonation
                         </span>
                     </Link>
                 </div>
                 <div className="flex items-center space-x-4">
-                    <Link 
+                    <Link
                         to="/admin"
                         className="flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
                         title="Administration"
@@ -39,9 +39,27 @@ export default function Layout({ children, fullHeight = false }: LayoutProps) {
                     />
                 </div>
             </header>
-            <main className={`flex-1 ${fullHeight ? 'flex flex-col' : 'flex flex-col items-center justify-center'} p-4`}>
-                <div className={`w-full ${fullHeight ? 'flex-1 flex flex-col' : 'max-w-6xl'} bg-white rounded-xl shadow-lg ${fullHeight ? 'h-full' : ''} my-8`}>
-                    <div className={`${fullHeight ? 'flex-1 flex flex-col overflow-hidden' : 'p-8'}`}>
+            <main
+                className={`flex-1 ${
+                    fullHeight
+                        ? "flex flex-col"
+                        : "flex flex-col items-center justify-center"
+                } p-4`}
+            >
+                <div
+                    className={`w-full ${
+                        fullHeight ? "flex-1 flex flex-col" : "max-w-6xl"
+                    } bg-white rounded-xl shadow-lg ${
+                        fullHeight ? "h-full" : ""
+                    } my-8`}
+                >
+                    <div
+                        className={`${
+                            fullHeight
+                                ? "flex-1 flex flex-col overflow-hidden"
+                                : "p-8"
+                        }`}
+                    >
                         {children}
                     </div>
                 </div>
