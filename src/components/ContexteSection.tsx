@@ -6,90 +6,90 @@ interface ContexteSectionProps {
 
 export default function ContexteSection({ contexte }: ContexteSectionProps) {
     return (
-        <div className="space-y-8">
+        <div className="space-y-6">
             {/* Analyse de sol */}
             <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">
                     Analyse de sol
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                    <div className="bg-gray-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             Type de sol
                         </label>
-                        <p className="text-gray-900">
+                        <p className="text-gray-900 text-sm font-medium">
                             {contexte.analyseSol.typeSol}
                         </p>
                     </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-gray-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             Densité apparente
                         </label>
-                        <p className="text-gray-900">
+                        <p className="text-gray-900 text-sm">
                             {contexte.analyseSol.densiteApparente}
                         </p>
                     </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-gray-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             Teneur en MO (%)
                         </label>
-                        <p className="text-gray-900">
+                        <p className="text-gray-900 text-sm">
                             {contexte.analyseSol.teneurMO}%
                         </p>
                     </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-gray-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             Teneur en Carbone Organique (%)
                         </label>
-                        <p className="text-gray-900">
+                        <p className="text-gray-900 text-sm">
                             {contexte.analyseSol.teneurCarbone}%
                         </p>
                     </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-gray-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             Profondeur analyse (mm)
                         </label>
-                        <p className="text-gray-900">
+                        <p className="text-gray-900 text-sm">
                             {contexte.analyseSol.profondeurAnalyse} mm
                         </p>
                     </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-gray-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             Argile (g/kg)
                         </label>
-                        <p className="text-gray-900">
+                        <p className="text-gray-900 text-sm">
                             {contexte.analyseSol.argile} g/kg
                         </p>
                     </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-gray-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             CaCO3 (g/kg)
                         </label>
-                        <p className="text-gray-900">
+                        <p className="text-gray-900 text-sm">
                             {contexte.analyseSol.caco3} g/kg
                         </p>
                     </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-gray-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             pH
                         </label>
-                        <p className="text-gray-900">
+                        <p className="text-gray-900 text-sm">
                             {contexte.analyseSol.ph}
                         </p>
                     </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-gray-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             C/N
                         </label>
-                        <p className="text-gray-900">
+                        <p className="text-gray-900 text-sm">
                             {contexte.analyseSol.cn}
                         </p>
                     </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-gray-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             Taux de cailloux (%)
                         </label>
-                        <p className="text-gray-900">
+                        <p className="text-gray-900 text-sm">
                             {contexte.analyseSol.tauxCailloux}%
                         </p>
                     </div>
@@ -98,71 +98,71 @@ export default function ContexteSection({ contexte }: ContexteSectionProps) {
 
             {/* Contexte climatique */}
             <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">
                     Contexte climatique et seuils régionnaux
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                    <div className="bg-blue-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             Zone climatique
                         </label>
-                        <p className="text-gray-900">
+                        <p className="text-gray-900 text-sm font-medium">
                             {contexte.contexteClimatique.zoneClimatique}
                         </p>
                     </div>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-blue-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             Température (°C)
                         </label>
-                        <p className="text-gray-900">
+                        <p className="text-gray-900 text-sm">
                             {contexte.contexteClimatique.temperature}°C
                         </p>
                     </div>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-blue-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             ETP (mm)
                         </label>
-                        <p className="text-gray-900">
+                        <p className="text-gray-900 text-sm">
                             {contexte.contexteClimatique.etp} mm
                         </p>
                     </div>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-blue-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             Irrigation (mm)
                         </label>
-                        <p className="text-gray-900">
+                        <p className="text-gray-900 text-sm">
                             {contexte.contexteClimatique.irrigation} mm
                         </p>
                     </div>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-blue-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             Précipitation (mm)
                         </label>
-                        <p className="text-gray-900">
+                        <p className="text-gray-900 text-sm">
                             {contexte.contexteClimatique.precipitation} mm
                         </p>
                     </div>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-blue-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             Petite Région Agricole (PRA)
                         </label>
-                        <p className="text-gray-900 text-sm">
+                        <p className="text-gray-900 text-xs font-medium">
                             {contexte.contexteClimatique.pra}
                         </p>
                     </div>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-blue-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             DDC moyenne PRA
                         </label>
-                        <p className="text-gray-900">
+                        <p className="text-gray-900 text-sm">
                             {contexte.contexteClimatique.ddcMoyennePRA}
                         </p>
                     </div>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-blue-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             IFT moyen régional
                         </label>
-                        <p className="text-gray-900">
+                        <p className="text-gray-900 text-sm">
                             {contexte.contexteClimatique.iftMoyenRegional}
                         </p>
                     </div>
@@ -171,55 +171,55 @@ export default function ContexteSection({ contexte }: ContexteSectionProps) {
 
             {/* Calculs */}
             <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">
                     Calculs automatiques
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div className="bg-green-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                    <div className="bg-green-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             Rapport MO sur Argile
                         </label>
-                        <p className="text-gray-900 font-semibold">
+                        <p className="text-gray-900 text-sm font-semibold">
                             {contexte.calculs.rapportMOArgile}%
                         </p>
                     </div>
-                    <div className="bg-green-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-green-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             Masse de terre fine (tonne/ha)
                         </label>
-                        <p className="text-gray-900 font-semibold">
+                        <p className="text-gray-900 text-sm font-semibold">
                             {contexte.calculs.masseTerreFineTonneHa}
                         </p>
                     </div>
-                    <div className="bg-green-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-green-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             Masse de MO (tonne/ha)
                         </label>
-                        <p className="text-gray-900 font-semibold">
+                        <p className="text-gray-900 text-sm font-semibold">
                             {contexte.calculs.masseMOTonneHa}
                         </p>
                     </div>
-                    <div className="bg-green-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-green-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             Stock de carbone organique (T/ha)
                         </label>
-                        <p className="text-gray-900 font-semibold">
+                        <p className="text-gray-900 text-sm font-semibold">
                             {contexte.calculs.stockCarboneOrganiqueTHa}
                         </p>
                     </div>
-                    <div className="bg-green-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-green-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             Coefficient intermédiaire K2
                         </label>
-                        <p className="text-gray-900 font-semibold">
+                        <p className="text-gray-900 text-sm font-semibold">
                             {contexte.calculs.coefficientIntermediaireK2}%
                         </p>
                     </div>
-                    <div className="bg-green-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <div className="bg-green-50 p-3 rounded-lg">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                             Coefficient de minéralisation K
                         </label>
-                        <p className="text-gray-900 font-semibold">
+                        <p className="text-gray-900 text-sm font-semibold">
                             {contexte.calculs.coefficientMineralisationK}%
                         </p>
                     </div>

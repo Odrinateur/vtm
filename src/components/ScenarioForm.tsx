@@ -1,4 +1,5 @@
 import type { Scenario, ResultatScenario } from "../assets/scenarios.mock";
+import { useState } from "react";
 
 interface ScenarioFormProps {
     scenario: Scenario;
@@ -13,6 +14,10 @@ export default function ScenarioForm({
     scenarioComparaison,
     resultatsComparaison,
 }: ScenarioFormProps) {
+    const [collapsedSections, setCollapsedSections] = useState<Record<string, boolean>>({});
+    const [collapsedCultures, setCollapsedCultures] = useState<Record<number, boolean>>({});
+    const [tableMode, setTableMode] = useState(false);
+
     const formatNumber = (num: number) => num.toFixed(2);
 
     const getComparisonIndicator = (current: number, comparison?: number) => {
@@ -32,544 +37,509 @@ export default function ScenarioForm({
         );
     };
 
-    return (
-        <div className="p-6 space-y-8">
-            {/* IAE (Infrastructure Agro-Écologique) */}
-            <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                    IAE (Infrastructure Agro-Écologique)
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Pourcentage d'IAE
-                        </label>
-                        {editMode ? (
-                            <input
-                                type="number"
-                                value={scenario.iae.pourcentageIAE}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                                step="0.1"
-                            />
-                        ) : (
-                            <p className="text-gray-900 font-medium">
-                                {scenario.iae.pourcentageIAE}%
-                                {getComparisonIndicator(
-                                    scenario.iae.pourcentageIAE,
-                                    scenarioComparaison?.iae.pourcentageIAE
-                                )}
-                            </p>
-                        )}
-                    </div>
+    const toggleSection = (sectionName: string) => {
+        setCollapsedSections(prev => ({
+            ...prev,
+            [sectionName]: !prev[sectionName]
+        }));
+    };
 
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Taille moyenne des parcelles (ha)
-                        </label>
-                        {editMode ? (
-                            <input
-                                type="number"
-                                value={scenario.iae.tailleMoyenneParcelles}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                                step="0.1"
-                            />
-                        ) : (
-                            <p className="text-gray-900 font-medium">
-                                {scenario.iae.tailleMoyenneParcelles} ha
-                                {getComparisonIndicator(
-                                    scenario.iae.tailleMoyenneParcelles,
-                                    scenarioComparaison?.iae
-                                        .tailleMoyenneParcelles
-                                )}
-                            </p>
-                        )}
-                    </div>
+    const toggleCulture = (index: number) => {
+        setCollapsedCultures(prev => ({
+            ...prev,
+            [index]: !prev[index]
+        }));
+    };
 
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Certification environnementale
-                        </label>
-                        {editMode ? (
-                            <select
-                                value={
-                                    scenario.iae.certificationEnvironnementale
-                                }
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                            >
-                                <option value="NA">NA</option>
-                                <option value="HVE">HVE</option>
-                                <option value="AB">AB</option>
-                            </select>
-                        ) : (
-                            <p className="text-gray-900 font-medium">
-                                {scenario.iae.certificationEnvironnementale}
-                                {scenarioComparaison &&
-                                    scenario.iae
-                                        .certificationEnvironnementale !==
-                                        scenarioComparaison.iae
-                                            .certificationEnvironnementale && (
-                                        <span className="ml-2 text-sm text-blue-600 font-medium">
-                                            (vs{" "}
-                                            {
-                                                scenarioComparaison.iae
-                                                    .certificationEnvironnementale
-                                            }
-                                            )
-                                        </span>
-                                    )}
-                            </p>
-                        )}
-                    </div>
+    const addCulture = () => {
+        // Logique pour ajouter une nouvelle culture
+        console.log("Ajouter une nouvelle culture");
+    };
 
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Utilisation d'un OAD
-                        </label>
-                        {editMode ? (
-                            <select
-                                value={
-                                    scenario.iae.utilisationOAD
-                                        ? "true"
-                                        : "false"
-                                }
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                            >
-                                <option value="false">Non</option>
-                                <option value="true">Oui</option>
-                            </select>
-                        ) : (
-                            <p className="text-gray-900 font-medium">
-                                {scenario.iae.utilisationOAD ? "Oui" : "Non"}
-                                {scenarioComparaison &&
-                                    scenario.iae.utilisationOAD !==
-                                        scenarioComparaison.iae
-                                            .utilisationOAD && (
-                                        <span className="ml-2 text-sm text-blue-600 font-medium">
-                                            (vs{" "}
-                                            {scenarioComparaison.iae
-                                                .utilisationOAD
-                                                ? "Oui"
-                                                : "Non"}
-                                            )
-                                        </span>
-                                    )}
-                            </p>
-                        )}
-                    </div>
-                </div>
-            </div>
-
-            {/* Chaulage */}
-            <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                    Chaulage des sols acides
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Amendement calcique
-                        </label>
-                        {editMode ? (
-                            <input
-                                type="number"
-                                value={scenario.chaulage.amendementCalcique}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                                step="0.1"
-                            />
-                        ) : (
-                            <p className="text-gray-900 font-medium">
-                                {scenario.chaulage.amendementCalcique}
-                                {getComparisonIndicator(
-                                    scenario.chaulage.amendementCalcique,
-                                    scenarioComparaison?.chaulage
-                                        .amendementCalcique
-                                )}
-                            </p>
-                        )}
-                    </div>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Quantité t/hectare
-                        </label>
-                        {editMode ? (
-                            <input
-                                type="number"
-                                value={scenario.chaulage.quantiteHectare}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                                step="0.1"
-                            />
-                        ) : (
-                            <p className="text-gray-900 font-medium">
-                                {scenario.chaulage.quantiteHectare} t/ha
-                                {getComparisonIndicator(
-                                    scenario.chaulage.quantiteHectare,
-                                    scenarioComparaison?.chaulage
-                                        .quantiteHectare
-                                )}
-                            </p>
-                        )}
-                    </div>
-                </div>
-            </div>
-
-            {/* Cultures */}
-            <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                    Rotation et ITK
-                </h3>
-                <div className="space-y-6">
-                    {scenario.cultures.map((ligneCulture, index) => (
-                        <div
-                            key={index}
-                            className="bg-white border border-gray-200 rounded-lg p-6"
+    if (tableMode && scenario.cultures.length > 0) {
+        return (
+            <div className="p-6 space-y-6">
+                {/* Switch pour basculer entre les modes */}
+                <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-xl font-semibold text-gray-900">
+                        Mode d'affichage
+                    </h3>
+                    <div className="flex items-center space-x-3">
+                        <span className={`text-sm ${!tableMode ? 'font-medium text-gray-900' : 'text-gray-500'}`}>
+                            Formulaire
+                        </span>
+                        <button
+                            onClick={() => setTableMode(!tableMode)}
+                            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                                tableMode ? 'bg-blue-600' : 'bg-gray-200'
+                            }`}
                         >
-                            <h4 className="text-lg font-medium text-gray-800 mb-4">
-                                Culture {index + 1}:{" "}
-                                {ligneCulture.culture.culture}
-                            </h4>
+                            <span
+                                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                                    tableMode ? 'translate-x-6' : 'translate-x-1'
+                                }`}
+                            />
+                        </button>
+                        <span className={`text-sm ${tableMode ? 'font-medium text-gray-900' : 'text-gray-500'}`}>
+                            Tableau
+                        </span>
+                    </div>
+                </div>
 
-                            {/* Informations culture */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                                <div className="bg-green-50 p-3 rounded">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                        Surface (ha)
-                                    </label>
-                                    {editMode ? (
-                                        <input
-                                            type="number"
-                                            value={ligneCulture.culture.surface}
-                                            className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
-                                            step="0.1"
-                                        />
-                                    ) : (
-                                        <p className="text-gray-900 font-medium">
-                                            {ligneCulture.culture.surface} ha
-                                        </p>
-                                    )}
-                                </div>
-                                <div className="bg-green-50 p-3 rounded">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                        Rendement (T/ha)
-                                    </label>
-                                    {editMode ? (
-                                        <input
-                                            type="number"
-                                            value={
-                                                ligneCulture.culture.rendement
-                                            }
-                                            className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
-                                            step="0.1"
-                                        />
-                                    ) : (
-                                        <p className="text-gray-900 font-medium">
-                                            {ligneCulture.culture.rendement}{" "}
-                                            T/ha
-                                            {scenarioComparaison &&
-                                                scenarioComparaison.cultures[
-                                                    index
-                                                ] &&
-                                                getComparisonIndicator(
-                                                    ligneCulture.culture
-                                                        .rendement,
-                                                    scenarioComparaison
-                                                        .cultures[index]
-                                                        ?.culture.rendement
-                                                )}
-                                        </p>
-                                    )}
-                                </div>
-                                <div className="bg-green-50 p-3 rounded">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                        Semis
-                                    </label>
-                                    {editMode ? (
-                                        <input
-                                            type="date"
-                                            value={ligneCulture.culture.semis}
-                                            className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
-                                        />
-                                    ) : (
-                                        <p className="text-gray-900 font-medium">
-                                            {ligneCulture.culture.semis}
-                                        </p>
-                                    )}
-                                </div>
-                                <div className="bg-green-50 p-3 rounded">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                        Récolte
-                                    </label>
-                                    {editMode ? (
-                                        <input
-                                            type="date"
-                                            value={ligneCulture.culture.recolte}
-                                            className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
-                                        />
-                                    ) : (
-                                        <p className="text-gray-900 font-medium">
-                                            {ligneCulture.culture.recolte}
-                                        </p>
-                                    )}
-                                </div>
+                {/* Mode tableau */}
+                <div className="bg-white rounded-lg shadow overflow-hidden">
+                    <table className="w-full">
+                        <thead className="bg-gray-50">
+                            <tr>
+                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Culture
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Surface (ha)
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Rendement (T/ha)
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Semis
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Récolte
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Couvert
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Biomasse
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                            {scenario.cultures.map((ligneCulture, index) => (
+                                <tr key={index} className="hover:bg-gray-50">
+                                    <td className="px-4 py-4 whitespace-nowrap font-medium text-gray-900">
+                                        {ligneCulture.culture.culture}
+                                    </td>
+                                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        {ligneCulture.culture.surface}
+                                    </td>
+                                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        {ligneCulture.culture.rendement}
+                                        {scenarioComparaison &&
+                                            scenarioComparaison.cultures[index] &&
+                                            getComparisonIndicator(
+                                                ligneCulture.culture.rendement,
+                                                scenarioComparaison.cultures[index]?.culture.rendement
+                                            )}
+                                    </td>
+                                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        {ligneCulture.culture.semis}
+                                    </td>
+                                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        {ligneCulture.culture.recolte}
+                                    </td>
+                                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        {ligneCulture.interculture?.couvert || "N/A"}
+                                    </td>
+                                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        {ligneCulture.interculture?.biomasse || "N/A"}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div className="p-6 space-y-6">
+            {/* Switch pour basculer entre les modes */}
+            <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-semibold text-gray-900">
+                    Mode d'affichage
+                </h3>
+                <div className="flex items-center space-x-3">
+                    <span className={`text-sm ${!tableMode ? 'font-medium text-gray-900' : 'text-gray-500'}`}>
+                        Formulaire
+                    </span>
+                    <button
+                        onClick={() => setTableMode(!tableMode)}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                            tableMode ? 'bg-blue-600' : 'bg-gray-200'
+                        }`}
+                    >
+                        <span
+                            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                                tableMode ? 'translate-x-6' : 'translate-x-1'
+                            }`}
+                        />
+                    </button>
+                    <span className={`text-sm ${tableMode ? 'font-medium text-gray-900' : 'text-gray-500'}`}>
+                        Tableau
+                    </span>
+                </div>
+            </div>
+
+            {/* IAE (Infrastructure Agro-Écologique) - Section repliable */}
+            <div className="border border-gray-200 rounded-lg">
+                <button
+                    onClick={() => toggleSection('iae')}
+                    className="w-full px-6 py-4 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors rounded-t-lg"
+                >
+                    <h3 className="text-lg font-semibold text-gray-900">
+                        IAE (Infrastructure Agro-Écologique)
+                    </h3>
+                    <svg
+                        className={`w-5 h-5 transition-transform ${
+                            collapsedSections.iae ? 'transform rotate-180' : ''
+                        }`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                {!collapsedSections.iae && (
+                    <div className="p-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div className="bg-gray-50 p-4 rounded-lg">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    Pourcentage d'IAE
+                                </label>
+                                {editMode ? (
+                                    <input
+                                        type="number"
+                                        value={scenario.iae.pourcentageIAE}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                        step="0.1"
+                                    />
+                                ) : (
+                                    <p className="text-gray-900 font-medium">
+                                        {scenario.iae.pourcentageIAE}%
+                                        {getComparisonIndicator(
+                                            scenario.iae.pourcentageIAE,
+                                            scenarioComparaison?.iae.pourcentageIAE
+                                        )}
+                                    </p>
+                                )}
                             </div>
 
-                            {/* Interculture */}
-                            {ligneCulture.interculture && (
-                                <div className="mb-6">
-                                    <h5 className="font-medium text-gray-700 mb-3">
-                                        Interculture
-                                    </h5>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                                        <div className="bg-yellow-50 p-3 rounded">
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                Couvert
-                                            </label>
-                                            {editMode ? (
-                                                <input
-                                                    type="text"
-                                                    value={
-                                                        ligneCulture
-                                                            .interculture
-                                                            .couvert
-                                                    }
-                                                    className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
-                                                />
-                                            ) : (
-                                                <p className="text-gray-900 font-medium">
-                                                    {
-                                                        ligneCulture
-                                                            .interculture
-                                                            .couvert
-                                                    }
-                                                </p>
+                            <div className="bg-gray-50 p-4 rounded-lg">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    Taille moyenne des parcelles (ha)
+                                </label>
+                                {editMode ? (
+                                    <input
+                                        type="number"
+                                        value={scenario.iae.tailleMoyenneParcelles}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                        step="0.1"
+                                    />
+                                ) : (
+                                    <p className="text-gray-900 font-medium">
+                                        {scenario.iae.tailleMoyenneParcelles} ha
+                                        {getComparisonIndicator(
+                                            scenario.iae.tailleMoyenneParcelles,
+                                            scenarioComparaison?.iae.tailleMoyenneParcelles
+                                        )}
+                                    </p>
+                                )}
+                            </div>
+
+                            <div className="bg-gray-50 p-4 rounded-lg">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    Certification environnementale
+                                </label>
+                                {editMode ? (
+                                    <select
+                                        value={scenario.iae.certificationEnvironnementale}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    >
+                                        <option value="NA">NA</option>
+                                        <option value="HVE">HVE</option>
+                                        <option value="AB">AB</option>
+                                    </select>
+                                ) : (
+                                    <p className="text-gray-900 font-medium">
+                                        {scenario.iae.certificationEnvironnementale}
+                                        {scenarioComparaison &&
+                                            scenario.iae.certificationEnvironnementale !==
+                                                scenarioComparaison.iae.certificationEnvironnementale && (
+                                                <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                    (vs {scenarioComparaison.iae.certificationEnvironnementale})
+                                                </span>
                                             )}
-                                        </div>
-                                        <div className="bg-yellow-50 p-3 rounded">
+                                    </p>
+                                )}
+                            </div>
+
+                            <div className="bg-gray-50 p-4 rounded-lg">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    Utilisation d'un OAD
+                                </label>
+                                {editMode ? (
+                                    <select
+                                        value={scenario.iae.utilisationOAD ? "true" : "false"}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    >
+                                        <option value="false">Non</option>
+                                        <option value="true">Oui</option>
+                                    </select>
+                                ) : (
+                                    <p className="text-gray-900 font-medium">
+                                        {scenario.iae.utilisationOAD ? "Oui" : "Non"}
+                                        {scenarioComparaison &&
+                                            scenario.iae.utilisationOAD !==
+                                                scenarioComparaison.iae.utilisationOAD && (
+                                                <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                    (vs {scenarioComparaison.iae.utilisationOAD ? "Oui" : "Non"})
+                                                </span>
+                                            )}
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {/* Chaulage - Section repliable */}
+            <div className="border border-gray-200 rounded-lg">
+                <button
+                    onClick={() => toggleSection('chaulage')}
+                    className="w-full px-6 py-4 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors rounded-t-lg"
+                >
+                    <h3 className="text-lg font-semibold text-gray-900">
+                        Chaulage des sols acides
+                    </h3>
+                    <svg
+                        className={`w-5 h-5 transition-transform ${
+                            collapsedSections.chaulage ? 'transform rotate-180' : ''
+                        }`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                {!collapsedSections.chaulage && (
+                    <div className="p-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="bg-blue-50 p-4 rounded-lg">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    Amendement calcique
+                                </label>
+                                {editMode ? (
+                                    <input
+                                        type="number"
+                                        value={scenario.chaulage.amendementCalcique}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                        step="0.1"
+                                    />
+                                ) : (
+                                    <p className="text-gray-900 font-medium">
+                                        {scenario.chaulage.amendementCalcique}
+                                        {getComparisonIndicator(
+                                            scenario.chaulage.amendementCalcique,
+                                            scenarioComparaison?.chaulage.amendementCalcique
+                                        )}
+                                    </p>
+                                )}
+                            </div>
+                            <div className="bg-blue-50 p-4 rounded-lg">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    Quantité t/hectare
+                                </label>
+                                {editMode ? (
+                                    <input
+                                        type="number"
+                                        value={scenario.chaulage.quantiteHectare}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                        step="0.1"
+                                    />
+                                ) : (
+                                    <p className="text-gray-900 font-medium">
+                                        {scenario.chaulage.quantiteHectare} t/ha
+                                        {getComparisonIndicator(
+                                            scenario.chaulage.quantiteHectare,
+                                            scenarioComparaison?.chaulage.quantiteHectare
+                                        )}
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {/* Cultures - Section avec bouton d'ajout */}
+            <div className="border border-gray-200 rounded-lg">
+                <div className="px-6 py-4 flex items-center justify-between bg-gray-50 rounded-t-lg">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                        Rotation et ITK ({scenario.cultures.length} culture{scenario.cultures.length > 1 ? 's' : ''})
+                    </h3>
+                    <button
+                        onClick={addCulture}
+                        className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm"
+                    >
+                        + Ajouter une culture
+                    </button>
+                </div>
+                <div className="p-6 space-y-4">
+                    {scenario.cultures.map((ligneCulture, index) => (
+                        <div key={index} className="border border-gray-200 rounded-lg">
+                            <button
+                                onClick={() => toggleCulture(index)}
+                                className="w-full px-4 py-3 flex items-center justify-between bg-green-50 hover:bg-green-100 transition-colors rounded-t-lg"
+                            >
+                                <div className="flex items-center space-x-4">
+                                    <h4 className="text-md font-medium text-gray-800">
+                                        {ligneCulture.culture.culture}
+                                    </h4>
+                                    <div className="flex space-x-4 text-sm text-gray-600">
+                                        <span>{ligneCulture.culture.surface} ha</span>
+                                        <span>{ligneCulture.culture.rendement} T/ha</span>
+                                        <span>{ligneCulture.culture.semis} → {ligneCulture.culture.recolte}</span>
+                                        {ligneCulture.interculture && (
+                                            <span className="text-blue-600">+ Couvert</span>
+                                        )}
+                                    </div>
+                                </div>
+                                <svg
+                                    className={`w-5 h-5 transition-transform ${
+                                        collapsedCultures[index] ? 'transform rotate-180' : ''
+                                    }`}
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            {!collapsedCultures[index] && (
+                                <div className="p-4">
+                                    {/* Informations culture */}
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                                        <div className="bg-green-50 p-3 rounded">
                                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                Biomasse (T MS/ha)
+                                                Surface (ha)
                                             </label>
                                             {editMode ? (
                                                 <input
                                                     type="number"
-                                                    value={
-                                                        ligneCulture
-                                                            .interculture
-                                                            .biomasse
-                                                    }
+                                                    value={ligneCulture.culture.surface}
                                                     className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
                                                     step="0.1"
                                                 />
                                             ) : (
                                                 <p className="text-gray-900 font-medium">
-                                                    {
-                                                        ligneCulture
-                                                            .interculture
-                                                            .biomasse
-                                                    }{" "}
-                                                    T MS/ha
+                                                    {ligneCulture.culture.surface} ha
+                                                </p>
+                                            )}
+                                        </div>
+                                        <div className="bg-green-50 p-3 rounded">
+                                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                                Rendement (T/ha)
+                                            </label>
+                                            {editMode ? (
+                                                <input
+                                                    type="number"
+                                                    value={ligneCulture.culture.rendement}
+                                                    className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                                                    step="0.1"
+                                                />
+                                            ) : (
+                                                <p className="text-gray-900 font-medium">
+                                                    {ligneCulture.culture.rendement} T/ha
                                                     {scenarioComparaison &&
-                                                        scenarioComparaison
-                                                            .cultures[index]
-                                                            ?.interculture &&
+                                                        scenarioComparaison.cultures[index] &&
                                                         getComparisonIndicator(
-                                                            ligneCulture
-                                                                .interculture
-                                                                .biomasse,
-                                                            scenarioComparaison
-                                                                .cultures[index]
-                                                                ?.interculture
-                                                                ?.biomasse
+                                                            ligneCulture.culture.rendement,
+                                                            scenarioComparaison.cultures[index]?.culture.rendement
                                                         )}
                                                 </p>
                                             )}
                                         </div>
-                                        <div className="bg-yellow-50 p-3 rounded">
+                                        <div className="bg-green-50 p-3 rounded">
                                             <label className="block text-sm font-medium text-gray-700 mb-1">
                                                 Semis
                                             </label>
                                             {editMode ? (
                                                 <input
                                                     type="date"
-                                                    value={
-                                                        ligneCulture
-                                                            .interculture.semis
-                                                    }
+                                                    value={ligneCulture.culture.semis}
                                                     className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
                                                 />
                                             ) : (
                                                 <p className="text-gray-900 font-medium">
-                                                    {
-                                                        ligneCulture
-                                                            .interculture.semis
-                                                    }
+                                                    {ligneCulture.culture.semis}
                                                 </p>
                                             )}
                                         </div>
-                                        <div className="bg-yellow-50 p-3 rounded">
+                                        <div className="bg-green-50 p-3 rounded">
                                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                Destruction
+                                                Récolte
                                             </label>
                                             {editMode ? (
                                                 <input
                                                     type="date"
-                                                    value={
-                                                        ligneCulture
-                                                            .interculture
-                                                            .destruction
-                                                    }
+                                                    value={ligneCulture.culture.recolte}
                                                     className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
                                                 />
                                             ) : (
                                                 <p className="text-gray-900 font-medium">
-                                                    {
-                                                        ligneCulture
-                                                            .interculture
-                                                            .destruction
-                                                    }
+                                                    {ligneCulture.culture.recolte}
                                                 </p>
                                             )}
                                         </div>
                                     </div>
-                                </div>
-                            )}
 
-                            {/* Fertilisation */}
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                {/* Amendements organiques */}
-                                <div>
-                                    <h5 className="font-medium text-gray-700 mb-3">
-                                        Amendements organiques
-                                    </h5>
-                                    <div className="space-y-3">
-                                        {ligneCulture.amendementOrganique1 && (
-                                            <div className="bg-orange-50 p-3 rounded">
-                                                <p className="text-sm font-medium text-gray-700">
-                                                    {
-                                                        ligneCulture
-                                                            .amendementOrganique1
-                                                            .pro
-                                                    }{" "}
-                                                    -{" "}
-                                                    {
-                                                        ligneCulture
-                                                            .amendementOrganique1
-                                                            .quantite
-                                                    }{" "}
-                                                    {
-                                                        ligneCulture
-                                                            .amendementOrganique1
-                                                            .unite
-                                                    }
-                                                </p>
-                                                <p className="text-xs text-gray-500">
-                                                    Enfouissement:{" "}
-                                                    {ligneCulture
-                                                        .amendementOrganique1
-                                                        .enfouissement
-                                                        ? "Oui"
-                                                        : "Non"}
-                                                </p>
-                                            </div>
-                                        )}
-                                        {ligneCulture.amendementOrganique2 && (
-                                            <div className="bg-orange-50 p-3 rounded">
-                                                <p className="text-sm font-medium text-gray-700">
-                                                    {
-                                                        ligneCulture
-                                                            .amendementOrganique2
-                                                            .pro
-                                                    }{" "}
-                                                    -{" "}
-                                                    {
-                                                        ligneCulture
-                                                            .amendementOrganique2
-                                                            .quantite
-                                                    }{" "}
-                                                    {
-                                                        ligneCulture
-                                                            .amendementOrganique2
-                                                            .unite
-                                                    }
-                                                </p>
-                                                <p className="text-xs text-gray-500">
-                                                    Enfouissement:{" "}
-                                                    {ligneCulture
-                                                        .amendementOrganique2
-                                                        .enfouissement
-                                                        ? "Oui"
-                                                        : "Non"}
-                                                </p>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-
-                                {/* Fertilisation azotée */}
-                                <div>
-                                    <h5 className="font-medium text-gray-700 mb-3">
-                                        Fertilisation azotée
-                                    </h5>
-                                    <div className="space-y-3">
-                                        {[
-                                            ligneCulture.fertilisationAzotee1,
-                                            ligneCulture.fertilisationAzotee2,
-                                            ligneCulture.fertilisationAzotee3,
-                                        ]
-                                            .filter(Boolean)
-                                            .map((ferti, idx) => (
-                                                <div
-                                                    key={idx}
-                                                    className="bg-blue-50 p-3 rounded"
-                                                >
-                                                    <p className="text-sm font-medium text-gray-700">
-                                                        {ferti!.formeEngrais} -{" "}
-                                                        {ferti!.quantite}{" "}
-                                                        {ferti!.unite}
-                                                    </p>
-                                                    <p className="text-xs text-gray-500">
-                                                        Inhibiteur:{" "}
-                                                        {ferti!
-                                                            .inhibiteurNitrification
-                                                            ? "Oui"
-                                                            : "Non"}
+                                    {/* Section Interculture si elle existe */}
+                                    {ligneCulture.interculture && (
+                                        <div className="bg-blue-50 p-4 rounded-lg mb-4">
+                                            <h5 className="font-medium text-gray-800 mb-3">Interculture</h5>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                                                <div>
+                                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                                        Couvert
+                                                    </label>
+                                                    <p className="text-gray-900 font-medium">
+                                                        {ligneCulture.interculture.couvert}
                                                     </p>
                                                 </div>
-                                            ))}
-                                    </div>
-                                </div>
-                            </div>
+                                                <div>
+                                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                                        Biomasse
+                                                    </label>
+                                                    <p className="text-gray-900 font-medium">
+                                                        {ligneCulture.interculture.biomasse}
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                                        Semis
+                                                    </label>
+                                                    <p className="text-gray-900 font-medium">
+                                                        {ligneCulture.interculture.semis}
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                                        Destruction
+                                                    </label>
+                                                    <p className="text-gray-900 font-medium">
+                                                        {ligneCulture.interculture.destruction}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
 
-                            {/* Fumure de fond */}
-                            {ligneCulture.fumureFond && (
-                                <div className="mt-4">
-                                    <h5 className="font-medium text-gray-700 mb-3">
-                                        Fumure de fond
-                                    </h5>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <div className="bg-purple-50 p-3 rounded">
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                Phosphate P (kg P/ha)
-                                            </label>
-                                            <p className="text-gray-900 font-medium">
-                                                {
-                                                    ligneCulture.fumureFond
-                                                        .phosphateP
-                                                }{" "}
-                                                kg P/ha
-                                            </p>
-                                        </div>
-                                        <div className="bg-purple-50 p-3 rounded">
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                Potasse K (kg K/ha)
-                                            </label>
-                                            <p className="text-gray-900 font-medium">
-                                                {
-                                                    ligneCulture.fumureFond
-                                                        .potasseK
-                                                }{" "}
-                                                kg K/ha
-                                            </p>
-                                        </div>
-                                    </div>
+                                    {/* Sections amendements et fertilisation peuvent être ajoutées ici */}
                                 </div>
                             )}
                         </div>
