@@ -1,4 +1,5 @@
 import type { ResultatScenario, Scenario } from "../assets/scenarios.mock";
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 interface ResultatsSectionProps {
     resultatsT0?: ResultatScenario;
@@ -40,291 +41,279 @@ export default function ResultatsSection({
         return "→";
     };
 
+    // Données pour les graphiques
+    const ddcData = [
+        { name: 'T0', value: resultatsT0?.ddc || 0, color: '#3B82F6' },
+        { name: 'Prévisionnel', value: resultatsPrev?.ddc || 0, color: '#10B981' }
+    ];
+
+    const carboneData = [
+        { name: 'T0', value: resultatsT0?.carboneHumifie || 0, color: '#F59E0B' },
+        { name: 'Prévisionnel', value: resultatsPrev?.carboneHumifie || 0, color: '#10B981' }
+    ];
+
+    const emissionsData = resultatsT0 && resultatsPrev ? [
+        { 
+            name: 'Fertilisations', 
+            T0: resultatsT0.bilanGES.emissions.fertilisations,
+            Prévisionnel: resultatsPrev.bilanGES.emissions.fertilisations
+        },
+        { 
+            name: 'Carburants', 
+            T0: resultatsT0.bilanGES.emissions.carburants,
+            Prévisionnel: resultatsPrev.bilanGES.emissions.carburants
+        },
+        { 
+            name: 'Chaulage', 
+            T0: resultatsT0.bilanGES.emissions.chaulage,
+            Prévisionnel: resultatsPrev.bilanGES.emissions.chaulage
+        }
+    ] : [];
+
+    const COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444'];
+
     return (
         <div className="space-y-8">
-            {/* Indicateurs Transitions */}
+            {/* Tableau des indicateurs de transition */}
             <div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                    Indicateurs Transitions
+                    Indicateurs de Transition
                 </h3>
 
-                {/* Durée de couverture vivante */}
-                <div className="mb-8">
-                    <h4 className="text-lg font-semibold text-gray-800 mb-4">
-                        Durée de couverture vivante
-                    </h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="bg-blue-50 p-6 rounded-lg">
-                            <h5 className="font-medium text-gray-700 mb-2">
-                                Scénario T0
-                            </h5>
-                            <p className="text-2xl font-bold text-blue-600">
-                                {formatNumber(resultatsT0?.ddc)} jours
-                            </p>
-                            <div className="mt-2 text-sm text-gray-600">
-                                <p>Niveau "entrée": 255</p>
-                                <p>Niveau "performance": 280</p>
-                            </div>
-                        </div>
-                        <div className="bg-green-50 p-6 rounded-lg">
-                            <h5 className="font-medium text-gray-700 mb-2">
-                                Scénario A
-                            </h5>
-                            <p className="text-2xl font-bold text-green-600">
-                                {formatNumber(resultatsPrev?.ddc)} jours
-                            </p>
-                            <div className="mt-2 text-sm text-gray-600">
-                                <p>Niveau "entrée": 255</p>
-                                <p>Niveau "performance": 280</p>
-                            </div>
-                            {resultatsT0 && resultatsPrev && (
-                                <div
-                                    className={`mt-2 font-medium ${getEvolutionColor(
-                                        resultatsT0.ddc,
-                                        resultatsPrev.ddc
-                                    )}`}
-                                >
-                                    {getEvolutionIcon(
-                                        resultatsT0.ddc,
-                                        resultatsPrev.ddc
+                <div className="bg-white rounded-lg shadow overflow-hidden">
+                    <table className="w-full">
+                        <thead className="bg-gray-50">
+                            <tr>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Indicateur
+                                </th>
+                                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Scénario T0
+                                </th>
+                                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Scénario Prévisionnel
+                                </th>
+                                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Évolution
+                                </th>
+                                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Graphique
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                            {/* DDC */}
+                            <tr>
+                                <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                                    Durée de couverture vivante (DDC)
+                                    <div className="text-xs text-gray-500 mt-1">
+                                        Niveau "entrée": 255j | Niveau "performance": 280j
+                                    </div>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-center">
+                                    <span className="text-2xl font-bold text-blue-600">
+                                        {formatNumber(resultatsT0?.ddc)} j
+                                    </span>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-center">
+                                    <span className="text-2xl font-bold text-green-600">
+                                        {formatNumber(resultatsPrev?.ddc)} j
+                                    </span>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-center">
+                                    {resultatsT0 && resultatsPrev && (
+                                        <div className={`font-medium ${getEvolutionColor(resultatsT0.ddc, resultatsPrev.ddc)}`}>
+                                            {getEvolutionIcon(resultatsT0.ddc, resultatsPrev.ddc)}
+                                            {formatNumber(resultatsPrev.ddc - resultatsT0.ddc)} j
+                                        </div>
                                     )}
-                                    {formatNumber(
-                                        resultatsPrev.ddc - resultatsT0.ddc
-                                    )}{" "}
-                                    jours
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-center">
+                                    <div className="w-20 h-20 mx-auto">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <PieChart>
+                                                <Pie
+                                                    data={ddcData}
+                                                    cx="50%"
+                                                    cy="50%"
+                                                    innerRadius={20}
+                                                    outerRadius={35}
+                                                    dataKey="value"
+                                                >
+                                                    {ddcData.map((entry, index) => (
+                                                        <Cell key={`cell-${index}`} fill={entry.color} />
+                                                    ))}
+                                                </Pie>
+                                                <Tooltip />
+                                            </PieChart>
+                                        </ResponsiveContainer>
+                                    </div>
+                                </td>
+                            </tr>
 
-                {/* Carbone humifié */}
-                <div className="mb-8">
-                    <h4 className="text-lg font-semibold text-gray-800 mb-4">
-                        Carbone humifié
-                    </h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="bg-yellow-50 p-6 rounded-lg">
-                            <h5 className="font-medium text-gray-700 mb-2">
-                                Scénario T0
-                            </h5>
-                            <p className="text-2xl font-bold text-yellow-600">
-                                {formatNumber(resultatsT0?.carboneHumifie)} T
-                                C/ha
-                            </p>
-                            <div className="mt-2 text-sm text-gray-600">
-                                <p>Niveau "entrée": 1,15</p>
-                                <p>Niveau "performance": 1,45</p>
-                            </div>
-                        </div>
-                        <div className="bg-green-50 p-6 rounded-lg">
-                            <h5 className="font-medium text-gray-700 mb-2">
-                                Scénario A
-                            </h5>
-                            <p className="text-2xl font-bold text-green-600">
-                                {formatNumber(resultatsPrev?.carboneHumifie)} T
-                                C/ha
-                            </p>
-                            <div className="mt-2 text-sm text-gray-600">
-                                <p>Niveau "entrée": 1,15</p>
-                                <p>Niveau "performance": 1,45</p>
-                            </div>
-                            {resultatsT0 && resultatsPrev && (
-                                <div
-                                    className={`mt-2 font-medium ${getEvolutionColor(
-                                        resultatsT0.carboneHumifie,
-                                        resultatsPrev.carboneHumifie
-                                    )}`}
-                                >
-                                    {getEvolutionIcon(
-                                        resultatsT0.carboneHumifie,
-                                        resultatsPrev.carboneHumifie
+                            {/* Carbone humifié */}
+                            <tr>
+                                <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                                    Carbone humifié
+                                    <div className="text-xs text-gray-500 mt-1">
+                                        Niveau "entrée": 1,15 | Niveau "performance": 1,45
+                                    </div>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-center">
+                                    <span className="text-2xl font-bold text-yellow-600">
+                                        {formatNumber(resultatsT0?.carboneHumifie)} T C/ha
+                                    </span>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-center">
+                                    <span className="text-2xl font-bold text-green-600">
+                                        {formatNumber(resultatsPrev?.carboneHumifie)} T C/ha
+                                    </span>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-center">
+                                    {resultatsT0 && resultatsPrev && (
+                                        <div className={`font-medium ${getEvolutionColor(resultatsT0.carboneHumifie, resultatsPrev.carboneHumifie)}`}>
+                                            {getEvolutionIcon(resultatsT0.carboneHumifie, resultatsPrev.carboneHumifie)}
+                                            {formatNumber(resultatsPrev.carboneHumifie - resultatsT0.carboneHumifie)} T C/ha
+                                        </div>
                                     )}
-                                    {formatNumber(
-                                        resultatsPrev.carboneHumifie -
-                                            resultatsT0.carboneHumifie
-                                    )}{" "}
-                                    T C/ha
-                                </div>
-                            )}
-                        </div>
-                    </div>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-center">
+                                    <div className="w-20 h-20 mx-auto">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <PieChart>
+                                                <Pie
+                                                    data={carboneData}
+                                                    cx="50%"
+                                                    cy="50%"
+                                                    innerRadius={20}
+                                                    outerRadius={35}
+                                                    dataKey="value"
+                                                >
+                                                    {carboneData.map((entry, index) => (
+                                                        <Cell key={`cell-${index}`} fill={entry.color} />
+                                                    ))}
+                                                </Pie>
+                                                <Tooltip />
+                                            </PieChart>
+                                        </ResponsiveContainer>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            {/* Bilan GES simplifié */}
+            {/* Bilan GES simplifié - Tableau */}
             <div>
-                <h4 className="text-lg font-semibold text-gray-800 mb-4">
+                <h4 className="text-xl font-semibold text-gray-800 mb-4">
                     Bilan GES simplifié
                 </h4>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {/* Scénario T0 */}
-                    <div className="bg-gray-50 p-6 rounded-lg">
-                        <h5 className="font-medium text-gray-700 mb-4">
-                            Scénario T0
-                        </h5>
-                        <div className="space-y-3">
-                            <div className="flex justify-between">
-                                <span>Stockage:</span>
-                                <span className="font-medium">
-                                    {formatNumber(
-                                        resultatsT0?.bilanGES.stockage
-                                    )}{" "}
-                                    T CO2 eq/ha
-                                </span>
-                            </div>
-                            <div className="flex justify-between">
-                                <span>Émissions totales:</span>
-                                <span className="font-medium">
-                                    {formatNumber(
-                                        resultatsT0?.bilanGES.emissions.total
-                                    )}{" "}
-                                    T CO2 eq/ha
-                                </span>
-                            </div>
-                            <div className="ml-4 space-y-1 text-sm text-gray-600">
-                                <div className="flex justify-between">
-                                    <span>• Fertilisations:</span>
-                                    <span>
-                                        {formatNumber(
-                                            resultatsT0?.bilanGES.emissions
-                                                .fertilisations
-                                        )}
-                                    </span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span>• Carburants:</span>
-                                    <span>
-                                        {formatNumber(
-                                            resultatsT0?.bilanGES.emissions
-                                                .carburants
-                                        )}
-                                    </span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span>• Chaulage:</span>
-                                    <span>
-                                        {formatNumber(
-                                            resultatsT0?.bilanGES.emissions
-                                                .chaulage
-                                        )}
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="border-t pt-2 flex justify-between font-bold">
-                                <span>Bilan net:</span>
-                                <span
-                                    className={
-                                        resultatsT0?.bilanGES.bilanNet &&
-                                        resultatsT0.bilanGES.bilanNet > 0
-                                            ? "text-red-600"
-                                            : "text-green-600"
-                                    }
-                                >
-                                    {formatNumber(
-                                        resultatsT0?.bilanGES.bilanNet
-                                    )}{" "}
-                                    T CO2 eq/ha
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Scénario A */}
-                    <div className="bg-green-50 p-6 rounded-lg">
-                        <h5 className="font-medium text-gray-700 mb-4">
-                            Scénario A
-                        </h5>
-                        <div className="space-y-3">
-                            <div className="flex justify-between">
-                                <span>Stockage:</span>
-                                <span className="font-medium">
-                                    {formatNumber(
-                                        resultatsPrev?.bilanGES.stockage
-                                    )}{" "}
-                                    T CO2 eq/ha
-                                </span>
-                            </div>
-                            <div className="flex justify-between">
-                                <span>Émissions totales:</span>
-                                <span className="font-medium">
-                                    {formatNumber(
-                                        resultatsPrev?.bilanGES.emissions.total
-                                    )}{" "}
-                                    T CO2 eq/ha
-                                </span>
-                            </div>
-                            <div className="ml-4 space-y-1 text-sm text-gray-600">
-                                <div className="flex justify-between">
-                                    <span>• Fertilisations:</span>
-                                    <span>
-                                        {formatNumber(
-                                            resultatsPrev?.bilanGES.emissions
-                                                .fertilisations
-                                        )}
-                                    </span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span>• Carburants:</span>
-                                    <span>
-                                        {formatNumber(
-                                            resultatsPrev?.bilanGES.emissions
-                                                .carburants
-                                        )}
-                                    </span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span>• Chaulage:</span>
-                                    <span>
-                                        {formatNumber(
-                                            resultatsPrev?.bilanGES.emissions
-                                                .chaulage
-                                        )}
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="border-t pt-2 flex justify-between font-bold">
-                                <span>Bilan net:</span>
-                                <span
-                                    className={
-                                        resultatsPrev?.bilanGES.bilanNet &&
-                                        resultatsPrev.bilanGES.bilanNet > 0
-                                            ? "text-red-600"
-                                            : "text-green-600"
-                                    }
-                                >
-                                    {formatNumber(
-                                        resultatsPrev?.bilanGES.bilanNet
-                                    )}{" "}
-                                    T CO2 eq/ha
-                                </span>
-                            </div>
-                        </div>
-                        {resultatsT0 && resultatsPrev && (
-                            <div className="mt-4 pt-4 border-t">
-                                <h6 className="font-medium text-gray-700 mb-2">
-                                    Évolution vs T0
-                                </h6>
-                                <div
-                                    className={`font-medium ${getEvolutionColor(
-                                        resultatsT0.bilanGES.bilanNet,
-                                        resultatsPrev.bilanGES.bilanNet
-                                    )}`}
-                                >
-                                    {getEvolutionIcon(
-                                        resultatsT0.bilanGES.bilanNet,
-                                        resultatsPrev.bilanGES.bilanNet
+                
+                <div className="bg-white rounded-lg shadow overflow-hidden mb-6">
+                    <table className="w-full">
+                        <thead className="bg-gray-50">
+                            <tr>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Composant
+                                </th>
+                                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Scénario T0
+                                </th>
+                                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Scénario Prévisionnel
+                                </th>
+                                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Évolution
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                                    Stockage
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-center text-blue-600 font-semibold">
+                                    {formatNumber(resultatsT0?.bilanGES.stockage)} T CO2 eq/ha
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-center text-green-600 font-semibold">
+                                    {formatNumber(resultatsPrev?.bilanGES.stockage)} T CO2 eq/ha
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-center">
+                                    {resultatsT0 && resultatsPrev && (
+                                        <div className={`font-medium ${getEvolutionColor(resultatsT0.bilanGES.stockage, resultatsPrev.bilanGES.stockage)}`}>
+                                            {getEvolutionIcon(resultatsT0.bilanGES.stockage, resultatsPrev.bilanGES.stockage)}
+                                            {formatNumber(resultatsPrev.bilanGES.stockage - resultatsT0.bilanGES.stockage)}
+                                        </div>
                                     )}
-                                    {formatNumber(
-                                        resultatsPrev.bilanGES.bilanNet -
-                                            resultatsT0.bilanGES.bilanNet
-                                    )}{" "}
-                                    T CO2 eq/ha
-                                </div>
-                            </div>
-                        )}
-                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                                    Émissions totales
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-center text-blue-600 font-semibold">
+                                    {formatNumber(resultatsT0?.bilanGES.emissions.total)} T CO2 eq/ha
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-center text-green-600 font-semibold">
+                                    {formatNumber(resultatsPrev?.bilanGES.emissions.total)} T CO2 eq/ha
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-center">
+                                    {resultatsT0 && resultatsPrev && (
+                                        <div className={`font-medium ${getEvolutionColor(resultatsT0.bilanGES.emissions.total, resultatsPrev.bilanGES.emissions.total)}`}>
+                                            {getEvolutionIcon(resultatsT0.bilanGES.emissions.total, resultatsPrev.bilanGES.emissions.total)}
+                                            {formatNumber(resultatsPrev.bilanGES.emissions.total - resultatsT0.bilanGES.emissions.total)}
+                                        </div>
+                                    )}
+                                </td>
+                            </tr>
+                            <tr className="bg-blue-50">
+                                <td className="px-6 py-4 whitespace-nowrap font-bold text-gray-900">
+                                    Bilan net
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-center font-bold">
+                                    <span className={resultatsT0?.bilanGES.bilanNet && resultatsT0.bilanGES.bilanNet > 0 ? "text-red-600" : "text-blue-600"}>
+                                        {formatNumber(resultatsT0?.bilanGES.bilanNet)} T CO2 eq/ha
+                                    </span>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-center font-bold">
+                                    <span className={resultatsPrev?.bilanGES.bilanNet && resultatsPrev.bilanGES.bilanNet > 0 ? "text-red-600" : "text-green-600"}>
+                                        {formatNumber(resultatsPrev?.bilanGES.bilanNet)} T CO2 eq/ha
+                                    </span>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-center">
+                                    {resultatsT0 && resultatsPrev && (
+                                        <div className={`font-bold ${getEvolutionColor(resultatsT0.bilanGES.bilanNet, resultatsPrev.bilanGES.bilanNet)}`}>
+                                            {getEvolutionIcon(resultatsT0.bilanGES.bilanNet, resultatsPrev.bilanGES.bilanNet)}
+                                            {formatNumber(resultatsPrev.bilanGES.bilanNet - resultatsT0.bilanGES.bilanNet)}
+                                        </div>
+                                    )}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+
+                {/* Graphique des émissions */}
+                {emissionsData.length > 0 && (
+                    <div className="bg-white rounded-lg shadow p-6">
+                        <h5 className="text-lg font-semibold text-gray-800 mb-4">
+                            Comparaison des émissions par source
+                        </h5>
+                        <div className="h-64">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={emissionsData}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="name" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Bar dataKey="T0" fill="#3B82F6" name="Scénario T0" />
+                                    <Bar dataKey="Prévisionnel" fill="#10B981" name="Scénario Prévisionnel" />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
+                )}
 
                 {/* Seuils de référence */}
                 <div className="mt-6 bg-blue-50 p-4 rounded-lg">
@@ -339,83 +328,53 @@ export default function ResultatsSection({
             </div>
 
             {/* Émissions par culture */}
-            {(resultatsT0?.emissionsParCulture.length ||
-                resultatsPrev?.emissionsParCulture.length) && (
+            {(resultatsT0?.emissionsParCulture.length || resultatsPrev?.emissionsParCulture.length) && (
                 <div>
-                    <h4 className="text-lg font-semibold text-gray-800 mb-4">
+                    <h4 className="text-xl font-semibold text-gray-800 mb-4">
                         Émissions par culture
                     </h4>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        {resultatsT0 && (
-                            <div>
-                                <h5 className="font-medium text-gray-700 mb-3">
-                                    Scénario T0
-                                </h5>
-                                <div className="space-y-2">
-                                    {resultatsT0.emissionsParCulture.map(
-                                        (culture, index) => (
-                                            <div
-                                                key={index}
-                                                className="flex justify-between items-center p-3 bg-gray-50 rounded"
-                                            >
-                                                <span className="text-sm">
-                                                    {culture.culture}
-                                                </span>
-                                                <div className="text-right">
-                                                    <div className="font-medium">
-                                                        {formatNumber(
-                                                            culture.emissions
-                                                        )}{" "}
-                                                        tCO2e/ha
-                                                    </div>
-                                                    <div className="text-xs text-gray-500">
-                                                        FE:{" "}
-                                                        {formatNumber(
-                                                            culture.facteurEmissions
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )
-                                    )}
-                                </div>
-                            </div>
-                        )}
-                        {resultatsPrev && (
-                            <div>
-                                <h5 className="font-medium text-gray-700 mb-3">
-                                    Scénario A
-                                </h5>
-                                <div className="space-y-2">
-                                    {resultatsPrev.emissionsParCulture.map(
-                                        (culture, index) => (
-                                            <div
-                                                key={index}
-                                                className="flex justify-between items-center p-3 bg-green-50 rounded"
-                                            >
-                                                <span className="text-sm">
-                                                    {culture.culture}
-                                                </span>
-                                                <div className="text-right">
-                                                    <div className="font-medium">
-                                                        {formatNumber(
-                                                            culture.emissions
-                                                        )}{" "}
-                                                        tCO2e/ha
-                                                    </div>
-                                                    <div className="text-xs text-gray-500">
-                                                        FE:{" "}
-                                                        {formatNumber(
-                                                            culture.facteurEmissions
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )
-                                    )}
-                                </div>
-                            </div>
-                        )}
+                    <div className="bg-white rounded-lg shadow overflow-hidden">
+                        <table className="w-full">
+                            <thead className="bg-gray-50">
+                                <tr>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Culture
+                                    </th>
+                                    <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Scénario T0
+                                    </th>
+                                    <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Scénario Prévisionnel
+                                    </th>
+                                    <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Facteur d'émissions
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                                {resultatsT0?.emissionsParCulture.map((cultureT0, index) => {
+                                    const culturePrev = resultatsPrev?.emissionsParCulture.find(
+                                        c => c.culture === cultureT0.culture
+                                    );
+                                    return (
+                                        <tr key={index}>
+                                            <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                                                {cultureT0.culture}
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-center text-blue-600 font-semibold">
+                                                {formatNumber(cultureT0.emissions)} tCO2e/ha
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-center text-green-600 font-semibold">
+                                                {culturePrev ? formatNumber(culturePrev.emissions) : "N/A"} tCO2e/ha
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-center text-gray-600">
+                                                FE: {formatNumber(cultureT0.facteurEmissions)}
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             )}

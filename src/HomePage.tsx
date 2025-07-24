@@ -17,8 +17,8 @@ export default function HomePage() {
             <h1 className="text-3xl font-bold mb-8 text-center">
                 Sélectionnez une exploitation
             </h1>
-            <div className="w-full flex flex-col items-center mb-8">
-                <div className="relative w-full">
+            <div className="w-full flex flex-col mb-8">
+                <div className="relative w-full mb-6">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
                         <svg
                             width="20"
@@ -44,35 +44,67 @@ export default function HomePage() {
                         className="w-full pl-10 pr-4 py-3 rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-green-500 bg-white text-gray-800 placeholder-gray-400 transition-all"
                     />
                 </div>
-            </div>
-            <div className="w-full space-y-4">
-                {filtered.length === 0 ? (
-                    <div className="text-center text-gray-400">
-                        Aucune exploitation trouvée.
-                    </div>
-                ) : (
-                    filtered.map((exp: Exploitation) => (
-                        <div
-                            key={exp.code}
-                            className="bg-white rounded shadow p-4 flex items-center justify-between hover:shadow-lg transition-shadow"
-                        >
-                            <div>
-                                <div className="font-semibold text-lg">
-                                    {exp.nom}
-                                </div>
-                                <div className="text-gray-500 text-sm">
-                                    Code SAP : {exp.code}
-                                </div>
-                            </div>
-                            <Link 
-                                to={`/exploitation/${exp.id}`}
-                                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
-                            >
-                                Voir
-                            </Link>
-                        </div>
-                    ))
-                )}
+
+                {/* Tableau des exploitations */}
+                <div className="bg-white rounded-lg shadow overflow-hidden">
+                    <table className="w-full">
+                        <thead className="bg-gray-50">
+                            <tr>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Nom
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Code SAP
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Type de diagnostique
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Date de dernière mise à jour
+                                </th>
+                                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                            {filtered.length === 0 ? (
+                                <tr>
+                                    <td colSpan={5} className="px-6 py-4 text-center text-gray-400">
+                                        Aucune exploitation trouvée.
+                                    </td>
+                                </tr>
+                            ) : (
+                                filtered.map((exp: Exploitation) => (
+                                    <tr key={exp.code} className="hover:bg-gray-50 transition-colors">
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <div className="font-medium text-gray-900">
+                                                {exp.nom}
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {exp.codeSAP}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {exp.typeDiag}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {exp.dateDerniereMiseAJour}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                            <Link 
+                                                to={`/exploitation/${exp.id}`}
+                                                className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                                            >
+                                                Accéder
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </Layout>
     );

@@ -218,6 +218,8 @@ export default function ScenarioPage() {
                     <ChartsSidebar
                         scenario={currentScenario}
                         resultats={resultats}
+                        scenarioT0={scenarioT0}
+                        resultatsT0={resultatsT0}
                         onClose={() => setShowCharts(false)}
                     />
                 </div>
