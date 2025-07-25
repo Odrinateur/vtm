@@ -21,6 +21,7 @@ interface ScenarioPageProps {
     scenarioComparaison?: Scenario;
     resultatsComparaison?: ResultatScenario;
     tableMode: boolean;
+    onImport?: () => void; // ajout
 }
 
 export default function ScenarioPage({
@@ -34,6 +35,7 @@ export default function ScenarioPage({
     scenarioComparaison,
     resultatsComparaison,
     tableMode,
+    onImport,
 }: ScenarioPageProps) {
     const exploitation = exploitations.find((exp) => exp.id === id);
     const resultats = resultatsScenarios.find(
@@ -70,6 +72,7 @@ export default function ScenarioPage({
         const importedData = importData[scenario.id];
         if (importedData) {
             onScenarioUpdate({ ...importedData });
+            if (typeof onImport === "function") onImport();
             // Mettre à jour dans le tableau global (simulation)
             const index = scenarios.findIndex((s) => s.id === scenario.id);
             if (index !== -1) {

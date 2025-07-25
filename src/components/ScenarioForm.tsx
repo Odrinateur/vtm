@@ -89,327 +89,402 @@ export default function ScenarioForm({
             <div className="space-y-6">
                 {/* Mode tableau */}
                 <div className="bg-white rounded-lg shadow overflow-hidden">
-                    <table className="w-full">
-                        <thead className="bg-gray-50">
-                            <tr>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Culture
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Surface (ha)
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Rendement (T/ha)
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Semis
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Récolte
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Couvert
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Biomasse
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Amendement org. (type)
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Amendement org. (qté)
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Amendement org. (unité)
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Fertilisation N (forme)
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Fertilisation N (qté)
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Fertilisation N (unité)
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Fumure fond (P)
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Fumure fond (K)
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
-                            {scenario.cultures.map((ligneCulture, index) => (
-                                <tr key={index} className="hover:bg-gray-50">
-                                    <td className="px-4 py-4 whitespace-nowrap font-medium text-gray-900">
-                                        {ligneCulture.culture.culture}
-                                    </td>
-                                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {ligneCulture.culture.surface}
-                                        {scenarioComparaison &&
-                                            getComparisonIndicator(
-                                                ligneCulture.culture.surface ??
-                                                    0,
-                                                (
+                    <div className="overflow-x-auto">
+                        {" "}
+                        {/* Ajout scroll horizontal */}
+                        <table className="w-full min-w-max">
+                            {" "}
+                            {/* min-w-max pour forcer le scroll si besoin */}
+                            <thead className="bg-gray-50">
+                                <tr>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Culture
+                                    </th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Surface (ha)
+                                    </th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Rendement (T/ha)
+                                    </th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Semis
+                                    </th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Récolte
+                                    </th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Couvert
+                                    </th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Biomasse
+                                    </th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Amendement org. (type)
+                                    </th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Amendement org. (qté)
+                                    </th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Amendement org. (unité)
+                                    </th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Fertilisation N (forme)
+                                    </th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Fertilisation N (qté)
+                                    </th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Fertilisation N (unité)
+                                    </th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Fumure fond (P)
+                                    </th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Fumure fond (K)
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                                {scenario.cultures.map(
+                                    (ligneCulture, index) => (
+                                        <tr
+                                            key={index}
+                                            className="hover:bg-gray-50"
+                                        >
+                                            <td className="px-4 py-4 whitespace-nowrap font-medium text-gray-900">
+                                                {ligneCulture.culture.culture}
+                                            </td>
+                                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                {ligneCulture.culture.surface}
+                                                {scenarioComparaison &&
+                                                    getComparisonIndicator(
+                                                        ligneCulture.culture
+                                                            .surface ?? 0,
+                                                        (
+                                                            scenarioComparaison
+                                                                ?.cultures?.[
+                                                                index
+                                                            ] || {}
+                                                        ).culture?.surface ?? 0
+                                                    )}
+                                            </td>
+                                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                {ligneCulture.culture.rendement}
+                                                {scenarioComparaison &&
+                                                    getComparisonIndicator(
+                                                        ligneCulture.culture
+                                                            .rendement ?? 0,
+                                                        (
+                                                            scenarioComparaison
+                                                                ?.cultures?.[
+                                                                index
+                                                            ] || {}
+                                                        ).culture?.rendement ??
+                                                            0
+                                                    )}
+                                            </td>
+                                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                {ligneCulture.culture.semis}
+                                                {scenario.type ===
+                                                    "previsionnel" &&
+                                                    scenarioComparaison &&
                                                     scenarioComparaison
-                                                        ?.cultures?.[index] ||
-                                                    {}
-                                                ).culture?.surface ?? 0
-                                            )}
-                                    </td>
-                                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {ligneCulture.culture.rendement}
-                                        {scenarioComparaison &&
-                                            getComparisonIndicator(
-                                                ligneCulture.culture
-                                                    .rendement ?? 0,
-                                                (
-                                                    scenarioComparaison
-                                                        ?.cultures?.[index] ||
-                                                    {}
-                                                ).culture?.rendement ?? 0
-                                            )}
-                                    </td>
-                                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {ligneCulture.culture.semis}
-                                        {scenario.type === "previsionnel" &&
-                                            scenarioComparaison &&
-                                            scenarioComparaison.cultures[
-                                                index
-                                            ] &&
-                                            ligneCulture.culture.semis !==
-                                                scenarioComparaison.cultures[
-                                                    index
-                                                ]?.culture.semis && (
-                                                <span className="ml-2 text-sm text-blue-600 font-medium">
-                                                    (T0:{" "}
-                                                    {
+                                                        .cultures[index] &&
+                                                    ligneCulture.culture
+                                                        .semis !==
                                                         scenarioComparaison
                                                             .cultures[index]
-                                                            ?.culture.semis
-                                                    }
-                                                    )
-                                                </span>
-                                            )}
-                                    </td>
-                                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {ligneCulture.culture.recolte}
-                                        {scenario.type === "previsionnel" &&
-                                            scenarioComparaison &&
-                                            scenarioComparaison.cultures[
-                                                index
-                                            ] &&
-                                            ligneCulture.culture.recolte !==
-                                                scenarioComparaison.cultures[
-                                                    index
-                                                ]?.culture.recolte && (
-                                                <span className="ml-2 text-sm text-blue-600 font-medium">
-                                                    (T0:{" "}
-                                                    {
+                                                            ?.culture.semis && (
+                                                        <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                            (T0:{" "}
+                                                            {
+                                                                scenarioComparaison
+                                                                    .cultures[
+                                                                    index
+                                                                ]?.culture.semis
+                                                            }
+                                                            )
+                                                        </span>
+                                                    )}
+                                            </td>
+                                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                {ligneCulture.culture.recolte}
+                                                {scenario.type ===
+                                                    "previsionnel" &&
+                                                    scenarioComparaison &&
+                                                    scenarioComparaison
+                                                        .cultures[index] &&
+                                                    ligneCulture.culture
+                                                        .recolte !==
                                                         scenarioComparaison
                                                             .cultures[index]
-                                                            ?.culture.recolte
-                                                    }
-                                                    )
-                                                </span>
-                                            )}
-                                    </td>
-                                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {ligneCulture.interculture?.couvert}
-                                        {scenario.type === "previsionnel" &&
-                                            scenarioComparaison &&
-                                            scenarioComparaison.cultures[
-                                                index
-                                            ] &&
-                                            ligneCulture.interculture
-                                                ?.couvert !==
-                                                scenarioComparaison.cultures[
-                                                    index
-                                                ]?.interculture?.couvert && (
-                                                <span className="ml-2 text-sm text-blue-600 font-medium">
-                                                    (T0:{" "}
-                                                    {
+                                                            ?.culture
+                                                            .recolte && (
+                                                        <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                            (T0:{" "}
+                                                            {
+                                                                scenarioComparaison
+                                                                    .cultures[
+                                                                    index
+                                                                ]?.culture
+                                                                    .recolte
+                                                            }
+                                                            )
+                                                        </span>
+                                                    )}
+                                            </td>
+                                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                {
+                                                    ligneCulture.interculture
+                                                        ?.couvert
+                                                }
+                                                {scenario.type ===
+                                                    "previsionnel" &&
+                                                    scenarioComparaison &&
+                                                    scenarioComparaison
+                                                        .cultures[index] &&
+                                                    ligneCulture.interculture
+                                                        ?.couvert !==
                                                         scenarioComparaison
                                                             .cultures[index]
                                                             ?.interculture
-                                                            ?.couvert
-                                                    }
-                                                    )
-                                                </span>
-                                            )}
-                                    </td>
-                                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {ligneCulture.interculture?.biomasse}
-                                        {scenarioComparaison &&
-                                            getComparisonIndicator(
-                                                ligneCulture.interculture
-                                                    ?.biomasse ?? 0,
-                                                (
-                                                    scenarioComparaison
-                                                        ?.cultures?.[index] ||
-                                                    {}
-                                                ).interculture?.biomasse ?? 0
-                                            )}
-                                    </td>
-                                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {ligneCulture.amendementOrganique1?.pro}
-                                        {ligneCulture.amendementOrganique1
-                                            ?.pro !==
-                                            scenarioComparaison?.cultures[index]
-                                                ?.amendementOrganique1?.pro && (
-                                            <span className="ml-2 text-sm text-blue-600 font-medium">
-                                                (T0:{" "}
+                                                            ?.couvert && (
+                                                        <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                            (T0:{" "}
+                                                            {
+                                                                scenarioComparaison
+                                                                    .cultures[
+                                                                    index
+                                                                ]?.interculture
+                                                                    ?.couvert
+                                                            }
+                                                            )
+                                                        </span>
+                                                    )}
+                                            </td>
+                                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
                                                 {
-                                                    scenarioComparaison
-                                                        ?.cultures?.[index]
-                                                        ?.amendementOrganique1
+                                                    ligneCulture.interculture
+                                                        ?.biomasse
+                                                }
+                                                {scenarioComparaison &&
+                                                    getComparisonIndicator(
+                                                        ligneCulture
+                                                            .interculture
+                                                            ?.biomasse ?? 0,
+                                                        (
+                                                            scenarioComparaison
+                                                                ?.cultures?.[
+                                                                index
+                                                            ] || {}
+                                                        ).interculture
+                                                            ?.biomasse ?? 0
+                                                    )}
+                                            </td>
+                                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                {
+                                                    ligneCulture
+                                                        .amendementOrganique1
                                                         ?.pro
                                                 }
-                                                )
-                                            </span>
-                                        )}
-                                    </td>
-                                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {
-                                            ligneCulture.amendementOrganique1
-                                                ?.quantite
-                                        }
-                                        {ligneCulture.amendementOrganique1
-                                            ?.quantite !==
-                                            scenarioComparaison?.cultures[index]
-                                                ?.amendementOrganique1
-                                                ?.quantite && (
-                                            <span className="ml-2 text-sm text-blue-600 font-medium">
-                                                (T0:{" "}
-                                                {
+                                                {ligneCulture
+                                                    .amendementOrganique1
+                                                    ?.pro !==
                                                     scenarioComparaison
                                                         ?.cultures[index]
                                                         ?.amendementOrganique1
+                                                        ?.pro && (
+                                                    <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                        (T0:{" "}
+                                                        {
+                                                            scenarioComparaison
+                                                                ?.cultures?.[
+                                                                index
+                                                            ]
+                                                                ?.amendementOrganique1
+                                                                ?.pro
+                                                        }
+                                                        )
+                                                    </span>
+                                                )}
+                                            </td>
+                                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                {
+                                                    ligneCulture
+                                                        .amendementOrganique1
                                                         ?.quantite
                                                 }
-                                                )
-                                            </span>
-                                        )}
-                                    </td>
-                                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {
-                                            ligneCulture.amendementOrganique1
-                                                ?.unite
-                                        }
-                                        {ligneCulture.amendementOrganique1
-                                            ?.unite !==
-                                            scenarioComparaison?.cultures[index]
-                                                ?.amendementOrganique1
-                                                ?.unite && (
-                                            <span className="ml-2 text-sm text-blue-600 font-medium">
-                                                (T0:{" "}
-                                                {
+                                                {ligneCulture
+                                                    .amendementOrganique1
+                                                    ?.quantite !==
                                                     scenarioComparaison
                                                         ?.cultures[index]
                                                         ?.amendementOrganique1
+                                                        ?.quantite && (
+                                                    <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                        (T0:{" "}
+                                                        {
+                                                            scenarioComparaison
+                                                                ?.cultures[
+                                                                index
+                                                            ]
+                                                                ?.amendementOrganique1
+                                                                ?.quantite
+                                                        }
+                                                        )
+                                                    </span>
+                                                )}
+                                            </td>
+                                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                {
+                                                    ligneCulture
+                                                        .amendementOrganique1
                                                         ?.unite
                                                 }
-                                                )
-                                            </span>
-                                        )}
-                                    </td>
-                                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {
-                                            ligneCulture.fertilisationAzotee1
-                                                ?.engraisMineral
-                                        }
-                                        {ligneCulture.fertilisationAzotee1
-                                            ?.engraisMineral !==
-                                            scenarioComparaison?.cultures[index]
-                                                ?.fertilisationAzotee1
-                                                ?.engraisMineral && (
-                                            <span className="ml-2 text-sm text-blue-600 font-medium">
-                                                (T0:{" "}
-                                                {
+                                                {ligneCulture
+                                                    .amendementOrganique1
+                                                    ?.unite !==
                                                     scenarioComparaison
                                                         ?.cultures[index]
-                                                        ?.fertilisationAzotee1
+                                                        ?.amendementOrganique1
+                                                        ?.unite && (
+                                                    <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                        (T0:{" "}
+                                                        {
+                                                            scenarioComparaison
+                                                                ?.cultures[
+                                                                index
+                                                            ]
+                                                                ?.amendementOrganique1
+                                                                ?.unite
+                                                        }
+                                                        )
+                                                    </span>
+                                                )}
+                                            </td>
+                                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                {
+                                                    ligneCulture
+                                                        .fertilisationAzotee1
                                                         ?.engraisMineral
                                                 }
-                                                )
-                                            </span>
-                                        )}
-                                    </td>
-                                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {
-                                            ligneCulture.fertilisationAzotee1
-                                                ?.quantite
-                                        }
-                                        {ligneCulture.fertilisationAzotee1
-                                            ?.quantite !==
-                                            scenarioComparaison?.cultures[index]
-                                                ?.fertilisationAzotee1
-                                                ?.quantite && (
-                                            <span className="ml-2 text-sm text-blue-600 font-medium">
-                                                (T0:{" "}
-                                                {
+                                                {ligneCulture
+                                                    .fertilisationAzotee1
+                                                    ?.engraisMineral !==
                                                     scenarioComparaison
                                                         ?.cultures[index]
                                                         ?.fertilisationAzotee1
+                                                        ?.engraisMineral && (
+                                                    <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                        (T0:{" "}
+                                                        {
+                                                            scenarioComparaison
+                                                                ?.cultures[
+                                                                index
+                                                            ]
+                                                                ?.fertilisationAzotee1
+                                                                ?.engraisMineral
+                                                        }
+                                                        )
+                                                    </span>
+                                                )}
+                                            </td>
+                                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                {
+                                                    ligneCulture
+                                                        .fertilisationAzotee1
                                                         ?.quantite
                                                 }
-                                                )
-                                            </span>
-                                        )}
-                                    </td>
-                                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {
-                                            ligneCulture.fertilisationAzotee1
-                                                ?.unite
-                                        }
-                                        {ligneCulture.fertilisationAzotee1
-                                            ?.unite !==
-                                            scenarioComparaison?.cultures[index]
-                                                ?.fertilisationAzotee1
-                                                ?.unite && (
-                                            <span className="ml-2 text-sm text-blue-600 font-medium">
-                                                (T0:{" "}
-                                                {
+                                                {ligneCulture
+                                                    .fertilisationAzotee1
+                                                    ?.quantite !==
                                                     scenarioComparaison
                                                         ?.cultures[index]
                                                         ?.fertilisationAzotee1
+                                                        ?.quantite && (
+                                                    <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                        (T0:{" "}
+                                                        {
+                                                            scenarioComparaison
+                                                                ?.cultures[
+                                                                index
+                                                            ]
+                                                                ?.fertilisationAzotee1
+                                                                ?.quantite
+                                                        }
+                                                        )
+                                                    </span>
+                                                )}
+                                            </td>
+                                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                {
+                                                    ligneCulture
+                                                        .fertilisationAzotee1
                                                         ?.unite
                                                 }
-                                                )
-                                            </span>
-                                        )}
-                                    </td>
-                                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {ligneCulture.fumureFond?.phosphateP}
-                                        {scenarioComparaison &&
-                                            getComparisonIndicator(
-                                                ligneCulture.fumureFond
-                                                    ?.phosphateP ?? 0,
-                                                (
+                                                {ligneCulture
+                                                    .fertilisationAzotee1
+                                                    ?.unite !==
                                                     scenarioComparaison
-                                                        ?.cultures?.[index] ||
-                                                    {}
-                                                ).fumureFond?.phosphateP ?? 0
-                                            )}
-                                    </td>
-                                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {ligneCulture.fumureFond?.potasseK}
-                                        {scenarioComparaison &&
-                                            getComparisonIndicator(
-                                                ligneCulture.fumureFond
-                                                    ?.potasseK ?? 0,
-                                                (
-                                                    scenarioComparaison
-                                                        ?.cultures?.[index] ||
-                                                    {}
-                                                ).fumureFond?.potasseK ?? 0
-                                            )}
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                                                        ?.cultures[index]
+                                                        ?.fertilisationAzotee1
+                                                        ?.unite && (
+                                                    <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                        (T0:{" "}
+                                                        {
+                                                            scenarioComparaison
+                                                                ?.cultures[
+                                                                index
+                                                            ]
+                                                                ?.fertilisationAzotee1
+                                                                ?.unite
+                                                        }
+                                                        )
+                                                    </span>
+                                                )}
+                                            </td>
+                                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                {
+                                                    ligneCulture.fumureFond
+                                                        ?.phosphateP
+                                                }
+                                                {scenarioComparaison &&
+                                                    getComparisonIndicator(
+                                                        ligneCulture.fumureFond
+                                                            ?.phosphateP ?? 0,
+                                                        (
+                                                            scenarioComparaison
+                                                                ?.cultures?.[
+                                                                index
+                                                            ] || {}
+                                                        ).fumureFond
+                                                            ?.phosphateP ?? 0
+                                                    )}
+                                            </td>
+                                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                {
+                                                    ligneCulture.fumureFond
+                                                        ?.potasseK
+                                                }
+                                                {scenarioComparaison &&
+                                                    getComparisonIndicator(
+                                                        ligneCulture.fumureFond
+                                                            ?.potasseK ?? 0,
+                                                        (
+                                                            scenarioComparaison
+                                                                ?.cultures?.[
+                                                                index
+                                                            ] || {}
+                                                        ).fumureFond
+                                                            ?.potasseK ?? 0
+                                                    )}
+                                            </td>
+                                        </tr>
+                                    )
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         );
