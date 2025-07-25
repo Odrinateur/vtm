@@ -26,21 +26,42 @@ export default function ScenarioForm({
 
     const formatNumber = (num: number) => num.toFixed(2);
 
-    const getComparisonIndicator = (current: number, comparison?: number) => {
-        if (!comparison) return null;
-        const diff = current - comparison;
-        if (Math.abs(diff) < 0.01) return null;
-
-        return (
-            <span
-                className={`ml-2 text-sm font-medium ${
-                    diff > 0 ? "text-green-600" : "text-red-600"
-                }`}
-            >
-                ({diff > 0 ? "+" : ""}
-                {formatNumber(diff)})
-            </span>
-        );
+    const getComparisonIndicator = (
+        current: number | string | boolean,
+        comparison?: number | string | boolean
+    ) => {
+        if (comparison === undefined || comparison === null) return null;
+        if (typeof current === "number" && typeof comparison === "number") {
+            const diff = current - comparison;
+            if (Math.abs(diff) < 0.01) return null;
+            return (
+                <span
+                    className={`ml-2 text-sm font-medium ${
+                        diff > 0 ? "text-green-600" : "text-red-600"
+                    }`}
+                >
+                    ({diff > 0 ? "+" : ""}
+                    {formatNumber(diff)})
+                </span>
+            );
+        }
+        if (typeof current === "boolean" && typeof comparison === "boolean") {
+            if (current === comparison) return null;
+            return (
+                <span className="ml-2 text-sm font-medium text-blue-600">
+                    (vs {comparison ? "Oui" : "Non"})
+                </span>
+            );
+        }
+        if (typeof current === "string" && typeof comparison === "string") {
+            if (current === comparison) return null;
+            return (
+                <span className="ml-2 text-sm font-medium text-blue-600">
+                    (vs {comparison})
+                </span>
+            );
+        }
+        return null;
     };
 
     const toggleSection = (sectionName: string) => {
@@ -126,65 +147,264 @@ export default function ScenarioForm({
                                     </td>
                                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
                                         {ligneCulture.culture.surface}
+                                        {scenarioComparaison &&
+                                            getComparisonIndicator(
+                                                ligneCulture.culture.surface ??
+                                                    0,
+                                                (
+                                                    scenarioComparaison
+                                                        ?.cultures?.[index] ||
+                                                    {}
+                                                ).culture?.surface ?? 0
+                                            )}
                                     </td>
                                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
                                         {ligneCulture.culture.rendement}
                                         {scenarioComparaison &&
-                                            scenarioComparaison.cultures[
-                                                index
-                                            ] &&
                                             getComparisonIndicator(
-                                                ligneCulture.culture.rendement,
-                                                scenarioComparaison.cultures[
-                                                    index
-                                                ]?.culture.rendement
+                                                ligneCulture.culture
+                                                    .rendement ?? 0,
+                                                (
+                                                    scenarioComparaison
+                                                        ?.cultures?.[index] ||
+                                                    {}
+                                                ).culture?.rendement ?? 0
                                             )}
                                     </td>
                                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
                                         {ligneCulture.culture.semis}
+                                        {scenario.type === "previsionnel" &&
+                                            scenarioComparaison &&
+                                            scenarioComparaison.cultures[
+                                                index
+                                            ] &&
+                                            ligneCulture.culture.semis !==
+                                                scenarioComparaison.cultures[
+                                                    index
+                                                ]?.culture.semis && (
+                                                <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                    (T0:{" "}
+                                                    {
+                                                        scenarioComparaison
+                                                            .cultures[index]
+                                                            ?.culture.semis
+                                                    }
+                                                    )
+                                                </span>
+                                            )}
                                     </td>
                                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
                                         {ligneCulture.culture.recolte}
+                                        {scenario.type === "previsionnel" &&
+                                            scenarioComparaison &&
+                                            scenarioComparaison.cultures[
+                                                index
+                                            ] &&
+                                            ligneCulture.culture.recolte !==
+                                                scenarioComparaison.cultures[
+                                                    index
+                                                ]?.culture.recolte && (
+                                                <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                    (T0:{" "}
+                                                    {
+                                                        scenarioComparaison
+                                                            .cultures[index]
+                                                            ?.culture.recolte
+                                                    }
+                                                    )
+                                                </span>
+                                            )}
                                     </td>
                                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {ligneCulture.interculture?.couvert ||
-                                            ""}
+                                        {ligneCulture.interculture?.couvert}
+                                        {scenario.type === "previsionnel" &&
+                                            scenarioComparaison &&
+                                            scenarioComparaison.cultures[
+                                                index
+                                            ] &&
+                                            ligneCulture.interculture
+                                                ?.couvert !==
+                                                scenarioComparaison.cultures[
+                                                    index
+                                                ]?.interculture?.couvert && (
+                                                <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                    (T0:{" "}
+                                                    {
+                                                        scenarioComparaison
+                                                            .cultures[index]
+                                                            ?.interculture
+                                                            ?.couvert
+                                                    }
+                                                    )
+                                                </span>
+                                            )}
                                     </td>
                                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {ligneCulture.interculture?.biomasse ||
-                                            ""}
+                                        {ligneCulture.interculture?.biomasse}
+                                        {scenarioComparaison &&
+                                            getComparisonIndicator(
+                                                ligneCulture.interculture
+                                                    ?.biomasse ?? 0,
+                                                (
+                                                    scenarioComparaison
+                                                        ?.cultures?.[index] ||
+                                                    {}
+                                                ).interculture?.biomasse ?? 0
+                                            )}
                                     </td>
                                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        {ligneCulture.amendementOrganique1?.pro}
                                         {ligneCulture.amendementOrganique1
-                                            ?.pro || ""}
+                                            ?.pro !==
+                                            scenarioComparaison?.cultures[index]
+                                                ?.amendementOrganique1?.pro && (
+                                            <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                (T0:{" "}
+                                                {
+                                                    scenarioComparaison
+                                                        ?.cultures?.[index]
+                                                        ?.amendementOrganique1
+                                                        ?.pro
+                                                }
+                                                )
+                                            </span>
+                                        )}
                                     </td>
                                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        {
+                                            ligneCulture.amendementOrganique1
+                                                ?.quantite
+                                        }
                                         {ligneCulture.amendementOrganique1
-                                            ?.quantite ?? ""}
+                                            ?.quantite !==
+                                            scenarioComparaison?.cultures[index]
+                                                ?.amendementOrganique1
+                                                ?.quantite && (
+                                            <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                (T0:{" "}
+                                                {
+                                                    scenarioComparaison
+                                                        ?.cultures[index]
+                                                        ?.amendementOrganique1
+                                                        ?.quantite
+                                                }
+                                                )
+                                            </span>
+                                        )}
                                     </td>
                                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        {
+                                            ligneCulture.amendementOrganique1
+                                                ?.unite
+                                        }
                                         {ligneCulture.amendementOrganique1
-                                            ?.unite || ""}
+                                            ?.unite !==
+                                            scenarioComparaison?.cultures[index]
+                                                ?.amendementOrganique1
+                                                ?.unite && (
+                                            <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                (T0:{" "}
+                                                {
+                                                    scenarioComparaison
+                                                        ?.cultures[index]
+                                                        ?.amendementOrganique1
+                                                        ?.unite
+                                                }
+                                                )
+                                            </span>
+                                        )}
                                     </td>
                                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        {
+                                            ligneCulture.fertilisationAzotee1
+                                                ?.engraisMineral
+                                        }
                                         {ligneCulture.fertilisationAzotee1
-                                            ?.engraisMineral || ""}
+                                            ?.engraisMineral !==
+                                            scenarioComparaison?.cultures[index]
+                                                ?.fertilisationAzotee1
+                                                ?.engraisMineral && (
+                                            <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                (T0:{" "}
+                                                {
+                                                    scenarioComparaison
+                                                        ?.cultures[index]
+                                                        ?.fertilisationAzotee1
+                                                        ?.engraisMineral
+                                                }
+                                                )
+                                            </span>
+                                        )}
                                     </td>
                                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        {
+                                            ligneCulture.fertilisationAzotee1
+                                                ?.quantite
+                                        }
                                         {ligneCulture.fertilisationAzotee1
-                                            ?.quantite ?? ""}
+                                            ?.quantite !==
+                                            scenarioComparaison?.cultures[index]
+                                                ?.fertilisationAzotee1
+                                                ?.quantite && (
+                                            <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                (T0:{" "}
+                                                {
+                                                    scenarioComparaison
+                                                        ?.cultures[index]
+                                                        ?.fertilisationAzotee1
+                                                        ?.quantite
+                                                }
+                                                )
+                                            </span>
+                                        )}
                                     </td>
                                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        {
+                                            ligneCulture.fertilisationAzotee1
+                                                ?.unite
+                                        }
                                         {ligneCulture.fertilisationAzotee1
-                                            ?.unite || ""}
+                                            ?.unite !==
+                                            scenarioComparaison?.cultures[index]
+                                                ?.fertilisationAzotee1
+                                                ?.unite && (
+                                            <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                (T0:{" "}
+                                                {
+                                                    scenarioComparaison
+                                                        ?.cultures[index]
+                                                        ?.fertilisationAzotee1
+                                                        ?.unite
+                                                }
+                                                )
+                                            </span>
+                                        )}
                                     </td>
                                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {ligneCulture.fumureFond?.phosphateP ??
-                                            ""}
+                                        {ligneCulture.fumureFond?.phosphateP}
+                                        {scenarioComparaison &&
+                                            getComparisonIndicator(
+                                                ligneCulture.fumureFond
+                                                    ?.phosphateP ?? 0,
+                                                (
+                                                    scenarioComparaison
+                                                        ?.cultures?.[index] ||
+                                                    {}
+                                                ).fumureFond?.phosphateP ?? 0
+                                            )}
                                     </td>
                                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {ligneCulture.fumureFond?.potasseK ??
-                                            ""}
+                                        {ligneCulture.fumureFond?.potasseK}
+                                        {scenarioComparaison &&
+                                            getComparisonIndicator(
+                                                ligneCulture.fumureFond
+                                                    ?.potasseK ?? 0,
+                                                (
+                                                    scenarioComparaison
+                                                        ?.cultures?.[index] ||
+                                                    {}
+                                                ).fumureFond?.potasseK ?? 0
+                                            )}
                                     </td>
                                 </tr>
                             ))}
@@ -295,20 +515,12 @@ export default function ScenarioForm({
                                             scenario.iae
                                                 .certificationEnvironnementale
                                         }
-                                        {scenarioComparaison &&
+                                        {getComparisonIndicator(
                                             scenario.iae
-                                                .certificationEnvironnementale !==
-                                                scenarioComparaison.iae
-                                                    .certificationEnvironnementale && (
-                                                <span className="ml-2 text-sm text-blue-600 font-medium">
-                                                    (vs{" "}
-                                                    {
-                                                        scenarioComparaison.iae
-                                                            .certificationEnvironnementale
-                                                    }
-                                                    )
-                                                </span>
-                                            )}
+                                                .certificationEnvironnementale,
+                                            scenarioComparaison?.iae
+                                                .certificationEnvironnementale
+                                        )}
                                     </p>
                                 )}
                             </div>
@@ -334,19 +546,11 @@ export default function ScenarioForm({
                                         {scenario.iae.utilisationOAD
                                             ? "Oui"
                                             : "Non"}
-                                        {scenarioComparaison &&
-                                            scenario.iae.utilisationOAD !==
-                                                scenarioComparaison.iae
-                                                    .utilisationOAD && (
-                                                <span className="ml-2 text-sm text-blue-600 font-medium">
-                                                    (vs{" "}
-                                                    {scenarioComparaison.iae
-                                                        .utilisationOAD
-                                                        ? "Oui"
-                                                        : "Non"}
-                                                    )
-                                                </span>
-                                            )}
+                                        {getComparisonIndicator(
+                                            scenario.iae.utilisationOAD,
+                                            scenarioComparaison?.iae
+                                                .utilisationOAD
+                                        )}
                                     </p>
                                 )}
                             </div>
@@ -442,6 +646,11 @@ export default function ScenarioForm({
                                 ) : (
                                     <p className="text-gray-900 font-medium">
                                         {scenario.chaulage.nombreHectare} ha
+                                        {getComparisonIndicator(
+                                            scenario.chaulage.nombreHectare,
+                                            scenarioComparaison?.chaulage
+                                                .nombreHectare
+                                        )}
                                     </p>
                                 )}
                             </div>
@@ -461,6 +670,12 @@ export default function ScenarioForm({
                                 ) : (
                                     <p className="text-gray-900 font-medium">
                                         {scenario.chaulage.amendementCalcique}
+                                        {getComparisonIndicator(
+                                            scenario.chaulage
+                                                .amendementCalcique,
+                                            scenarioComparaison?.chaulage
+                                                .amendementCalcique
+                                        )}
                                     </p>
                                 )}
                             </div>
@@ -566,6 +781,16 @@ export default function ScenarioForm({
                                             <p className="text-gray-900 font-medium">
                                                 {ligneCulture.culture.surface}{" "}
                                                 ha
+                                                {getComparisonIndicator(
+                                                    ligneCulture.culture
+                                                        .surface,
+                                                    (
+                                                        scenarioComparaison
+                                                            ?.cultures?.[
+                                                            index
+                                                        ] || {}
+                                                    ).culture?.surface
+                                                )}
                                             </p>
                                         )}
                                     </div>
@@ -587,16 +812,16 @@ export default function ScenarioForm({
                                             <p className="text-gray-900 font-medium">
                                                 {ligneCulture.culture.rendement}{" "}
                                                 T/ha
-                                                {scenarioComparaison &&
-                                                    scenarioComparaison
-                                                        .cultures[index] &&
-                                                    getComparisonIndicator(
-                                                        ligneCulture.culture
-                                                            .rendement,
+                                                {getComparisonIndicator(
+                                                    ligneCulture.culture
+                                                        .rendement,
+                                                    (
                                                         scenarioComparaison
-                                                            .cultures[index]
-                                                            ?.culture.rendement
-                                                    )}
+                                                            ?.cultures?.[
+                                                            index
+                                                        ] || {}
+                                                    ).culture?.rendement
+                                                )}
                                             </p>
                                         )}
                                     </div>
@@ -666,6 +891,33 @@ export default function ScenarioForm({
                                                                 .interculture
                                                                 .couvert
                                                         }
+                                                        {scenario.type ===
+                                                            "previsionnel" &&
+                                                            scenarioComparaison &&
+                                                            scenarioComparaison
+                                                                .cultures[index]
+                                                                ?.interculture &&
+                                                            ligneCulture
+                                                                .interculture
+                                                                .couvert !==
+                                                                scenarioComparaison
+                                                                    .cultures[
+                                                                    index
+                                                                ]?.interculture
+                                                                    ?.couvert && (
+                                                                <span className="ml-2 text-sm text-blue-600 font-medium">
+                                                                    (T0:{" "}
+                                                                    {
+                                                                        scenarioComparaison
+                                                                            .cultures[
+                                                                            index
+                                                                        ]
+                                                                            ?.interculture
+                                                                            ?.couvert
+                                                                    }
+                                                                    )
+                                                                </span>
+                                                            )}
                                                     </p>
                                                 )}
                                             </div>
@@ -692,20 +944,18 @@ export default function ScenarioForm({
                                                                 .biomasse
                                                         }{" "}
                                                         T MS/ha
-                                                        {scenarioComparaison &&
-                                                            scenarioComparaison
-                                                                .cultures[index]
-                                                                ?.interculture &&
-                                                            getComparisonIndicator(
-                                                                ligneCulture
-                                                                    .interculture
-                                                                    .biomasse,
+                                                        {getComparisonIndicator(
+                                                            ligneCulture
+                                                                .interculture
+                                                                .biomasse ?? 0,
+                                                            (
                                                                 scenarioComparaison
-                                                                    .cultures[
+                                                                    ?.cultures?.[
                                                                     index
-                                                                ]?.interculture
-                                                                    ?.biomasse
-                                                            )}
+                                                                ] || {}
+                                                            ).interculture
+                                                                ?.biomasse ?? 0
+                                                        )}
                                                     </p>
                                                 )}
                                             </div>
@@ -1053,6 +1303,20 @@ export default function ScenarioForm({
                                                                 .phosphateP
                                                         }{" "}
                                                         kg P/ha
+                                                        {getComparisonIndicator(
+                                                            ligneCulture
+                                                                .fumureFond
+                                                                .phosphateP ??
+                                                                0,
+                                                            (
+                                                                scenarioComparaison
+                                                                    ?.cultures?.[
+                                                                    index
+                                                                ] || {}
+                                                            ).fumureFond
+                                                                ?.phosphateP ??
+                                                                0
+                                                        )}
                                                     </p>
                                                 )}
                                             </div>
@@ -1080,6 +1344,18 @@ export default function ScenarioForm({
                                                                 .potasseK
                                                         }{" "}
                                                         kg K/ha
+                                                        {getComparisonIndicator(
+                                                            ligneCulture
+                                                                .fumureFond
+                                                                .potasseK ?? 0,
+                                                            (
+                                                                scenarioComparaison
+                                                                    ?.cultures?.[
+                                                                    index
+                                                                ] || {}
+                                                            ).fumureFond
+                                                                ?.potasseK ?? 0
+                                                        )}
                                                     </p>
                                                 )}
                                             </div>

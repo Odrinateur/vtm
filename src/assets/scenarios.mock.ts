@@ -99,16 +99,17 @@ export interface ResultatScenario {
 }
 
 export const scenarios: Scenario[] = [
+    // EARL DUPONT
     {
         id: "earl-dupont-t0",
         exploitationId: "earl-dupont",
         type: "T0",
         nom: "Scénario initial T0 (Récolte 2024)",
         annee: 2024,
-        isEmpty: true,
+        isEmpty: false,
         iae: {
-            pourcentageIAE: 0,
-            tailleMoyenneParcelles: 0,
+            pourcentageIAE: 5,
+            tailleMoyenneParcelles: 14,
             certificationEnvironnementale: "NA",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
@@ -119,7 +120,67 @@ export const scenarios: Scenario[] = [
             amendementCalcique: "Carbonate de calcium",
             quantiteHectare: 0,
         },
-        cultures: [],
+        cultures: [
+            {
+                culture: {
+                    id: "ble-tendre-dupont-t0",
+                    culture: "Blé tendre d'hiver",
+                    rendement: 7.2,
+                    semis: "2023-10-15",
+                    recolte: "2024-07-15",
+                    surface: 22,
+                },
+                interculture: {
+                    couvert: "Moutarde",
+                    biomasse: 2.5,
+                    semis: "2023-08-20",
+                    destruction: "2023-10-10",
+                },
+                amendementOrganique1: {
+                    pro: "Fumier de bovins",
+                    quantite: 18,
+                    unite: "T/ha",
+                    inhibiteurNitrification: false,
+                    enfouissementMaterielDelais: "Buse et rampe < 4h",
+                },
+                fertilisationAzotee1: {
+                    engraisMineral: "N - Ammonium 33,5",
+                    quantite: 140,
+                    unite: "kg N/ha",
+                    inhibiteurNitrification: false,
+                },
+                fumureFond: {
+                    phosphateP: 60,
+                    potasseK: 120,
+                },
+            },
+            {
+                culture: {
+                    id: "colza-dupont-t0",
+                    culture: "Colza d'hiver",
+                    rendement: 3.6,
+                    semis: "2023-08-25",
+                    recolte: "2024-07-10",
+                    surface: 13,
+                },
+                interculture: {
+                    couvert: "Radis fourrager",
+                    biomasse: 2.8,
+                    semis: "2023-07-30",
+                    destruction: "2023-08-20",
+                },
+                fertilisationAzotee1: {
+                    engraisMineral: "N - Ammonium 33,5",
+                    quantite: 170,
+                    unite: "kg N/ha",
+                    inhibiteurNitrification: false,
+                },
+                fumureFond: {
+                    phosphateP: 80,
+                    potasseK: 150,
+                },
+            },
+        ],
     },
     {
         id: "earl-dupont-previsionnel",
@@ -127,22 +188,77 @@ export const scenarios: Scenario[] = [
         type: "previsionnel",
         nom: "Scénario A reconçu (Prévision 2027)",
         annee: 2027,
-        isEmpty: true,
+        isEmpty: false,
         iae: {
-            pourcentageIAE: 0,
-            tailleMoyenneParcelles: 0,
-            certificationEnvironnementale: "NA",
+            pourcentageIAE: 8,
+            tailleMoyenneParcelles: 12,
+            certificationEnvironnementale: "HVE",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: false,
+            utilisationOAD: true,
         },
         chaulage: {
             nombreHectare: 0,
             amendementCalcique: "Carbonate de calcium",
-            quantiteHectare: 0,
+            quantiteHectare: 2,
         },
-        cultures: [],
+        cultures: [
+            {
+                culture: {
+                    id: "ble-tendre-dupont-prev",
+                    culture: "Blé tendre d'hiver",
+                    rendement: 7.8,
+                    semis: "2026-10-20",
+                    recolte: "2027-07-20",
+                    surface: 18,
+                },
+                interculture: {
+                    couvert: "Mélange légumineuses",
+                    biomasse: 3.5,
+                    semis: "2026-07-25",
+                    destruction: "2026-10-15",
+                },
+                amendementOrganique1: {
+                    pro: "Compost végétal",
+                    quantite: 15,
+                    unite: "T/ha",
+                    inhibiteurNitrification: false,
+                    enfouissementMaterielDelais: "Compost végétal",
+                },
+                fertilisationAzotee1: {
+                    engraisMineral: "N - Ammonium 33,5",
+                    quantite: 120,
+                    unite: "kg N/ha",
+                    inhibiteurNitrification: true,
+                },
+                fumureFond: {
+                    phosphateP: 50,
+                    potasseK: 100,
+                },
+            },
+            {
+                culture: {
+                    id: "luzerne-dupont-prev",
+                    culture: "Luzerne",
+                    rendement: 11.5,
+                    semis: "2027-03-15",
+                    recolte: "2027-09-30",
+                    surface: 7,
+                },
+                interculture: {
+                    couvert: "Pas de couvert",
+                    biomasse: 0,
+                    semis: "",
+                    destruction: "",
+                },
+                fumureFond: {
+                    phosphateP: 40,
+                    potasseK: 200,
+                },
+            },
+        ],
     },
+    // SCEA MARTIN
     {
         id: "scea-martin-t0",
         exploitationId: "scea-martin",
@@ -187,7 +303,7 @@ export const scenarios: Scenario[] = [
         },
         cultures: [],
     },
-    // Ajout des scénarios pour les nouvelles exploitations
+    // GAEC BERNARD
     {
         id: "gaec-bernard-t0",
         exploitationId: "gaec-bernard",
@@ -294,6 +410,7 @@ export const scenarios: Scenario[] = [
             },
         ],
     },
+    // EARL MOREAU
     {
         id: "earl-moreau-t0",
         exploitationId: "earl-moreau",
@@ -426,6 +543,7 @@ export const scenarios: Scenario[] = [
             },
         ],
     },
+    // SCEA ROUSSEAU
     {
         id: "scea-rousseau-t0",
         exploitationId: "scea-rousseau",
@@ -532,7 +650,7 @@ export const scenarios: Scenario[] = [
             },
         ],
     },
-    // Scénarios pour les exploitations restantes
+    // GAEC LEFEBVRE
     {
         id: "gaec-lefebvre-t0",
         exploitationId: "gaec-lefebvre",
@@ -625,6 +743,7 @@ export const scenarios: Scenario[] = [
             },
         ],
     },
+    // EARL PETIT
     {
         id: "earl-petit-t0",
         exploitationId: "earl-petit",
@@ -763,6 +882,7 @@ export const scenarios: Scenario[] = [
             },
         ],
     },
+    // SCEA LAMBERT
     {
         id: "scea-lambert-t0",
         exploitationId: "scea-lambert",
@@ -855,6 +975,7 @@ export const scenarios: Scenario[] = [
             },
         ],
     },
+    // GAEC SIMON
     {
         id: "gaec-simon-t0",
         exploitationId: "gaec-simon",
@@ -968,6 +1089,7 @@ export const scenarios: Scenario[] = [
             },
         ],
     },
+    // EARL GARCIA
     {
         id: "earl-garcia-t0",
         exploitationId: "earl-garcia",
@@ -1271,6 +1393,7 @@ export const importData: Record<string, Scenario> = {
 };
 
 export const resultatsScenarios: ResultatScenario[] = [
+    // EARL DUPONT
     {
         scenarioId: "earl-dupont-t0",
         ddc: 245,
@@ -1328,12 +1451,504 @@ export const resultatsScenarios: ResultatScenario[] = [
                 emissions: 1.8,
                 facteurEmissions: 0.23,
             },
+            { culture: "Luzerne", emissions: 0.3, facteurEmissions: 0.025 },
+        ],
+    },
+    // SCEA MARTIN
+    {
+        scenarioId: "scea-martin-t0",
+        ddc: 255,
+        carboneHumifie: 1.0,
+        bilanGES: {
+            stockage: -0.3,
+            emissions: {
+                total: 4.0,
+                fertilisations: 2.6,
+                mineraleDirecte: 1.3,
+                mineraleAmont: 0.7,
+                organiqueDirecteResidus: 0.2,
+                organiqueAmont: 0.2,
+                volatilisationLixiviation: 0.5,
+                carburants: 0.7,
+                chaulage: 0.0,
+            },
+            bilanNet: 3.5,
+        },
+        emissionsParCulture: [
+            { culture: "Orge d'hiver", emissions: 2.2, facteurEmissions: 0.31 },
+            {
+                culture: "Pois protéagineux",
+                emissions: 1.8,
+                facteurEmissions: 0.21,
+            },
+        ],
+    },
+    {
+        scenarioId: "scea-martin-previsionnel",
+        ddc: 275,
+        carboneHumifie: 1.5,
+        bilanGES: {
+            stockage: 0.2,
+            emissions: {
+                total: 3.2,
+                fertilisations: 1.8,
+                mineraleDirecte: 0.9,
+                mineraleAmont: 0.5,
+                organiqueDirecteResidus: 0.2,
+                organiqueAmont: 0.1,
+                volatilisationLixiviation: 0.3,
+                carburants: 0.6,
+                chaulage: 0.2,
+            },
+            bilanNet: 2.6,
+        },
+        emissionsParCulture: [
+            { culture: "Orge d'hiver", emissions: 1.4, facteurEmissions: 0.19 },
+            {
+                culture: "Pois protéagineux",
+                emissions: 1.0,
+                facteurEmissions: 0.13,
+            },
+        ],
+    },
+    // GAEC BERNARD
+    {
+        scenarioId: "gaec-bernard-t0",
+        ddc: 240,
+        carboneHumifie: 1.1,
+        bilanGES: {
+            stockage: -0.4,
+            emissions: {
+                total: 3.8,
+                fertilisations: 2.4,
+                mineraleDirecte: 1.2,
+                mineraleAmont: 0.6,
+                organiqueDirecteResidus: 0.2,
+                organiqueAmont: 0.2,
+                volatilisationLixiviation: 0.5,
+                carburants: 0.7,
+                chaulage: 0.0,
+            },
+            bilanNet: 3.4,
+        },
+        emissionsParCulture: [
+            {
+                culture: "Blé tendre d'hiver",
+                emissions: 2.0,
+                facteurEmissions: 0.28,
+            },
+            { culture: "Tournesol", emissions: 1.4, facteurEmissions: 0.18 },
+        ],
+    },
+    {
+        scenarioId: "gaec-bernard-previsionnel",
+        ddc: 265,
+        carboneHumifie: 1.6,
+        bilanGES: {
+            stockage: 0.4,
+            emissions: {
+                total: 2.9,
+                fertilisations: 1.6,
+                mineraleDirecte: 0.8,
+                mineraleAmont: 0.4,
+                organiqueDirecteResidus: 0.1,
+                organiqueAmont: 0.1,
+                volatilisationLixiviation: 0.2,
+                carburants: 0.5,
+                chaulage: 0.2,
+            },
+            bilanNet: 2.5,
+        },
+        emissionsParCulture: [
+            {
+                culture: "Blé tendre d'hiver",
+                emissions: 1.2,
+                facteurEmissions: 0.16,
+            },
+            { culture: "Soja", emissions: 0.8, facteurEmissions: 0.09 },
+        ],
+    },
+    // EARL MOREAU
+    {
+        scenarioId: "earl-moreau-t0",
+        ddc: 260,
+        carboneHumifie: 1.3,
+        bilanGES: {
+            stockage: -0.2,
+            emissions: {
+                total: 3.9,
+                fertilisations: 2.5,
+                mineraleDirecte: 1.3,
+                mineraleAmont: 0.7,
+                organiqueDirecteResidus: 0.2,
+                organiqueAmont: 0.2,
+                volatilisationLixiviation: 0.5,
+                carburants: 0.7,
+                chaulage: 0.0,
+            },
+            bilanNet: 3.7,
+        },
+        emissionsParCulture: [
+            { culture: "Maïs grain", emissions: 2.1, facteurEmissions: 0.29 },
+            { culture: "Tournesol", emissions: 1.6, facteurEmissions: 0.21 },
+        ],
+    },
+    {
+        scenarioId: "earl-moreau-previsionnel",
+        ddc: 280,
+        carboneHumifie: 1.7,
+        bilanGES: {
+            stockage: 0.5,
+            emissions: {
+                total: 2.8,
+                fertilisations: 1.5,
+                mineraleDirecte: 0.7,
+                mineraleAmont: 0.4,
+                organiqueDirecteResidus: 0.1,
+                organiqueAmont: 0.1,
+                volatilisationLixiviation: 0.2,
+                carburants: 0.5,
+                chaulage: 0.2,
+            },
+            bilanNet: 2.3,
+        },
+        emissionsParCulture: [
+            { culture: "Maïs grain", emissions: 1.1, facteurEmissions: 0.15 },
+            { culture: "Soja", emissions: 0.7, facteurEmissions: 0.08 },
+        ],
+    },
+    // SCEA ROUSSEAU
+    {
+        scenarioId: "scea-rousseau-t0",
+        ddc: 250,
+        carboneHumifie: 1.0,
+        bilanGES: {
+            stockage: -0.3,
+            emissions: {
+                total: 3.7,
+                fertilisations: 2.3,
+                mineraleDirecte: 1.1,
+                mineraleAmont: 0.6,
+                organiqueDirecteResidus: 0.2,
+                organiqueAmont: 0.2,
+                volatilisationLixiviation: 0.4,
+                carburants: 0.6,
+                chaulage: 0.0,
+            },
+            bilanNet: 3.4,
+        },
+        emissionsParCulture: [
+            {
+                culture: "Blé tendre d'hiver",
+                emissions: 2.0,
+                facteurEmissions: 0.27,
+            },
+            { culture: "Orge d'hiver", emissions: 1.3, facteurEmissions: 0.17 },
+        ],
+    },
+    {
+        scenarioId: "scea-rousseau-previsionnel",
+        ddc: 270,
+        carboneHumifie: 1.4,
+        bilanGES: {
+            stockage: 0.3,
+            emissions: {
+                total: 2.7,
+                fertilisations: 1.4,
+                mineraleDirecte: 0.7,
+                mineraleAmont: 0.3,
+                organiqueDirecteResidus: 0.1,
+                organiqueAmont: 0.1,
+                volatilisationLixiviation: 0.2,
+                carburants: 0.4,
+                chaulage: 0.2,
+            },
+            bilanNet: 2.1,
+        },
+        emissionsParCulture: [
+            {
+                culture: "Blé tendre d'hiver",
+                emissions: 1.1,
+                facteurEmissions: 0.15,
+            },
+            { culture: "Orge d'hiver", emissions: 0.7, facteurEmissions: 0.09 },
+        ],
+    },
+    // GAEC LEFEBVRE
+    {
+        scenarioId: "gaec-lefebvre-t0",
+        ddc: 235,
+        carboneHumifie: 1.2,
+        bilanGES: {
+            stockage: -0.2,
+            emissions: {
+                total: 3.6,
+                fertilisations: 2.2,
+                mineraleDirecte: 1.1,
+                mineraleAmont: 0.5,
+                organiqueDirecteResidus: 0.2,
+                organiqueAmont: 0.2,
+                volatilisationLixiviation: 0.4,
+                carburants: 0.6,
+                chaulage: 0.0,
+            },
+            bilanNet: 3.4,
+        },
+        emissionsParCulture: [
+            {
+                culture: "Betterave sucrière",
+                emissions: 2.1,
+                facteurEmissions: 0.28,
+            },
+            {
+                culture: "Blé tendre d'hiver",
+                emissions: 1.2,
+                facteurEmissions: 0.16,
+            },
+        ],
+    },
+    {
+        scenarioId: "gaec-lefebvre-previsionnel",
+        ddc: 255,
+        carboneHumifie: 1.5,
+        bilanGES: {
+            stockage: 0.2,
+            emissions: {
+                total: 2.5,
+                fertilisations: 1.2,
+                mineraleDirecte: 0.6,
+                mineraleAmont: 0.3,
+                organiqueDirecteResidus: 0.1,
+                organiqueAmont: 0.1,
+                volatilisationLixiviation: 0.2,
+                carburants: 0.4,
+                chaulage: 0.1,
+            },
+            bilanNet: 1.9,
+        },
+        emissionsParCulture: [
+            {
+                culture: "Betterave sucrière",
+                emissions: 1.0,
+                facteurEmissions: 0.13,
+            },
+            {
+                culture: "Blé tendre d'hiver",
+                emissions: 0.7,
+                facteurEmissions: 0.09,
+            },
+        ],
+    },
+    // EARL PETIT
+    {
+        scenarioId: "earl-petit-t0",
+        ddc: 230,
+        carboneHumifie: 1.1,
+        bilanGES: {
+            stockage: -0.1,
+            emissions: {
+                total: 3.5,
+                fertilisations: 2.1,
+                mineraleDirecte: 1.0,
+                mineraleAmont: 0.5,
+                organiqueDirecteResidus: 0.2,
+                organiqueAmont: 0.2,
+                volatilisationLixiviation: 0.3,
+                carburants: 0.5,
+                chaulage: 0.0,
+            },
+            bilanNet: 3.4,
+        },
+        emissionsParCulture: [
             {
                 culture: "Colza d'hiver",
-                emissions: 1.0,
+                emissions: 1.8,
                 facteurEmissions: 0.24,
             },
-            { culture: "Luzerne", emissions: 0.3, facteurEmissions: 0.025 },
+            {
+                culture: "Blé tendre d'hiver",
+                emissions: 1.1,
+                facteurEmissions: 0.15,
+            },
+        ],
+    },
+    {
+        scenarioId: "earl-petit-previsionnel",
+        ddc: 250,
+        carboneHumifie: 1.4,
+        bilanGES: {
+            stockage: 0.1,
+            emissions: {
+                total: 2.3,
+                fertilisations: 1.0,
+                mineraleDirecte: 0.5,
+                mineraleAmont: 0.2,
+                organiqueDirecteResidus: 0.1,
+                organiqueAmont: 0.1,
+                volatilisationLixiviation: 0.1,
+                carburants: 0.3,
+                chaulage: 0.1,
+            },
+            bilanNet: 1.7,
+        },
+        emissionsParCulture: [
+            {
+                culture: "Colza d'hiver",
+                emissions: 0.7,
+                facteurEmissions: 0.09,
+            },
+            {
+                culture: "Blé tendre d'hiver",
+                emissions: 0.5,
+                facteurEmissions: 0.06,
+            },
+        ],
+    },
+    // SCEA LAMBERT
+    {
+        scenarioId: "scea-lambert-t0",
+        ddc: 240,
+        carboneHumifie: 1.0,
+        bilanGES: {
+            stockage: -0.2,
+            emissions: {
+                total: 3.4,
+                fertilisations: 2.0,
+                mineraleDirecte: 1.0,
+                mineraleAmont: 0.5,
+                organiqueDirecteResidus: 0.2,
+                organiqueAmont: 0.2,
+                volatilisationLixiviation: 0.3,
+                carburants: 0.5,
+                chaulage: 0.0,
+            },
+            bilanNet: 3.2,
+        },
+        emissionsParCulture: [
+            { culture: "Orge d'hiver", emissions: 1.7, facteurEmissions: 0.22 },
+            { culture: "Pois d'hiver", emissions: 1.0, facteurEmissions: 0.12 },
+        ],
+    },
+    {
+        scenarioId: "scea-lambert-previsionnel",
+        ddc: 260,
+        carboneHumifie: 1.3,
+        bilanGES: {
+            stockage: 0.2,
+            emissions: {
+                total: 2.2,
+                fertilisations: 0.9,
+                mineraleDirecte: 0.4,
+                mineraleAmont: 0.2,
+                organiqueDirecteResidus: 0.1,
+                organiqueAmont: 0.1,
+                volatilisationLixiviation: 0.1,
+                carburants: 0.2,
+                chaulage: 0.1,
+            },
+            bilanNet: 1.5,
+        },
+        emissionsParCulture: [
+            { culture: "Orge d'hiver", emissions: 0.6, facteurEmissions: 0.08 },
+            { culture: "Pois d'hiver", emissions: 0.4, facteurEmissions: 0.05 },
+        ],
+    },
+    // GAEC SIMON
+    {
+        scenarioId: "gaec-simon-t0",
+        ddc: 225,
+        carboneHumifie: 1.0,
+        bilanGES: {
+            stockage: -0.1,
+            emissions: {
+                total: 3.2,
+                fertilisations: 1.8,
+                mineraleDirecte: 0.9,
+                mineraleAmont: 0.4,
+                organiqueDirecteResidus: 0.1,
+                organiqueAmont: 0.1,
+                volatilisationLixiviation: 0.1,
+                carburants: 0.3,
+                chaulage: 0.0,
+            },
+            bilanNet: 3.1,
+        },
+        emissionsParCulture: [
+            { culture: "Blé dur", emissions: 1.5, facteurEmissions: 0.2 },
+            { culture: "Lentille", emissions: 0.8, facteurEmissions: 0.1 },
+        ],
+    },
+    {
+        scenarioId: "gaec-simon-previsionnel",
+        ddc: 245,
+        carboneHumifie: 1.2,
+        bilanGES: {
+            stockage: 0.1,
+            emissions: {
+                total: 1.8,
+                fertilisations: 0.7,
+                mineraleDirecte: 0.3,
+                mineraleAmont: 0.1,
+                organiqueDirecteResidus: 0.1,
+                organiqueAmont: 0.1,
+                volatilisationLixiviation: 0.1,
+                carburants: 0.1,
+                chaulage: 0.1,
+            },
+            bilanNet: 1.1,
+        },
+        emissionsParCulture: [
+            { culture: "Blé dur", emissions: 0.5, facteurEmissions: 0.07 },
+            { culture: "Lentille", emissions: 0.3, facteurEmissions: 0.04 },
+        ],
+    },
+    // EARL GARCIA
+    {
+        scenarioId: "earl-garcia-t0",
+        ddc: 220,
+        carboneHumifie: 0.9,
+        bilanGES: {
+            stockage: -0.1,
+            emissions: {
+                total: 2.8,
+                fertilisations: 1.2,
+                mineraleDirecte: 0.6,
+                mineraleAmont: 0.3,
+                organiqueDirecteResidus: 0.1,
+                organiqueAmont: 0.1,
+                volatilisationLixiviation: 0.1,
+                carburants: 0.2,
+                chaulage: 0.0,
+            },
+            bilanNet: 2.7,
+        },
+        emissionsParCulture: [
+            { culture: "Vigne", emissions: 1.2, facteurEmissions: 0.16 },
+            { culture: "Blé dur", emissions: 0.7, facteurEmissions: 0.09 },
+        ],
+    },
+    {
+        scenarioId: "earl-garcia-previsionnel",
+        ddc: 235,
+        carboneHumifie: 1.1,
+        bilanGES: {
+            stockage: 0.1,
+            emissions: {
+                total: 1.5,
+                fertilisations: 0.5,
+                mineraleDirecte: 0.2,
+                mineraleAmont: 0.1,
+                organiqueDirecteResidus: 0.1,
+                organiqueAmont: 0.1,
+                volatilisationLixiviation: 0.1,
+                carburants: 0.1,
+                chaulage: 0.1,
+            },
+            bilanNet: 1.0,
+        },
+        emissionsParCulture: [
+            { culture: "Vigne", emissions: 0.5, facteurEmissions: 0.07 },
+            { culture: "Blé dur", emissions: 0.3, facteurEmissions: 0.04 },
         ],
     },
 ];
