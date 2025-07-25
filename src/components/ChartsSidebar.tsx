@@ -75,9 +75,9 @@ export default function ChartsSidebar({
     const emissionsData = resultats?.emissionsParCulture || [];
 
     return (
-        <div className="flex flex-col h-full">
+        <div className="top-0 flex flex-col h-full">
             {/* En-tête - maintenant sticky dans la sidebar */}
-            <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center z-10">
+            <div className="bg-white p-4 flex justify-between items-center z-10">
                 <div>
                     <h3 className="text-lg font-semibold text-gray-900">
                         Perf agro détaillées - {scenario.nom}
@@ -108,7 +108,7 @@ export default function ChartsSidebar({
                 </button>
             </div>
 
-            <div className="p-4 space-y-6">
+            <div className="p-2 space-y-6">
                 {/* Indicateurs clés */}
                 {resultats && (
                     <div className="bg-gray-50 rounded-lg p-4">

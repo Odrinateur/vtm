@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+.is-fixed {
+    position: fixed !important;
+    z-index: 50;
+}

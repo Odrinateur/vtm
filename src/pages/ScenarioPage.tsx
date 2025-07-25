@@ -1,14 +1,12 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
 import Layout from "../Layout";
-import exploitations, {
-    type ContexteExploitation,
-} from "../assets/exploitations.mock";
+import exploitations from "../assets/exploitations.mock";
 import {
     scenarios,
     resultatsScenarios,
     importData,
 } from "../assets/scenarios.mock";
+import type { Scenario, ResultatScenario } from "../assets/scenarios.mock";
 import ScenarioForm from "../components/ScenarioForm";
 import ChartsSidebar from "../components/ChartsSidebar";
 
@@ -16,33 +14,31 @@ interface ScenarioPageProps {
     type: "T0" | "previsionnel";
     id: string;
     editMode?: boolean;
-    onEditModeChange?: (edit: boolean) => void;
-    onSave?: (newContexte: ContexteExploitation) => void;
+    showCharts: boolean;
+    setShowCharts: (show: boolean) => void;
+    scenario: Scenario;
+    onScenarioUpdate: (s: Scenario) => void;
+    scenarioComparaison?: Scenario;
+    resultatsComparaison?: ResultatScenario;
+    tableMode: boolean;
 }
 
 export default function ScenarioPage({
     type,
     id,
     editMode,
+    showCharts,
+    setShowCharts,
+    scenario,
+    onScenarioUpdate,
+    scenarioComparaison,
+    resultatsComparaison,
+    tableMode,
 }: ScenarioPageProps) {
-    const [showCharts, setShowCharts] = useState(false);
-    const [currentScenario, setCurrentScenario] = useState(() =>
-        scenarios.find((s) => s.exploitationId === id && s.type === type)
-    );
-
-    useEffect(() => {
-        const found = scenarios.find(
-            (s) => s.exploitationId === id && s.type === type
-        );
-        setCurrentScenario(found);
-        setShowCharts(false); // optionnel : ferme les graphiques lors du changement
-    }, [id, type]);
-
     const exploitation = exploitations.find((exp) => exp.id === id);
     const resultats = resultatsScenarios.find(
-        (r) => r.scenarioId === currentScenario?.id
+        (r) => r.scenarioId === scenario?.id
     );
-
     // Pour la comparaison avec T0 (si on est sur le scénario prévisionnel)
     const scenarioT0 =
         type === "previsionnel"
@@ -52,7 +48,7 @@ export default function ScenarioPage({
         ? resultatsScenarios.find((r) => r.scenarioId === scenarioT0.id)
         : null;
 
-    if (!exploitation || !currentScenario) {
+    if (!exploitation || !scenario) {
         return (
             <Layout>
                 <div className="text-center">
@@ -71,53 +67,25 @@ export default function ScenarioPage({
     }
 
     const handleImportData = () => {
-        const importedData = importData[currentScenario.id];
+        const importedData = importData[scenario.id];
         if (importedData) {
-            setCurrentScenario({ ...importedData });
+            onScenarioUpdate({ ...importedData });
             // Mettre à jour dans le tableau global (simulation)
-            const index = scenarios.findIndex(
-                (s) => s.id === currentScenario.id
-            );
+            const index = scenarios.findIndex((s) => s.id === scenario.id);
             if (index !== -1) {
                 scenarios[index] = { ...importedData };
             }
         }
     };
 
-    const navigateToOtherScenario = () => {
-        const otherType = type === "T0" ? "previsionnel" : "T0";
-        return `/exploitation/${id}/scenario/${otherType}`;
-    };
-
     return (
-        <div className="flex h-full">
+        <div className="flex gap-4">
             {/* Contenu principal */}
-            <div className="flex-1 flex flex-col min-w-0">
-                <div className="flex flex-col h-full p-6">
-                    {/* Actions */}
-                    <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg border mb-6 flex-shrink-0">
-                        <div className="flex space-x-2">
-                            <Link
-                                to={navigateToOtherScenario()}
-                                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                            >
-                                {type === "T0"
-                                    ? "Scénario Prévisionnel"
-                                    : "Scénario T0"}
-                            </Link>
-                            <button
-                                onClick={() => setShowCharts(!showCharts)}
-                                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                            >
-                                {showCharts ? "Masquer" : "Afficher"} Perf agro
-                                détaillées
-                            </button>
-                        </div>
-                    </div>
-
+            <div className={`flex-1 ${showCharts ? "w-2/3" : "w-full"}`}>
+                <div className="flex flex-col h-full">
                     {/* Contenu du scénario */}
-                    <div className="flex-1 bg-white rounded-lg border overflow-hidden min-h-0">
-                        {currentScenario.isEmpty ? (
+                    <div className="flex-1 bg-white rounded-lg border-gray-200 overflow-hidden">
+                        {scenario.isEmpty ? (
                             <div className="flex items-center justify-center h-full py-10">
                                 <div className="text-center">
                                     <div className="w-24 h-24 mx-auto mb-4 bg-gray-200 rounded-full flex items-center justify-center">
@@ -146,7 +114,7 @@ export default function ScenarioPage({
                                         onClick={handleImportData}
                                         className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
                                     >
-                                        {currentScenario.type === "T0"
+                                        {scenario.type === "T0"
                                             ? "Importer les données"
                                             : "Importer depuis T0"}
                                     </button>
@@ -155,10 +123,15 @@ export default function ScenarioPage({
                         ) : (
                             <div className="h-full overflow-y-auto">
                                 <ScenarioForm
-                                    scenario={currentScenario}
+                                    scenario={scenario}
                                     editMode={editMode ?? false}
-                                    scenarioComparaison={scenarioT0}
-                                    resultatsComparaison={resultatsT0}
+                                    scenarioComparaison={
+                                        scenarioComparaison ?? scenarioT0
+                                    }
+                                    resultatsComparaison={
+                                        resultatsComparaison ?? resultatsT0
+                                    }
+                                    tableMode={tableMode}
                                 />
                             </div>
                         )}
@@ -167,10 +140,10 @@ export default function ScenarioPage({
             </div>
 
             {/* Sidebar des charts */}
-            {showCharts && !currentScenario.isEmpty && (
-                <div className="w-1/3 border-l border-gray-200 bg-white sticky top-0 h-full overflow-y-auto">
+            {showCharts && !scenario.isEmpty && (
+                <div className="w-1/3  border-gray-200 bg-white relative">
                     <ChartsSidebar
-                        scenario={currentScenario ?? undefined}
+                        scenario={scenario ?? undefined}
                         resultats={resultats ?? undefined}
                         scenarioT0={scenarioT0 ?? undefined}
                         resultatsT0={resultatsT0 ?? undefined}
