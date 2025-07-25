@@ -105,12 +105,6 @@ export default function ScenarioPage({
                                     ? "Scénario Prévisionnel"
                                     : "Scénario T0"}
                             </Link>
-                            <Link
-                                to={`/exploitation/${id}/comparaison`}
-                                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                            >
-                                Comparaison
-                            </Link>
                             <button
                                 onClick={() => setShowCharts(!showCharts)}
                                 className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
