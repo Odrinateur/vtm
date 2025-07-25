@@ -90,12 +90,12 @@ export default function ScenarioPage({
     };
 
     return (
-        <div className="flex">
+        <div className="flex h-full">
             {/* Contenu principal */}
-            <div className="flex-1">
+            <div className="flex-1 flex flex-col min-w-0">
                 <div className="flex flex-col h-full p-6">
                     {/* Actions */}
-                    <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg border mb-6">
+                    <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg border mb-6 flex-shrink-0">
                         <div className="flex space-x-2">
                             <Link
                                 to={navigateToOtherScenario()}
@@ -116,7 +116,7 @@ export default function ScenarioPage({
                     </div>
 
                     {/* Contenu du scénario */}
-                    <div className="flex-1 bg-white rounded-lg border overflow-hidden">
+                    <div className="flex-1 bg-white rounded-lg border overflow-hidden min-h-0">
                         {currentScenario.isEmpty ? (
                             <div className="flex items-center justify-center h-full py-10">
                                 <div className="text-center">
@@ -168,7 +168,7 @@ export default function ScenarioPage({
 
             {/* Sidebar des charts */}
             {showCharts && !currentScenario.isEmpty && (
-                <div className="w-1/3 h-screen overflow-y-auto border-l border-gray-200 bg-white relative">
+                <div className="w-1/3 border-l border-gray-200 bg-white sticky top-0 h-full overflow-y-auto">
                     <ChartsSidebar
                         scenario={currentScenario ?? undefined}
                         resultats={resultats ?? undefined}
