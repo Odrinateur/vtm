@@ -19,11 +19,11 @@ export interface AmendementOrganique {
     quantite: number;
     unite: string;
     inhibiteurNitrification: boolean;
-    enfouissement: boolean;
+    enfouissementMaterielDelais: string;
 }
 
 export interface FertilisationAzotee {
-    formeEngrais: string;
+    engraisMineral: string;
     quantite: number;
     unite: string;
     inhibiteurNitrification: boolean;
@@ -55,14 +55,15 @@ export interface IAE {
 }
 
 export interface Chaulage {
-    amendementCalcique: number;
+    nombreHectare: number;
+    amendementCalcique: string;
     quantiteHectare: number;
 }
 
 export interface Scenario {
     id: string;
     exploitationId: string;
-    type: 'T0' | 'previsionnel';
+    type: "T0" | "previsionnel";
     nom: string;
     annee: number;
     iae: IAE;
@@ -111,13 +112,14 @@ export const scenarios: Scenario[] = [
             certificationEnvironnementale: "NA",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: false
+            utilisationOAD: false,
         },
         chaulage: {
-            amendementCalcique: 0,
-            quantiteHectare: 0
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 0,
         },
-        cultures: []
+        cultures: [],
     },
     {
         id: "earl-dupont-previsionnel",
@@ -132,13 +134,14 @@ export const scenarios: Scenario[] = [
             certificationEnvironnementale: "NA",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: false
+            utilisationOAD: false,
         },
         chaulage: {
-            amendementCalcique: 0,
-            quantiteHectare: 0
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 0,
         },
-        cultures: []
+        cultures: [],
     },
     {
         id: "scea-martin-t0",
@@ -153,13 +156,14 @@ export const scenarios: Scenario[] = [
             certificationEnvironnementale: "NA",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: false
+            utilisationOAD: false,
         },
         chaulage: {
-            amendementCalcique: 0,
-            quantiteHectare: 0
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 0,
         },
-        cultures: []
+        cultures: [],
     },
     {
         id: "scea-martin-previsionnel",
@@ -174,13 +178,14 @@ export const scenarios: Scenario[] = [
             certificationEnvironnementale: "NA",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: false
+            utilisationOAD: false,
         },
         chaulage: {
-            amendementCalcique: 0,
-            quantiteHectare: 0
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 0,
         },
-        cultures: []
+        cultures: [],
     },
     // Ajout des scénarios pour les nouvelles exploitations
     {
@@ -196,11 +201,12 @@ export const scenarios: Scenario[] = [
             certificationEnvironnementale: "NA",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: false
+            utilisationOAD: false,
         },
         chaulage: {
-            amendementCalcique: 1,
-            quantiteHectare: 1.5
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 1.5,
         },
         cultures: [
             {
@@ -210,27 +216,27 @@ export const scenarios: Scenario[] = [
                     rendement: 6.8,
                     semis: "2023-10-20",
                     recolte: "2024-07-20",
-                    surface: 30
+                    surface: 30,
                 },
                 amendementOrganique1: {
                     pro: "Fumier de bovins",
                     quantite: 25,
                     unite: "T/ha",
                     inhibiteurNitrification: false,
-                    enfouissement: true
+                    enfouissementMaterielDelais: "Buse et rampe < 4h",
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Ammonitrate 33.5%",
+                    engraisMineral: "N - Ammonium 33,5",
                     quantite: 140,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: false
+                    inhibiteurNitrification: false,
                 },
                 fumureFond: {
                     phosphateP: 50,
-                    potasseK: 100
-                }
-            }
-        ]
+                    potasseK: 100,
+                },
+            },
+        ],
     },
     {
         id: "gaec-bernard-previsionnel",
@@ -245,11 +251,12 @@ export const scenarios: Scenario[] = [
             certificationEnvironnementale: "HVE",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: true
+            utilisationOAD: true,
         },
         chaulage: {
-            amendementCalcique: 2,
-            quantiteHectare: 2.5
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 2.5,
         },
         cultures: [
             {
@@ -259,33 +266,33 @@ export const scenarios: Scenario[] = [
                     rendement: 7.2,
                     semis: "2026-10-25",
                     recolte: "2027-07-25",
-                    surface: 25
+                    surface: 25,
                 },
                 interculture: {
                     couvert: "Phacélie",
                     biomasse: 2.8,
                     semis: "2026-07-30",
-                    destruction: "2026-10-20"
+                    destruction: "2026-10-20",
                 },
                 amendementOrganique1: {
                     pro: "Compost végétal",
                     quantite: 18,
                     unite: "T/ha",
                     inhibiteurNitrification: false,
-                    enfouissement: true
+                    enfouissementMaterielDelais: "Compost végétal",
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Ammonitrate 33.5%",
+                    engraisMineral: "N - Ammonium 33.5 % 33.5%",
                     quantite: 110,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: true
+                    inhibiteurNitrification: true,
                 },
                 fumureFond: {
                     phosphateP: 45,
-                    potasseK: 90
-                }
-            }
-        ]
+                    potasseK: 90,
+                },
+            },
+        ],
     },
     {
         id: "earl-moreau-t0",
@@ -300,11 +307,12 @@ export const scenarios: Scenario[] = [
             certificationEnvironnementale: "NA",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: false
+            utilisationOAD: false,
         },
         chaulage: {
-            amendementCalcique: 0,
-            quantiteHectare: 0
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 0,
         },
         cultures: [
             {
@@ -314,18 +322,18 @@ export const scenarios: Scenario[] = [
                     rendement: 9.2,
                     semis: "2024-04-15",
                     recolte: "2024-10-15",
-                    surface: 35
+                    surface: 35,
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Urée 46%",
+                    engraisMineral: "N - Urée 46%%",
                     quantite: 180,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: false
+                    inhibiteurNitrification: false,
                 },
                 fumureFond: {
                     phosphateP: 70,
-                    potasseK: 140
-                }
+                    potasseK: 140,
+                },
             },
             {
                 culture: {
@@ -334,20 +342,20 @@ export const scenarios: Scenario[] = [
                     rendement: 2.8,
                     semis: "2024-04-20",
                     recolte: "2024-09-10",
-                    surface: 20
+                    surface: 20,
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Ammonitrate 33.5%",
+                    engraisMineral: "N - Ammonium 33.5 % 33.5%",
                     quantite: 80,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: false
+                    inhibiteurNitrification: false,
                 },
                 fumureFond: {
                     phosphateP: 60,
-                    potasseK: 120
-                }
-            }
-        ]
+                    potasseK: 120,
+                },
+            },
+        ],
     },
     {
         id: "earl-moreau-previsionnel",
@@ -362,11 +370,12 @@ export const scenarios: Scenario[] = [
             certificationEnvironnementale: "HVE",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: true
+            utilisationOAD: true,
         },
         chaulage: {
-            amendementCalcique: 1,
-            quantiteHectare: 1.2
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 1.2,
         },
         cultures: [
             {
@@ -376,24 +385,24 @@ export const scenarios: Scenario[] = [
                     rendement: 9.8,
                     semis: "2027-04-20",
                     recolte: "2027-10-20",
-                    surface: 30
+                    surface: 30,
                 },
                 interculture: {
                     couvert: "Seigle",
                     biomasse: 3.2,
                     semis: "2026-10-25",
-                    destruction: "2027-04-15"
+                    destruction: "2027-04-15",
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Urée protégée NBP",
+                    engraisMineral: "Urée protégée NBP",
                     quantite: 160,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: true
+                    inhibiteurNitrification: true,
                 },
                 fumureFond: {
                     phosphateP: 65,
-                    potasseK: 130
-                }
+                    potasseK: 130,
+                },
             },
             {
                 culture: {
@@ -402,20 +411,20 @@ export const scenarios: Scenario[] = [
                     rendement: 3.2,
                     semis: "2027-05-10",
                     recolte: "2027-09-25",
-                    surface: 25
+                    surface: 25,
                 },
                 interculture: {
                     couvert: "Avoine",
                     biomasse: 2.5,
                     semis: "2026-09-30",
-                    destruction: "2027-05-05"
+                    destruction: "2027-05-05",
                 },
                 fumureFond: {
                     phosphateP: 50,
-                    potasseK: 150
-                }
-            }
-        ]
+                    potasseK: 150,
+                },
+            },
+        ],
     },
     {
         id: "scea-rousseau-t0",
@@ -430,11 +439,12 @@ export const scenarios: Scenario[] = [
             certificationEnvironnementale: "NA",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: false
+            utilisationOAD: false,
         },
         chaulage: {
-            amendementCalcique: 0,
-            quantiteHectare: 0
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 0,
         },
         cultures: [
             {
@@ -444,27 +454,27 @@ export const scenarios: Scenario[] = [
                     rendement: 7.1,
                     semis: "2023-10-10",
                     recolte: "2024-07-10",
-                    surface: 40
+                    surface: 40,
                 },
                 amendementOrganique1: {
                     pro: "Lisier de Porc",
                     quantite: 30,
                     unite: "m3/ha",
                     inhibiteurNitrification: false,
-                    enfouissement: true
+                    enfouissementMaterielDelais: "Lisier de Porc",
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Solution Azotée 30",
+                    engraisMineral: "Solution Azotée 30",
                     quantite: 160,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: false
+                    inhibiteurNitrification: false,
                 },
                 fumureFond: {
                     phosphateP: 55,
-                    potasseK: 110
-                }
-            }
-        ]
+                    potasseK: 110,
+                },
+            },
+        ],
     },
     {
         id: "scea-rousseau-previsionnel",
@@ -479,11 +489,12 @@ export const scenarios: Scenario[] = [
             certificationEnvironnementale: "HVE",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: true
+            utilisationOAD: true,
         },
         chaulage: {
-            amendementCalcique: 1,
-            quantiteHectare: 1.8
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 1.8,
         },
         cultures: [
             {
@@ -493,33 +504,33 @@ export const scenarios: Scenario[] = [
                     rendement: 7.6,
                     semis: "2026-10-15",
                     recolte: "2027-07-15",
-                    surface: 35
+                    surface: 35,
                 },
                 interculture: {
                     couvert: "Mélange légumineuses",
                     biomasse: 3.8,
                     semis: "2026-07-20",
-                    destruction: "2026-10-10"
+                    destruction: "2026-10-10",
                 },
                 amendementOrganique1: {
                     pro: "Digestat liquide",
                     quantite: 25,
                     unite: "m3/ha",
                     inhibiteurNitrification: false,
-                    enfouissement: false
+                    enfouissementMaterielDelais: "Digestat liquide",
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Solution Azotée 30",
+                    engraisMineral: "Solution Azotée 30",
                     quantite: 130,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: true
+                    inhibiteurNitrification: true,
                 },
                 fumureFond: {
                     phosphateP: 50,
-                    potasseK: 100
-                }
-            }
-        ]
+                    potasseK: 100,
+                },
+            },
+        ],
     },
     // Scénarios pour les exploitations restantes
     {
@@ -535,11 +546,12 @@ export const scenarios: Scenario[] = [
             certificationEnvironnementale: "NA",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: false
+            utilisationOAD: false,
         },
         chaulage: {
-            amendementCalcique: 0,
-            quantiteHectare: 0
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 0,
         },
         cultures: [
             {
@@ -549,20 +561,20 @@ export const scenarios: Scenario[] = [
                     rendement: 85,
                     semis: "2024-03-25",
                     recolte: "2024-10-25",
-                    surface: 28
+                    surface: 28,
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Ammonitrate 33.5%",
+                    engraisMineral: "N - Ammonium 33.5 % 33.5%",
                     quantite: 120,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: false
+                    inhibiteurNitrification: false,
                 },
                 fumureFond: {
                     phosphateP: 80,
-                    potasseK: 200
-                }
-            }
-        ]
+                    potasseK: 200,
+                },
+            },
+        ],
     },
     {
         id: "gaec-lefebvre-previsionnel",
@@ -577,11 +589,12 @@ export const scenarios: Scenario[] = [
             certificationEnvironnementale: "HVE",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: true
+            utilisationOAD: true,
         },
         chaulage: {
-            amendementCalcique: 2,
-            quantiteHectare: 3
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 3,
         },
         cultures: [
             {
@@ -591,26 +604,26 @@ export const scenarios: Scenario[] = [
                     rendement: 90,
                     semis: "2027-03-30",
                     recolte: "2027-10-30",
-                    surface: 25
+                    surface: 25,
                 },
                 interculture: {
                     couvert: "Moutarde tardive",
                     biomasse: 3.5,
                     semis: "2026-11-01",
-                    destruction: "2027-03-25"
+                    destruction: "2027-03-25",
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Ammonitrate 33.5%",
+                    engraisMineral: "N - Ammonium 33.5 % 33.5%",
                     quantite: 100,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: true
+                    inhibiteurNitrification: true,
                 },
                 fumureFond: {
                     phosphateP: 75,
-                    potasseK: 180
-                }
-            }
-        ]
+                    potasseK: 180,
+                },
+            },
+        ],
     },
     {
         id: "earl-petit-t0",
@@ -625,11 +638,12 @@ export const scenarios: Scenario[] = [
             certificationEnvironnementale: "NA",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: false
+            utilisationOAD: false,
         },
         chaulage: {
-            amendementCalcique: 1,
-            quantiteHectare: 2
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 2,
         },
         cultures: [
             {
@@ -639,18 +653,18 @@ export const scenarios: Scenario[] = [
                     rendement: 3.5,
                     semis: "2023-08-28",
                     recolte: "2024-07-12",
-                    surface: 22
+                    surface: 22,
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Urée 46%",
+                    engraisMineral: "N - Urée 46%%",
                     quantite: 190,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: false
+                    inhibiteurNitrification: false,
                 },
                 fumureFond: {
                     phosphateP: 85,
-                    potasseK: 160
-                }
+                    potasseK: 160,
+                },
             },
             {
                 culture: {
@@ -659,20 +673,20 @@ export const scenarios: Scenario[] = [
                     rendement: 7.0,
                     semis: "2023-10-12",
                     recolte: "2024-07-18",
-                    surface: 33
+                    surface: 33,
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Ammonitrate 33.5%",
+                    engraisMineral: "N - Ammonium 33.5 % 33.5%",
                     quantite: 155,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: false
+                    inhibiteurNitrification: false,
                 },
                 fumureFond: {
                     phosphateP: 60,
-                    potasseK: 115
-                }
-            }
-        ]
+                    potasseK: 115,
+                },
+            },
+        ],
     },
     {
         id: "earl-petit-previsionnel",
@@ -687,11 +701,12 @@ export const scenarios: Scenario[] = [
             certificationEnvironnementale: "HVE",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: true
+            utilisationOAD: true,
         },
         chaulage: {
-            amendementCalcique: 2,
-            quantiteHectare: 2.8
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 2.8,
         },
         cultures: [
             {
@@ -701,24 +716,24 @@ export const scenarios: Scenario[] = [
                     rendement: 4.0,
                     semis: "2026-09-02",
                     recolte: "2027-07-18",
-                    surface: 20
+                    surface: 20,
                 },
                 interculture: {
                     couvert: "Trèfle incarnat",
                     biomasse: 4.2,
                     semis: "2026-07-25",
-                    destruction: "2026-08-28"
+                    destruction: "2026-08-28",
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Urée protégée NBP",
+                    engraisMineral: "Urée protégée NBP",
                     quantite: 165,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: true
+                    inhibiteurNitrification: true,
                 },
                 fumureFond: {
                     phosphateP: 80,
-                    potasseK: 150
-                }
+                    potasseK: 150,
+                },
             },
             {
                 culture: {
@@ -727,26 +742,26 @@ export const scenarios: Scenario[] = [
                     rendement: 7.5,
                     semis: "2026-10-18",
                     recolte: "2027-07-25",
-                    surface: 30
+                    surface: 30,
                 },
                 interculture: {
                     couvert: "Féverole",
                     biomasse: 3.6,
                     semis: "2026-07-30",
-                    destruction: "2026-10-13"
+                    destruction: "2026-10-13",
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Ammonitrate 33.5%",
+                    engraisMineral: "N - Ammonium 33.5 % 33.5%",
                     quantite: 125,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: true
+                    inhibiteurNitrification: true,
                 },
                 fumureFond: {
                     phosphateP: 55,
-                    potasseK: 105
-                }
-            }
-        ]
+                    potasseK: 105,
+                },
+            },
+        ],
     },
     {
         id: "scea-lambert-t0",
@@ -761,11 +776,12 @@ export const scenarios: Scenario[] = [
             certificationEnvironnementale: "NA",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: false
+            utilisationOAD: false,
         },
         chaulage: {
-            amendementCalcique: 0,
-            quantiteHectare: 0
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 0,
         },
         cultures: [
             {
@@ -775,20 +791,20 @@ export const scenarios: Scenario[] = [
                     rendement: 6.2,
                     semis: "2023-10-05",
                     recolte: "2024-07-05",
-                    surface: 45
+                    surface: 45,
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Solution Azotée 30",
+                    engraisMineral: "Solution Azotée 30",
                     quantite: 130,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: false
+                    inhibiteurNitrification: false,
                 },
                 fumureFond: {
                     phosphateP: 50,
-                    potasseK: 95
-                }
-            }
-        ]
+                    potasseK: 95,
+                },
+            },
+        ],
     },
     {
         id: "scea-lambert-previsionnel",
@@ -803,11 +819,12 @@ export const scenarios: Scenario[] = [
             certificationEnvironnementale: "HVE",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: true
+            utilisationOAD: true,
         },
         chaulage: {
-            amendementCalcique: 1,
-            quantiteHectare: 1.5
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 1.5,
         },
         cultures: [
             {
@@ -817,26 +834,26 @@ export const scenarios: Scenario[] = [
                     rendement: 6.8,
                     semis: "2026-10-10",
                     recolte: "2027-07-10",
-                    surface: 40
+                    surface: 40,
                 },
                 interculture: {
                     couvert: "Vesce",
                     biomasse: 3.1,
                     semis: "2026-07-15",
-                    destruction: "2026-10-05"
+                    destruction: "2026-10-05",
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Solution Azotée 30",
+                    engraisMineral: "Solution Azotée 30",
                     quantite: 110,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: true
+                    inhibiteurNitrification: true,
                 },
                 fumureFond: {
                     phosphateP: 45,
-                    potasseK: 85
-                }
-            }
-        ]
+                    potasseK: 85,
+                },
+            },
+        ],
     },
     {
         id: "gaec-simon-t0",
@@ -851,11 +868,12 @@ export const scenarios: Scenario[] = [
             certificationEnvironnementale: "NA",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: false
+            utilisationOAD: false,
         },
         chaulage: {
-            amendementCalcique: 0,
-            quantiteHectare: 0
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 0,
         },
         cultures: [
             {
@@ -865,20 +883,20 @@ export const scenarios: Scenario[] = [
                     rendement: 5.8,
                     semis: "2023-11-05",
                     recolte: "2024-07-25",
-                    surface: 38
+                    surface: 38,
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Urée 46%",
+                    engraisMineral: "N - Urée 46%%",
                     quantite: 170,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: false
+                    inhibiteurNitrification: false,
                 },
                 fumureFond: {
                     phosphateP: 65,
-                    potasseK: 120
-                }
-            }
-        ]
+                    potasseK: 120,
+                },
+            },
+        ],
     },
     {
         id: "gaec-simon-previsionnel",
@@ -893,11 +911,12 @@ export const scenarios: Scenario[] = [
             certificationEnvironnementale: "Bio",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: true
+            utilisationOAD: true,
         },
         chaulage: {
-            amendementCalcique: 0,
-            quantiteHectare: 0
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 0,
         },
         cultures: [
             {
@@ -907,25 +926,25 @@ export const scenarios: Scenario[] = [
                     rendement: 4.8,
                     semis: "2026-11-10",
                     recolte: "2027-07-30",
-                    surface: 30
+                    surface: 30,
                 },
                 interculture: {
                     couvert: "Luzerne",
                     biomasse: 5.5,
                     semis: "2026-08-01",
-                    destruction: "2026-11-05"
+                    destruction: "2026-11-05",
                 },
                 amendementOrganique1: {
                     pro: "Compost végétal",
                     quantite: 25,
                     unite: "T/ha",
                     inhibiteurNitrification: false,
-                    enfouissement: true
+                    enfouissementMaterielDelais: "Compost végétal",
                 },
                 fumureFond: {
                     phosphateP: 40,
-                    potasseK: 80
-                }
+                    potasseK: 80,
+                },
             },
             {
                 culture: {
@@ -934,20 +953,20 @@ export const scenarios: Scenario[] = [
                     rendement: 1.8,
                     semis: "2027-03-20",
                     recolte: "2027-08-15",
-                    surface: 15
+                    surface: 15,
                 },
                 interculture: {
                     couvert: "Sarrasin",
                     biomasse: 2.2,
                     semis: "2026-08-20",
-                    destruction: "2027-03-15"
+                    destruction: "2027-03-15",
                 },
                 fumureFond: {
                     phosphateP: 30,
-                    potasseK: 60
-                }
-            }
-        ]
+                    potasseK: 60,
+                },
+            },
+        ],
     },
     {
         id: "earl-garcia-t0",
@@ -962,11 +981,12 @@ export const scenarios: Scenario[] = [
             certificationEnvironnementale: "NA",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: false
+            utilisationOAD: false,
         },
         chaulage: {
-            amendementCalcique: 0,
-            quantiteHectare: 0
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 0,
         },
         cultures: [
             {
@@ -976,27 +996,27 @@ export const scenarios: Scenario[] = [
                     rendement: 65,
                     semis: "2024-03-15",
                     recolte: "2024-09-20",
-                    surface: 25
+                    surface: 25,
                 },
                 amendementOrganique1: {
                     pro: "Compost végétal",
                     quantite: 15,
                     unite: "T/ha",
                     inhibiteurNitrification: false,
-                    enfouissement: true
+                    enfouissementMaterielDelais: "Compost végétal",
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Ammonitrate 33.5%",
+                    engraisMineral: "N - Ammonium 33.5 % 33.5%",
                     quantite: 60,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: false
+                    inhibiteurNitrification: false,
                 },
                 fumureFond: {
                     phosphateP: 40,
-                    potasseK: 180
-                }
-            }
-        ]
+                    potasseK: 180,
+                },
+            },
+        ],
     },
     {
         id: "earl-garcia-previsionnel",
@@ -1011,11 +1031,12 @@ export const scenarios: Scenario[] = [
             certificationEnvironnementale: "Bio",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: true
+            utilisationOAD: true,
         },
         chaulage: {
-            amendementCalcique: 0,
-            quantiteHectare: 0
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 0,
         },
         cultures: [
             {
@@ -1025,28 +1046,28 @@ export const scenarios: Scenario[] = [
                     rendement: 58,
                     semis: "2027-03-20",
                     recolte: "2027-09-25",
-                    surface: 23
+                    surface: 23,
                 },
                 interculture: {
                     couvert: "Engrais vert permanent",
                     biomasse: 4.8,
                     semis: "2027-03-01",
-                    destruction: ""
+                    destruction: "",
                 },
                 amendementOrganique1: {
                     pro: "Compost végétal",
                     quantite: 20,
                     unite: "T/ha",
                     inhibiteurNitrification: false,
-                    enfouissement: true
+                    enfouissementMaterielDelais: "Compost végétal",
                 },
                 fumureFond: {
                     phosphateP: 35,
-                    potasseK: 160
-                }
-            }
-        ]
-    }
+                    potasseK: 160,
+                },
+            },
+        ],
+    },
 ];
 
 // Données complètes pour l'import
@@ -1064,11 +1085,12 @@ export const importData: Record<string, Scenario> = {
             certificationEnvironnementale: "NA",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: false
+            utilisationOAD: false,
         },
         chaulage: {
-            amendementCalcique: 0,
-            quantiteHectare: 0
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 0,
         },
         cultures: [
             {
@@ -1078,37 +1100,37 @@ export const importData: Record<string, Scenario> = {
                     rendement: 7.5,
                     semis: "2023-10-15",
                     recolte: "2024-07-15",
-                    surface: 25
+                    surface: 25,
                 },
                 interculture: {
                     couvert: "Moutarde",
                     biomasse: 2.5,
                     semis: "2023-08-20",
-                    destruction: "2023-10-10"
+                    destruction: "2023-10-10",
                 },
                 amendementOrganique1: {
                     pro: "Fumier de bovins",
                     quantite: 20,
                     unite: "T/ha",
                     inhibiteurNitrification: false,
-                    enfouissement: true
+                    enfouissementMaterielDelais: "Fumier de bovins",
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Ammonitrate 33.5%",
+                    engraisMineral: "N - Ammonium 33.5 % 33.5%",
                     quantite: 150,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: false
+                    inhibiteurNitrification: false,
                 },
                 fertilisationAzotee2: {
-                    formeEngrais: "Urée 46%",
+                    engraisMineral: "N - Urée 46%%",
                     quantite: 80,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: false
+                    inhibiteurNitrification: false,
                 },
                 fumureFond: {
                     phosphateP: 60,
-                    potasseK: 120
-                }
+                    potasseK: 120,
+                },
             },
             {
                 culture: {
@@ -1117,26 +1139,26 @@ export const importData: Record<string, Scenario> = {
                     rendement: 3.8,
                     semis: "2024-08-25",
                     recolte: "2025-07-15",
-                    surface: 15
+                    surface: 15,
                 },
                 interculture: {
                     couvert: "Radis fourrager",
                     biomasse: 3.0,
                     semis: "2024-08-01",
-                    destruction: "2024-08-20"
+                    destruction: "2024-08-20",
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Ammonitrate 33.5%",
+                    engraisMineral: "N - Ammonium 33.5 % 33.5%",
                     quantite: 180,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: false
+                    inhibiteurNitrification: false,
                 },
                 fumureFond: {
                     phosphateP: 80,
-                    potasseK: 150
-                }
-            }
-        ]
+                    potasseK: 150,
+                },
+            },
+        ],
     },
     "earl-dupont-previsionnel": {
         id: "earl-dupont-previsionnel",
@@ -1151,11 +1173,12 @@ export const importData: Record<string, Scenario> = {
             certificationEnvironnementale: "HVE",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: true
+            utilisationOAD: true,
         },
         chaulage: {
-            amendementCalcique: 2,
-            quantiteHectare: 2
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 2,
         },
         cultures: [
             {
@@ -1165,37 +1188,37 @@ export const importData: Record<string, Scenario> = {
                     rendement: 7.8,
                     semis: "2026-10-20",
                     recolte: "2027-07-20",
-                    surface: 20
+                    surface: 20,
                 },
                 interculture: {
                     couvert: "Mélange légumineuses",
                     biomasse: 3.5,
                     semis: "2026-07-25",
-                    destruction: "2026-10-15"
+                    destruction: "2026-10-15",
                 },
                 amendementOrganique1: {
                     pro: "Compost végétal",
                     quantite: 15,
                     unite: "T/ha",
                     inhibiteurNitrification: false,
-                    enfouissement: true
+                    enfouissementMaterielDelais: "Compost végétal",
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Ammonitrate 33.5%",
+                    engraisMineral: "N - Ammonium 33.5 % 33.5%",
                     quantite: 120,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: true
+                    inhibiteurNitrification: true,
                 },
                 fertilisationAzotee2: {
-                    formeEngrais: "Urée 46%",
+                    engraisMineral: "N - Urée 46%%",
                     quantite: 60,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: true
+                    inhibiteurNitrification: true,
                 },
                 fumureFond: {
                     phosphateP: 50,
-                    potasseK: 100
-                }
+                    potasseK: 100,
+                },
             },
             {
                 culture: {
@@ -1204,24 +1227,24 @@ export const importData: Record<string, Scenario> = {
                     rendement: 4.2,
                     semis: "2027-08-30",
                     recolte: "2028-07-20",
-                    surface: 15
+                    surface: 15,
                 },
                 interculture: {
                     couvert: "Trèfle violet",
                     biomasse: 4.0,
                     semis: "2027-07-25",
-                    destruction: "2027-08-25"
+                    destruction: "2027-08-25",
                 },
                 fertilisationAzotee1: {
-                    formeEngrais: "Ammonitrate 33.5%",
+                    engraisMineral: "N - Ammonium 33.5 % 33.5%",
                     quantite: 150,
                     unite: "kg N/ha",
-                    inhibiteurNitrification: true
+                    inhibiteurNitrification: true,
                 },
                 fumureFond: {
                     phosphateP: 70,
-                    potasseK: 130
-                }
+                    potasseK: 130,
+                },
             },
             {
                 culture: {
@@ -1230,21 +1253,21 @@ export const importData: Record<string, Scenario> = {
                     rendement: 12.0,
                     semis: "2027-03-15",
                     recolte: "2027-09-30",
-                    surface: 5
+                    surface: 5,
                 },
                 interculture: {
                     couvert: "Pas de couvert",
                     biomasse: 0,
                     semis: "",
-                    destruction: ""
+                    destruction: "",
                 },
                 fumureFond: {
                     phosphateP: 40,
-                    potasseK: 200
-                }
-            }
-        ]
-    }
+                    potasseK: 200,
+                },
+            },
+        ],
+    },
 };
 
 export const resultatsScenarios: ResultatScenario[] = [
@@ -1263,14 +1286,22 @@ export const resultatsScenarios: ResultatScenario[] = [
                 organiqueAmont: 0.2,
                 volatilisationLixiviation: 0.6,
                 carburants: 0.8,
-                chaulage: 0.0
+                chaulage: 0.0,
             },
-            bilanNet: 3.7
+            bilanNet: 3.7,
         },
         emissionsParCulture: [
-            { culture: "Blé tendre d'hiver", emissions: 2.5, facteurEmissions: 0.33 },
-            { culture: "Colza d'hiver", emissions: 1.7, facteurEmissions: 0.45 }
-        ]
+            {
+                culture: "Blé tendre d'hiver",
+                emissions: 2.5,
+                facteurEmissions: 0.33,
+            },
+            {
+                culture: "Colza d'hiver",
+                emissions: 1.7,
+                facteurEmissions: 0.45,
+            },
+        ],
     },
     {
         scenarioId: "earl-dupont-previsionnel",
@@ -1287,16 +1318,24 @@ export const resultatsScenarios: ResultatScenario[] = [
                 organiqueAmont: 0.2,
                 volatilisationLixiviation: 0.4,
                 carburants: 0.7,
-                chaulage: 0.4
+                chaulage: 0.4,
             },
-            bilanNet: 2.8
+            bilanNet: 2.8,
         },
         emissionsParCulture: [
-            { culture: "Blé tendre d'hiver", emissions: 1.8, facteurEmissions: 0.23 },
-            { culture: "Colza d'hiver", emissions: 1.0, facteurEmissions: 0.24 },
-            { culture: "Luzerne", emissions: 0.3, facteurEmissions: 0.025 }
-        ]
-    }
+            {
+                culture: "Blé tendre d'hiver",
+                emissions: 1.8,
+                facteurEmissions: 0.23,
+            },
+            {
+                culture: "Colza d'hiver",
+                emissions: 1.0,
+                facteurEmissions: 0.24,
+            },
+            { culture: "Luzerne", emissions: 0.3, facteurEmissions: 0.025 },
+        ],
+    },
 ];
 
 export default scenarios;
