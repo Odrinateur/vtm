@@ -265,10 +265,10 @@ export const scenarios: Scenario[] = [
         type: "T0",
         nom: "Scénario initial T0 (Récolte 2024)",
         annee: 2024,
-        isEmpty: true,
+        isEmpty: false,
         iae: {
-            pourcentageIAE: 0,
-            tailleMoyenneParcelles: 0,
+            pourcentageIAE: 2,
+            tailleMoyenneParcelles: 11,
             certificationEnvironnementale: "NA",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
@@ -279,7 +279,48 @@ export const scenarios: Scenario[] = [
             amendementCalcique: "Carbonate de calcium",
             quantiteHectare: 0,
         },
-        cultures: [],
+        cultures: [
+            {
+                culture: {
+                    id: "ble-tendre-martin",
+                    culture: "Blé tendre d'hiver",
+                    rendement: 7.1,
+                    semis: "2023-10-12",
+                    recolte: "2024-07-12",
+                    surface: 18,
+                },
+                fertilisationAzotee1: {
+                    engraisMineral: "N - Ammonium 33,5",
+                    quantite: 125,
+                    unite: "kg N/ha",
+                    inhibiteurNitrification: false,
+                },
+                fumureFond: {
+                    phosphateP: 50,
+                    potasseK: 100,
+                },
+            },
+            {
+                culture: {
+                    id: "orge-hiver-martin",
+                    culture: "Orge d'hiver",
+                    rendement: 6.2,
+                    semis: "2023-10-05",
+                    recolte: "2024-07-05",
+                    surface: 12,
+                },
+                fertilisationAzotee1: {
+                    engraisMineral: "N - Ammonium 33,5",
+                    quantite: 110,
+                    unite: "kg N/ha",
+                    inhibiteurNitrification: false,
+                },
+                fumureFond: {
+                    phosphateP: 45,
+                    potasseK: 90,
+                },
+            },
+        ],
     },
     {
         id: "scea-martin-previsionnel",
@@ -287,21 +328,62 @@ export const scenarios: Scenario[] = [
         type: "previsionnel",
         nom: "Scénario A reconçu (Prévision 2027)",
         annee: 2027,
-        isEmpty: true,
+        isEmpty: false,
         iae: {
-            pourcentageIAE: 0,
-            tailleMoyenneParcelles: 0,
-            certificationEnvironnementale: "NA",
+            pourcentageIAE: 4,
+            tailleMoyenneParcelles: 10,
+            certificationEnvironnementale: "HVE",
             consommationCarburant: 0,
             typeCarburant: "Gazole non routier (litres)",
-            utilisationOAD: false,
+            utilisationOAD: true,
         },
         chaulage: {
-            nombreHectare: 0,
+            nombreHectare: 1,
             amendementCalcique: "Carbonate de calcium",
-            quantiteHectare: 0,
+            quantiteHectare: 1.2,
         },
-        cultures: [],
+        cultures: [
+            {
+                culture: {
+                    id: "ble-tendre-martin-prev",
+                    culture: "Blé tendre d'hiver",
+                    rendement: 7.5,
+                    semis: "2026-10-15",
+                    recolte: "2027-07-15",
+                    surface: 15,
+                },
+                fertilisationAzotee1: {
+                    engraisMineral: "N - Ammonium 33,5",
+                    quantite: 120,
+                    unite: "kg N/ha",
+                    inhibiteurNitrification: true,
+                },
+                fumureFond: {
+                    phosphateP: 48,
+                    potasseK: 95,
+                },
+            },
+            {
+                culture: {
+                    id: "pois-proteagineux-martin-prev",
+                    culture: "Pois protéagineux",
+                    rendement: 3.1,
+                    semis: "2027-03-20",
+                    recolte: "2027-08-10",
+                    surface: 10,
+                },
+                fertilisationAzotee1: {
+                    engraisMineral: "N/A",
+                    quantite: 0,
+                    unite: "kg N/ha",
+                    inhibiteurNitrification: false,
+                },
+                fumureFond: {
+                    phosphateP: 40,
+                    potasseK: 80,
+                },
+            },
+        ],
     },
     // GAEC BERNARD
     {
@@ -1386,6 +1468,132 @@ export const importData: Record<string, Scenario> = {
                 fumureFond: {
                     phosphateP: 40,
                     potasseK: 200,
+                },
+            },
+        ],
+    },
+    "scea-martin-t0": {
+        id: "scea-martin-t0",
+        exploitationId: "scea-martin",
+        type: "T0",
+        nom: "Scénario initial T0 (Récolte 2024)",
+        annee: 2024,
+        isEmpty: false,
+        iae: {
+            pourcentageIAE: 2,
+            tailleMoyenneParcelles: 11,
+            certificationEnvironnementale: "NA",
+            consommationCarburant: 0,
+            typeCarburant: "Gazole non routier (litres)",
+            utilisationOAD: false,
+        },
+        chaulage: {
+            nombreHectare: 0,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 0,
+        },
+        cultures: [
+            {
+                culture: {
+                    id: "ble-tendre-martin",
+                    culture: "Blé tendre d'hiver",
+                    rendement: 7.1,
+                    semis: "2023-10-12",
+                    recolte: "2024-07-12",
+                    surface: 18,
+                },
+                fertilisationAzotee1: {
+                    engraisMineral: "N - Ammonium 33,5",
+                    quantite: 125,
+                    unite: "kg N/ha",
+                    inhibiteurNitrification: false,
+                },
+                fumureFond: {
+                    phosphateP: 50,
+                    potasseK: 100,
+                },
+            },
+            {
+                culture: {
+                    id: "orge-hiver-martin",
+                    culture: "Orge d'hiver",
+                    rendement: 6.2,
+                    semis: "2023-10-05",
+                    recolte: "2024-07-05",
+                    surface: 12,
+                },
+                fertilisationAzotee1: {
+                    engraisMineral: "N - Ammonium 33,5",
+                    quantite: 110,
+                    unite: "kg N/ha",
+                    inhibiteurNitrification: false,
+                },
+                fumureFond: {
+                    phosphateP: 45,
+                    potasseK: 90,
+                },
+            },
+        ],
+    },
+    "scea-martin-previsionnel": {
+        id: "scea-martin-previsionnel",
+        exploitationId: "scea-martin",
+        type: "previsionnel",
+        nom: "Scénario A reconçu (Prévision 2027)",
+        annee: 2027,
+        isEmpty: false,
+        iae: {
+            pourcentageIAE: 4,
+            tailleMoyenneParcelles: 10,
+            certificationEnvironnementale: "HVE",
+            consommationCarburant: 0,
+            typeCarburant: "Gazole non routier (litres)",
+            utilisationOAD: true,
+        },
+        chaulage: {
+            nombreHectare: 1,
+            amendementCalcique: "Carbonate de calcium",
+            quantiteHectare: 1.2,
+        },
+        cultures: [
+            {
+                culture: {
+                    id: "ble-tendre-martin-prev",
+                    culture: "Blé tendre d'hiver",
+                    rendement: 7.5,
+                    semis: "2026-10-15",
+                    recolte: "2027-07-15",
+                    surface: 15,
+                },
+                fertilisationAzotee1: {
+                    engraisMineral: "N - Ammonium 33,5",
+                    quantite: 120,
+                    unite: "kg N/ha",
+                    inhibiteurNitrification: true,
+                },
+                fumureFond: {
+                    phosphateP: 48,
+                    potasseK: 95,
+                },
+            },
+            {
+                culture: {
+                    id: "pois-proteagineux-martin-prev",
+                    culture: "Pois protéagineux",
+                    rendement: 3.1,
+                    semis: "2027-03-20",
+                    recolte: "2027-08-10",
+                    surface: 10,
+                },
+                fertilisationAzotee1: {
+                    engraisMineral: "N/A",
+                    quantite: 0,
+                    unite: "kg N/ha",
+                    inhibiteurNitrification: false,
+                },
+                fumureFond: {
+                    phosphateP: 40,
+                    potasseK: 80,
                 },
             },
         ],
